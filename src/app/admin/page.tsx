@@ -1,0 +1,72 @@
+"use client";
+
+import { useState } from "react";
+import LinkGenerator from "@/components/admin/LinkGenerator";
+
+export default function AdminPage() {
+  const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? "";
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isAuthed, setIsAuthed] = useState(false);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError("");
+
+    if (!adminPassword) {
+      setError("NEXT_PUBLIC_ADMIN_PASSWORD belum diisi.");
+      return;
+    }
+
+    if (password === adminPassword) {
+      setIsAuthed(true);
+      return;
+    }
+
+    setError("Password salah.");
+  };
+
+  return (
+    <main className="min-h-screen py-16">
+      <div className="max-w-md mx-auto px-4 sm:px-6">
+        <h1 className="font-display text-display-lg italic text-slate-700 text-center">
+          Admin Dashboard
+        </h1>
+        <p className="mt-2 text-body-sm text-slate-500 text-center">
+          Generate link WhatsApp untuk setiap tamu.
+        </p>
+
+        {!isAuthed ? (
+          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+            <label className="text-label text-slate-500 uppercase" htmlFor="pwd">
+              Password
+            </label>
+            <input
+              id="pwd"
+              type="password"
+              className="w-full px-4 py-3 rounded-xl border border-white/40 bg-white/60 text-body-md text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-gold-400/50 focus:border-gold-400/60"
+              placeholder="Masukkan password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            {error && (
+              <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-body-sm text-red-500">
+                {error}
+              </div>
+            )}
+            <button
+              type="submit"
+              className="w-full rounded-xl bg-gold-400 text-white py-3 font-medium hover:bg-gold-300 transition-colors"
+            >
+              Masuk
+            </button>
+          </form>
+        ) : (
+          <div className="mt-8">
+            <LinkGenerator />
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}
