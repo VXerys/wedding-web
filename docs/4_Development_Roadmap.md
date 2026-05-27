@@ -367,7 +367,40 @@ export const EVENT = {
 } as const;
 ```
 
-### Step 2.5 — Main Page Assembly (Day 3 Morning)
+### Step 2.5 — CountdownTimer Section (Save The Date)
+
+**Files:**
+- `src/hooks/useCountdown.ts` — Custom hook for live countdown
+- `src/components/countdown/CountdownTimer.tsx` — Save The Date section
+- `src/app/page.tsx` — Integration between HeroSection and EventDetails
+
+**Implementation:**
+1. Create `useCountdown` hook:
+   - Input: ISO 8601 datetime string from `NEXT_PUBLIC_EVENT_DATE`
+   - Output: `{ days, hours, minutes, seconds, isExpired }`
+   - Uses `useState` + `setInterval` at 1-second intervals
+   - Auto-stops interval when expired or on unmount
+2. Create `CountdownTimer` component:
+   - "Save" label + "The Date" display heading
+   - Ornamental gold divider (lines + diamond)
+   - Four glassmorphism boxes showing countdown values
+   - Labels: Hari, Jam, Menit, Detik
+   - Expired state: shows "Terima kasih atas kehadirannya 💕"
+3. Add to `page.tsx` between `<HeroSection />` and `<EventDetails />`
+
+**Environment:**
+- `NEXT_PUBLIC_EVENT_DATE` extended to support ISO 8601 datetime format
+  - Full datetime: `2026-07-12T09:00:00+07:00` (countdown to exact time)
+  - Date-only: `2026-07-12` (countdown to midnight, backward compatible)
+
+**Acceptance Criteria:**
+- [ ] Countdown displays correct remaining time
+- [ ] Seconds update every 1 second visually
+- [ ] Expired datetime shows thank-you message instead of countdown
+- [ ] Values are zero-padded and use tabular-nums
+- [ ] Glassmorphism card styling matches design system
+
+### Step 2.6 — Main Page Assembly (Day 3 Morning)
 
 Update `app/page.tsx` to assemble all components:
 - Wrap `HeroSection` in `<Suspense fallback={<HeroFallback />}>`
@@ -398,7 +431,7 @@ export default function Page() {
 }
 ```
 
-### Step 2.6 — Static Visual Polish (Day 3 Afternoon)
+### Step 2.7 — Static Visual Polish (Day 3 Afternoon)
 
 - [ ] Verify glassmorphism card effect renders correctly on mobile Chrome and Safari.
 - [ ] Check all `font-display` (Cormorant Garamond) sections render with correct italic weights.

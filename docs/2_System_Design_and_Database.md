@@ -40,6 +40,7 @@
 │  │  ├── CoverEnvelope   (CSR — Animation State)       │  │
 │  │  ├── HeroSection     (CSR — useSearchParams)       │  │
 │  │  ├── EventDetails    (Static — Bento Grid)         │  │
+│  │  ├── CountdownTimer  (CSR — useCountdown Hook)       │  │
 │  │  ├── RSVPForm        (CSR — Form State)            │  │
 │  │  └── GuestbookFeed   (CSR — Realtime + Pagination) │  │
 │  └────────────────────────────────────────────────────┘  │
@@ -87,6 +88,7 @@ If we server-render the guest's name (from the `?to=` URL param), every unique U
 | `CoverEnvelope` | **CSR** (`'use client'`) | Requires `useState` for `isOpened` animation trigger. |
 | `HeroSection` | **CSR** (`'use client'`) | Must call `useSearchParams()` — requires client context. Wrapped in `<Suspense>`. |
 | `EventDetails` | **Server Component** | Pure static data. No interactivity. Rendered server-side, zero JS sent. |
+| `CountdownTimer` | **CSR** (`'use client'`) | Requires `useState` + `setInterval` for live per-second updates. Reads `NEXT_PUBLIC_EVENT_DATE` env var (inlined at build time). |
 | `RSVPForm` | **CSR** (`'use client'`) | Form state, submit handler, validation, optimistic updates. |
 | `GuestbookFeed` | **CSR** (`'use client'`) | Supabase Realtime subscription, pagination state, optimistic items array. |
 | `app/admin/page.tsx` | **CSR** (`'use client'`) | All logic is client-side; password check, clipboard API. |
@@ -158,6 +160,8 @@ digital-invitation/
 │   ├── hero/
 │   │   ├── HeroSection.tsx       # Guest personalization (uses useSearchParams)
 │   │   └── HeroFallback.tsx      # Suspense skeleton
+│   ├── countdown/
+│   │   └── CountdownTimer.tsx    # Save The Date countdown (Client Component)
 │   ├── details/
 │   │   └── EventDetails.tsx      # Bento grid (Server Component)
 │   ├── rsvp/
@@ -179,6 +183,7 @@ digital-invitation/
 │   └── guestbook.ts              # TypeScript interfaces
 │
 ├── hooks/
+│   ├── useCountdown.ts            # Custom hook: live countdown to target datetime
 │   ├── useGuestbookFeed.ts       # Custom hook: fetch + realtime + pagination
 │   └── useRSVPSubmit.ts          # Custom hook: form submission + optimistic UI
 │
@@ -506,7 +511,8 @@ NEXT_PUBLIC_MAPS_URL=https://maps.google.com/?q=-6.2088,106.8456
 # Couple Names (used in metadata and hero)
 NEXT_PUBLIC_GROOM_NAME=Ahmad
 NEXT_PUBLIC_BRIDE_NAME=Siti
-NEXT_PUBLIC_EVENT_DATE=2026-07-12
+# ISO 8601 format — supports date-only (2026-07-12) or full datetime
+NEXT_PUBLIC_EVENT_DATE=2026-07-12T09:00:00+07:00
 ```
 
 ### `.env.example` (committed to Git as template)
@@ -520,6 +526,7 @@ NEXT_PUBLIC_WHATSAPP_NUMBER=
 NEXT_PUBLIC_MAPS_URL=
 NEXT_PUBLIC_GROOM_NAME=
 NEXT_PUBLIC_BRIDE_NAME=
+# ISO 8601 format — supports date-only (2026-07-12) or full datetime (2026-07-12T09:00:00+07:00)
 NEXT_PUBLIC_EVENT_DATE=
 ```
 

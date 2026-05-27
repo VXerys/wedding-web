@@ -538,6 +538,41 @@ const badgeConfig = {
 </span>
 ```
 
+### 7.4 CountdownTimer — Save The Date
+
+**Visual Design:**
+- Section centered within `max-w-md` container.
+- Label: `"SAVE"` in `text-label text-gold-400 tracking-[0.32em] uppercase`.
+- Heading: `"The Date"` in `font-display text-display-lg italic text-slate-700`.
+- Ornamental divider: thin gold horizontal lines with diamond `◆` centered between.
+
+**Countdown Boxes:**
+```tsx
+// Each countdown unit
+<div className="glass-card-elevated w-[72px] h-[72px] sm:w-20 sm:h-20 flex items-center justify-center">
+  <span className="font-display text-display-md text-slate-700 tabular-nums">
+    {String(value).padStart(2, "0")}
+  </span>
+</div>
+<span className="text-label text-slate-500 font-body tracking-widest uppercase">
+  {label}
+</span>
+```
+
+**Layout:**
+- Four boxes in a horizontal `flex` row with `gap-3 sm:gap-4`.
+- Labels below each box: `Hari`, `Jam`, `Menit`, `Detik`.
+- Values zero-padded to 2 digits (`tabular-nums` for consistent width).
+
+**Expired State:**
+- When event datetime has passed, the countdown boxes are replaced with:
+  - A single `glass-card` containing the message `"Terima kasih atas kehadirannya 💕"`
+  - Styled in `font-display text-display-md italic text-slate-700`.
+
+**Performance:**
+- `setInterval` runs every 1 second. Auto-stops when expired.
+- Uses `tabular-nums` CSS property to prevent layout shift on digit changes.
+
 ---
 
 ## 8. Framer Motion Animation Specifications

@@ -1,7 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+
+const emptySubscribe = () => () => {};
 
 interface CoverEnvelopeProps {
   guestName: string;
@@ -22,7 +24,13 @@ const coverVariants = {
 export default function CoverEnvelope({ guestName }: CoverEnvelopeProps) {
   const [isOpened, setIsOpened] = useState(false);
   const prefersReducedMotion = useReducedMotion();
-  const variants = prefersReducedMotion
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+
+  const variants = (mounted && prefersReducedMotion)
     ? {
         visible: { opacity: 1 },
         exit: { opacity: 0, transition: { duration: 0.2 } },

@@ -80,6 +80,7 @@ The system delivers personalized invitations via WhatsApp links, captures RSVP c
 | Admin Dashboard (`/admin`) | P1 — High | Password-protected link generator |
 | WhatsApp Link Auto-Generator | P1 — High | Generate `wa.me` link with URL-encoded message |
 | Vercel Deployment + CI/CD | P0 — Critical | Auto-deploy from `main` branch |
+| Countdown Timer (Save The Date) | P1 — High | Real-time countdown to akad ceremony datetime |
 
 ### Out-of-Scope (v1.0)
 - QR code generation and scanning at the physical venue.
@@ -297,6 +298,39 @@ The system delivers personalized invitations via WhatsApp links, captures RSVP c
 - GIVEN guest name is `"Budi Santoso"`
 - THEN spaces MUST be encoded as `+` (not `%20`) in the `?to=` parameter for best WhatsApp compatibility.
 - IMPLEMENTATION: `encodeURIComponent(name).replace(/%20/g, '+')`.
+
+---
+
+### US-007: Countdown Timer — Save The Date
+
+**As a** wedding guest,
+**I want** to see a live countdown to the wedding ceremony,
+**so that** I feel the anticipation building and know exactly how much time is left.
+
+#### Acceptance Criteria
+
+**AC-007-1 (Live Countdown Display):**
+- GIVEN the invitation page is loaded
+- WHEN the countdown section is visible
+- THEN four countdown boxes display the remaining: Hari (Days), Jam (Hours), Menit (Minutes), Detik (Seconds).
+- AND the seconds value updates every 1 second in real-time.
+
+**AC-007-2 (Heading & Styling):**
+- THEN the section displays "Save" as an uppercase label and "The Date" in display font.
+- AND an ornamental gold divider separates the heading from the countdown boxes.
+- AND the countdown boxes use the glassmorphism elevated card style.
+
+**AC-007-3 (Expired State):**
+- GIVEN the event datetime has passed
+- WHEN the page loads
+- THEN instead of countdown boxes, display: "Terima kasih atas kehadirannya 💕".
+- AND the countdown interval stops (no unnecessary setInterval running).
+
+**AC-007-4 (Date Source):**
+- GIVEN `NEXT_PUBLIC_EVENT_DATE` is set as ISO 8601 datetime (e.g., `2026-07-12T09:00:00+07:00`)
+- THEN the countdown targets that exact datetime with timezone.
+- GIVEN `NEXT_PUBLIC_EVENT_DATE` is date-only (e.g., `2026-07-12`)
+- THEN the countdown targets midnight local time of that date.
 
 ---
 

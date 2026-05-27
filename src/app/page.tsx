@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import CountdownTimer from "@/components/countdown/CountdownTimer";
 import EventDetails from "@/components/details/EventDetails";
 import GuestbookSection from "@/components/guestbook/GuestbookSection";
 import HeroFallback from "@/components/hero/HeroFallback";
@@ -10,6 +11,7 @@ export default function Home() {
       <Suspense fallback={<HeroFallback />}>
         <HeroSection />
       </Suspense>
+      <CountdownTimer />
       <EventDetails />
       <Suspense fallback={null}>
         <GuestbookSection />
