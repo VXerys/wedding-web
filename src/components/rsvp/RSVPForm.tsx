@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import FormField from "@/components/rsvp/FormField";
-import { useRSVPSubmit } from "@/hooks/useRSVPSubmit";
+import { RSVPSubmitError, useRSVPSubmit } from "@/hooks/useRSVPSubmit";
 import type { AttendanceStatus, FormErrors, RSVPFormData } from "@/types/guestbook";
 import type { GuestbookEntry } from "@/types/guestbook";
 
@@ -84,8 +84,19 @@ export default function RSVPForm({
         message: "",
       });
       setErrors({});
-    } catch {
+    } catch (error) {
       setFormData(snapshot);
+      if (error instanceof RSVPSubmitError) {
+        const errorSuffix = error.code
+          ? ` [${error.code}]`
+          : typeof error.status === "number"
+            ? ` [HTTP ${error.status}]`
+            : "";
+
+        setSubmitError(`${error.message}${errorSuffix}`);
+        return;
+      }
+
       setSubmitError("Gagal mengirim ucapan. Silakan coba lagi.");
     }
   };

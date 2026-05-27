@@ -15,6 +15,7 @@ export default function GuestbookSection() {
     hasMore,
     isLoading,
     isLoadingMore,
+    error,
     addOptimisticEntry,
     confirmEntry,
     removeEntry,
@@ -34,6 +35,7 @@ export default function GuestbookSection() {
         hasMore={hasMore}
         isLoading={isLoading}
         isLoadingMore={isLoadingMore}
+        error={error}
         onLoadMore={loadMore}
       />
     </>

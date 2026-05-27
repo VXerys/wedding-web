@@ -14,7 +14,7 @@ const coverVariants = {
     opacity: 0,
     transition: {
       duration: 0.9,
-      ease: [0.76, 0, 0.24, 1],
+      ease: [0.76, 0, 0.24, 1] as [number, number, number, number],
     },
   },
 };
@@ -53,7 +53,7 @@ export default function CoverEnvelope({ guestName }: CoverEnvelopeProps) {
   };
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       {!isOpened && (
         <motion.div
           className="cover-overlay fixed inset-0 z-50 flex items-center justify-center bg-cream-100"
@@ -63,7 +63,7 @@ export default function CoverEnvelope({ guestName }: CoverEnvelopeProps) {
           onClick={handleOpen}
           onKeyDown={handleKeyDown}
           variants={variants}
-          initial="visible"
+          initial={false}
           animate="visible"
           exit="exit"
         >

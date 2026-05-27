@@ -18,6 +18,7 @@
 8. [Environment Variables](#8-environment-variables)
 9. [Supabase Client Configuration](#9-supabase-client-configuration)
 10. [Deployment Architecture](#10-deployment-architecture)
+11. [Operational Verification Checklist](#11-operational-verification-checklist)
 
 ---
 
@@ -607,3 +608,53 @@ const nextConfig: NextConfig = {
 
 export default nextConfig;
 ```
+
+---
+
+## 11. Operational Verification Checklist
+
+Use this checklist when guestbook insert/select/realtime appears unstable in development or production.
+
+### 11.1 Environment and Runtime
+
+1. Confirm `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are set in `.env.local`.
+2. Restart `next dev` after every env change because `NEXT_PUBLIC_*` values are inlined in the client bundle.
+3. Open browser DevTools and verify RSVP submit request is sent to the correct Supabase project URL.
+
+### 11.2 Database Schema and Policies (Supabase Dashboard)
+
+Run in SQL Editor to verify table columns and policy behavior:
+
+```sql
+SELECT column_name, data_type, is_nullable, column_default
+FROM information_schema.columns
+WHERE table_schema = 'public' AND table_name = 'guestbook'
+ORDER BY ordinal_position;
+
+SELECT policyname, permissive, roles, cmd, qual, with_check
+FROM pg_policies
+WHERE schemaname = 'public' AND tablename = 'guestbook'
+ORDER BY policyname;
+```
+
+Expected result:
+- `attendance` remains constrained to `Hadir`, `Tidak Hadir`, `Ragu`.
+- `anon` can `INSERT` and `SELECT`.
+- `anon` cannot `DELETE`.
+- delete/moderation is executed manually from Supabase dashboard authenticated context.
+
+### 11.3 Realtime Readiness
+
+1. In Supabase dashboard, enable Realtime replication for `public.guestbook` INSERT events.
+2. Open two browser tabs:
+   - Tab A submits RSVP.
+   - Tab B should receive the new row without refresh.
+3. If event arrives but UI duplicates an item, inspect optimistic reconciliation logs in browser console.
+
+### 11.4 Failure Simulation
+
+1. Temporarily disable `anon SELECT` policy and refresh guestbook:
+   - expected: UI shows backend error state (not empty-state only).
+2. Temporarily disable `anon INSERT` policy and submit RSVP:
+   - expected: submit fails with surfaced Supabase message/code.
+3. Restore policies immediately after test.

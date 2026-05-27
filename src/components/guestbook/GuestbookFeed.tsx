@@ -8,6 +8,7 @@ interface GuestbookFeedProps {
   isLoading: boolean;
   hasMore: boolean;
   isLoadingMore: boolean;
+  error: string | null;
   onLoadMore: () => void;
 }
 
@@ -16,6 +17,7 @@ export default function GuestbookFeed({
   isLoading,
   hasMore,
   isLoadingMore,
+  error,
   onLoadMore,
 }: GuestbookFeedProps) {
   return (
@@ -25,6 +27,12 @@ export default function GuestbookFeed({
           Buku Ucapan
         </h2>
 
+        {!isLoading && error && (
+          <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-body-sm text-red-500">
+            {error}
+          </div>
+        )}
+
         {isLoading ? (
           <div className="space-y-3">
             {[...Array(3)].map((_, index) => (
@@ -33,6 +41,10 @@ export default function GuestbookFeed({
                 className="h-24 rounded-2xl bg-white/50 border border-white/30 animate-pulse"
               />
             ))}
+          </div>
+        ) : error && entries.length === 0 ? (
+          <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-center text-body-sm text-red-500">
+            {error}
           </div>
         ) : entries.length === 0 ? (
           <div className="rounded-2xl border border-white/30 bg-white/60 p-6 text-center text-body-sm text-slate-500">

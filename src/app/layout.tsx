@@ -17,7 +17,18 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const resolveSiteUrl = () => {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL;
+  if (!raw) return "http://localhost:3000";
+
+  try {
+    return new URL(raw).toString();
+  } catch {
+    return "http://localhost:3000";
+  }
+};
+
+const siteUrl = resolveSiteUrl();
 const groom = process.env.NEXT_PUBLIC_GROOM_NAME ?? "Ahmad";
 const bride = process.env.NEXT_PUBLIC_BRIDE_NAME ?? "Siti";
 
@@ -40,11 +51,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="id"
-      className={`${cormorant.variable} ${dmSans.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col font-body text-slate-700">
+    <html lang="id" className="h-full" suppressHydrationWarning>
+      <body
+        className={`${cormorant.variable} ${dmSans.variable} min-h-full flex flex-col font-body text-slate-700 antialiased`}
+      >
         {children}
       </body>
     </html>
