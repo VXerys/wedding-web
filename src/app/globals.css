@@ -47,6 +47,14 @@
 }
 
 @layer components {
+  @media (min-width: 768px) {
+    .desktop-bg {
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 90%, rgba(212, 175, 55, 0.04) 0%, transparent 50%);
+    }
+  }
+
   .glass-card {
     background: var(--color-glass-fill);
     backdrop-filter: blur(16px) saturate(180%);

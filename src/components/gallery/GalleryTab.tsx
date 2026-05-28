@@ -1,6 +1,14 @@
-import React from "react";
+"use client";
 
-export default function GalleryTab() {
+import { useMemo } from "react";
+import { useGuestbookFeed } from "@/hooks/useGuestbookFeed";
+import type { GuestbookEntry } from "@/types/guestbook";
+
+interface GalleryTabProps {
+  showFooter?: boolean;
+}
+
+export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
   const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
   const imgBotanical1 = "/images/figma/d540e9f3235a86d6904c5eb0df6518a696ba706e.png";
   const imgBotanical2 = "/images/figma/0075a5a667093bb6693efe3ca1de31736ffe19a9.png";
@@ -10,15 +18,35 @@ export default function GalleryTab() {
   const imgContainer = "/images/figma/68c0a575e0429a3317cb3b9703ca1501cde92e9a.svg";
   const imgContainer1 = "/images/figma/28e90c3f7da422ea4d9d412db4bafb955718abd2.svg";
   const imgIcon = "/images/figma/f0a0985e4ec65be955672ab2b838ad9b600c13e5.svg";
+  const { entries, isLoading, error } = useGuestbookFeed();
+
+  const visibleEntries = useMemo(() => entries.slice(0, 2), [entries]);
+
+  const getRelativeTime = (isoDate: string) => {
+    const timestamp = new Date(isoDate).getTime();
+    if (Number.isNaN(timestamp)) return "";
+    // eslint-disable-next-line react-hooks/purity
+    const diffMs = Date.now() - timestamp;
+    const diffHours = Math.max(1, Math.floor(diffMs / (1000 * 60 * 60)));
+    if (diffHours < 24) return `${diffHours} HOURS AGO`;
+    const diffDays = Math.floor(diffHours / 24);
+    return `${diffDays} DAYS AGO`;
+  };
+
+  const getAttendanceStyle = (attendance: GuestbookEntry["attendance"]) => {
+    if (attendance === "Hadir") {
+      return "bg-[#585e4d] text-white border-transparent";
+    }
+
+    if (attendance === "Ragu") {
+      return "bg-[rgba(212,175,55,0.2)] text-[#d4af37] border-[rgba(212,175,55,0.1)]";
+    }
+
+    return "bg-[rgba(95,95,88,0.15)] text-[#5f5f58] border-[rgba(95,95,88,0.1)]";
+  };
 
   return (
-    <div
-      className="relative w-full min-h-screen flex flex-col items-center overflow-x-hidden"
-      style={{
-        backgroundImage:
-          "linear-gradient(90deg, rgb(253, 252, 249) 0%, rgb(253, 252, 249) 100%), linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%)",
-      }}
-    >
+    <div className="relative w-full flex flex-col items-center overflow-x-hidden">
       {/* Background grid pattern */}
       <div
         className="absolute inset-0 opacity-15 bg-[length:8px_8px] bg-left-top bg-repeat pointer-events-none"
@@ -50,11 +78,15 @@ export default function GalleryTab() {
         </div>
       </div>
 
+      {/* Smooth Transition Masks */}
+      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#FDFCF9] to-transparent pointer-events-none z-15" />
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#FDFCF9] to-transparent pointer-events-none z-15" />
+
       {/* Main Container */}
-      <div className="flex flex-col gap-[63px] items-center w-full max-w-[480px] pb-[139.8px] relative px-6 z-25">
+      <div className="flex flex-col gap-[63px] items-center w-full max-w-[480px] pb-[48px] relative px-6 z-25">
         
         {/* Section: Gallery */}
-        <div className="w-full flex flex-col gap-[37px] items-center pt-[47px] relative">
+        <div className="w-full flex flex-col gap-[37px] items-center pt-[24px] relative">
           
           {/* Header block */}
           <div className="w-full flex flex-col gap-[4.2px] items-center relative">
@@ -151,98 +183,100 @@ export default function GalleryTab() {
             </p>
           </div>
 
-          {/* Mini Feed (Dummy Cards) */}
+          {/* Mini Feed */}
           <div className="w-full flex flex-col gap-[16px] items-stretch relative">
-            
-            {/* Card 1 */}
-            <div className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
-              <div className="w-full flex items-start justify-between">
-                <div className="flex flex-col gap-[3px] items-start">
-                  <h4 className="font-body font-normal text-[14px] text-[#585e4d] leading-[21px]">
-                    Julian & Clara
-                  </h4>
-                  <span className="font-body font-normal text-[9px] text-[rgba(95,95,88,0.5)] tracking-[0.9px] uppercase">
-                    2 HOURS AGO
-                  </span>
+            {isLoading && (
+              <>
+                <div className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
+                  <div className="w-full h-[96px] rounded-[12px] bg-[rgba(95,95,88,0.08)] animate-pulse" />
                 </div>
-                <div className="bg-[#585e4d] flex items-center px-[12px] py-[4px] rounded-full">
-                  <span className="font-body font-normal text-[9px] text-white uppercase tracking-wider">
-                    HADIR
-                  </span>
+                <div className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
+                  <div className="w-full h-[96px] rounded-[12px] bg-[rgba(95,95,88,0.08)] animate-pulse" />
+                </div>
+              </>
+            )}
+
+            {!isLoading && visibleEntries.map((entry) => (
+              <div key={entry.id} className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
+                <div className="w-full flex items-start justify-between">
+                  <div className="flex flex-col gap-[3px] items-start">
+                    <h4 className="font-body font-normal text-[14px] text-[#585e4d] leading-[21px]">
+                      {entry.guest_name}
+                    </h4>
+                    <span className="font-body font-normal text-[9px] text-[rgba(95,95,88,0.5)] tracking-[0.9px] uppercase">
+                      {getRelativeTime(entry.created_at)}
+                    </span>
+                  </div>
+                  <div className={`border border-solid flex items-center px-[13px] py-[5px] rounded-full ${getAttendanceStyle(entry.attendance)}`}>
+                    <span className="font-body font-normal text-[9px] uppercase tracking-wider">
+                      {entry.attendance === "Ragu" ? "TENTATIVE" : entry.attendance.toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+                <div className="w-full font-display font-light italic text-[17px] text-[rgba(95,95,88,0.9)] leading-[27.63px]">
+                  <p>&ldquo;{entry.message}&rdquo;</p>
                 </div>
               </div>
-              <div className="w-full font-display font-light italic text-[17px] text-[rgba(95,95,88,0.9)] leading-[27.63px]">
-                <p>
-                  &ldquo;Wishing you both a lifetime of love and happiness! The ceremony was absolutely breathtaking.&rdquo;
+            ))}
+
+            {!isLoading && visibleEntries.length === 0 && (
+              <div className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
+                <p className="font-body font-normal text-[14px] text-[rgba(95,95,88,0.6)] text-center">
+                  Belum ada ucapan.
                 </p>
               </div>
-            </div>
+            )}
 
-            {/* Card 2 */}
-            <div className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[15.3px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
-              <div className="w-full flex items-start justify-between">
-                <div className="flex flex-col gap-[3px] items-start">
-                  <h4 className="font-body font-normal text-[14px] text-[#585e4d] leading-[21px]">
-                    Auntie Martha
-                  </h4>
-                  <span className="font-body font-normal text-[9px] text-[rgba(95,95,88,0.5)] tracking-[0.9px] uppercase">
-                    5 HOURS AGO
-                  </span>
-                </div>
-                <div className="bg-[rgba(212,175,55,0.2)] border border-[rgba(212,175,55,0.1)] border-solid flex items-center px-[13px] py-[5px] rounded-full">
-                  <span className="font-body font-normal text-[9px] text-[#d4af37] uppercase tracking-wider">
-                    TENTATIVE
-                  </span>
-                </div>
-              </div>
-              <div className="w-full font-display font-light italic text-[17px] text-[rgba(95,95,88,0.9)] leading-[27.63px]">
-                <p>
-                  &ldquo;Sending all my love from afar. Wishing I could be there to see you walk down the aisle.&rdquo;
+            {!isLoading && error && (
+              <div className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
+                <p className="font-body font-normal text-[12px] text-red-500 text-center">
+                  {error}
                 </p>
               </div>
-            </div>
-
+            )}
           </div>
 
         </div>
 
         {/* Footer */}
-        <div className="w-full flex flex-col items-center pb-[128px] pt-px relative">
-          <div className="flex flex-col gap-[23.6px] items-center relative">
-            
-            <p className="font-display font-light italic text-[18px] text-[rgba(95,95,88,0.6)] text-center leading-[29.25px]">
-              With gratitude from the families of
-            </p>
-            <h2 className="font-display font-light italic text-[48px] text-center text-[#585e4d] leading-[48px] tracking-[-1.2px]">
-              Brandon & Meyca
-            </h2>
-            
-            <div className="pt-[16px]">
-              <div className="flex gap-[32px] h-[15px] items-start">
-                <span className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.6)] text-center uppercase tracking-wider cursor-pointer hover:text-[#585e4d] transition-colors">
-                  SAVE DATE
-                </span>
-                <span className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.6)] text-center uppercase tracking-wider cursor-pointer hover:text-[#585e4d] transition-colors">
-                  LOCATION
-                </span>
-                <span className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.6)] text-center uppercase tracking-wider cursor-pointer hover:text-[#585e4d] transition-colors">
-                  REGISTRY
+        {showFooter && (
+          <div className="w-full flex flex-col items-center pb-[128px] pt-px relative">
+            <div className="flex flex-col gap-[23.6px] items-center relative">
+              
+              <p className="font-display font-light italic text-[18px] text-[rgba(95,95,88,0.6)] text-center leading-[29.25px]">
+                With gratitude from the families of
+              </p>
+              <h2 className="font-display font-light italic text-[48px] text-center text-[#585e4d] leading-[48px] tracking-[-1.2px]">
+                Brandon & Meyca
+              </h2>
+              
+              <div className="pt-[16px]">
+                <div className="flex gap-[32px] h-[15px] items-start">
+                  <span className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.6)] text-center uppercase tracking-wider cursor-pointer hover:text-[#585e4d] transition-colors">
+                    SAVE DATE
+                  </span>
+                  <span className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.6)] text-center uppercase tracking-wider cursor-pointer hover:text-[#585e4d] transition-colors">
+                    LOCATION
+                  </span>
+                  <span className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.6)] text-center uppercase tracking-wider cursor-pointer hover:text-[#585e4d] transition-colors">
+                    REGISTRY
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-[11.8px] items-center pt-[24px]">
+                <div className="bg-[rgba(212,175,55,0.3)] h-[1px] w-[40px]" />
+                <div className="w-[18px] h-[16px] relative flex items-center justify-center">
+                  <img alt="Heart" className="w-full h-full object-contain" src={imgIcon} />
+                </div>
+                <span className="font-body font-normal text-[9px] text-[rgba(95,95,88,0.4)] text-center tracking-[4.5px] uppercase">
+                  THANK YOU — 2024
                 </span>
               </div>
-            </div>
 
-            <div className="flex flex-col gap-[11.8px] items-center pt-[24px]">
-              <div className="bg-[rgba(212,175,55,0.3)] h-[1px] w-[40px]" />
-              <div className="w-[18px] h-[16px] relative flex items-center justify-center">
-                <img alt="Heart" className="w-full h-full object-contain" src={imgIcon} />
-              </div>
-              <span className="font-body font-normal text-[9px] text-[rgba(95,95,88,0.4)] text-center tracking-[4.5px] uppercase">
-                THANK YOU — 2024
-              </span>
             </div>
-
           </div>
-        </div>
+        )}
 
       </div>
     </div>

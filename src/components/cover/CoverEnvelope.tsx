@@ -64,7 +64,7 @@ export default function CoverEnvelope({ guestName }: CoverEnvelopeProps) {
     <AnimatePresence mode="wait" initial={false}>
       {!isOpened && (
         <motion.div
-          className="cover-overlay fixed inset-0 z-50 flex items-center justify-center bg-cream-100"
+          className="cover-overlay fixed inset-0 z-50 md:left-1/2 md:-translate-x-1/2 md:w-[430px] flex items-center justify-center bg-cream-100"
           role="button"
           tabIndex={0}
           aria-label="Ketuk untuk membuka undangan"

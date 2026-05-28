@@ -152,8 +152,9 @@ export const useGuestbookFeed = () => {
   }, []);
 
   useEffect(() => {
+    const channelId = `guestbook-feed-${Math.random().toString(36).substring(2, 10)}`;
     const channel = supabase
-      .channel("public:guestbook")
+      .channel(channelId)
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "guestbook" },

@@ -1,8 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
-import FormField from "@/components/rsvp/FormField";
+import { useState } from "react";
 import { RSVPSubmitError, useRSVPSubmit } from "@/hooks/useRSVPSubmit";
 import type { AttendanceStatus, FormErrors, RSVPFormData } from "@/types/guestbook";
 import type { GuestbookEntry } from "@/types/guestbook";
@@ -14,10 +12,7 @@ interface RSVPFormProps {
   removeEntry: (tempId: string) => void;
 }
 
-const inputBase =
-  "w-full px-4 py-3 bg-white/50 backdrop-blur-sm border border-white/40 rounded-xl font-body text-body-md text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-gold-400/50 focus:border-gold-400/60 transition-all duration-200";
-
-const inputError = "border-red-300/60 focus:ring-red-300/50 focus:border-red-300";
+const defaultMessage = "Konfirmasi kehadiran.";
 
 export default function RSVPForm({
   guestName,
@@ -39,12 +34,7 @@ export default function RSVPForm({
     removeEntry,
   });
 
-  const buttonLabel = useMemo(() => {
-    if (submitState === "loading") return "Mengirim...";
-    if (submitState === "success") return "Terkirim!";
-    if (submitState === "error") return "Gagal, Coba Lagi";
-    return "Kirim Ucapan";
-  }, [submitState]);
+  const imgContainer = "/images/figma/d745edfa5a6618dd70dff20b2a6531d6e9e0306d.svg";
 
   const validate = () => {
     const nextErrors: FormErrors = {};
@@ -53,9 +43,6 @@ export default function RSVPForm({
     }
     if (!formData.attendance) {
       nextErrors.attendance = "Pilih status kehadiran Anda.";
-    }
-    if (!formData.message.trim()) {
-      nextErrors.message = "Tulis ucapan atau doa singkat.";
     }
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
@@ -75,7 +62,7 @@ export default function RSVPForm({
       await submitRSVP({
         guest_name: formData.name.trim(),
         attendance,
-        message: formData.message.trim(),
+        message: formData.message.trim() || defaultMessage,
       });
 
       setFormData({
@@ -97,96 +84,150 @@ export default function RSVPForm({
         return;
       }
 
-      setSubmitError("Gagal mengirim ucapan. Silakan coba lagi.");
+      setSubmitError("Gagal mengirim RSVP. Silakan coba lagi.");
     }
   };
 
   return (
-    <section className="pt-12 pb-16" id="rsvp">
-      <div className="max-w-md mx-auto px-4 sm:px-6">
-        <h2 className="font-display font-light text-display-lg italic text-slate-700 text-center mb-6">
-          RSVP & Ucapan
+    <section className="w-full flex flex-col gap-[40px] items-center pt-[31px]" id="rsvp">
+      <div className="w-full flex flex-col gap-[4.2px] items-center relative">
+        <span className="font-body font-semibold text-[13px] text-center tracking-[1.56px] text-[#5f5f58] uppercase">
+          RSVP
+        </span>
+        <h2 className="font-display font-light italic text-[42px] text-center text-[#585e4d] leading-[42px] tracking-[-0.42px]">
+          Konfirmasi Kehadiran
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <FormField id="guest-name" label="Nama" error={errors.name}>
-            <input
-              id="guest-name"
-              className={`${inputBase} ${errors.name ? inputError : ""}`}
-              placeholder="Nama lengkap"
-              value={formData.name}
-              onChange={(event) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  name: event.target.value,
-                }))
-              }
-              aria-describedby={errors.name ? "guest-name-error" : undefined}
-            />
-          </FormField>
+        <div className="flex gap-[12px] items-center justify-center pt-[11.8px] w-full">
+          <div className="bg-[rgba(201,168,76,0.3)] h-[0.5px] w-[48px]" />
+          <div className="w-[11.397px] h-[11.397px] relative flex items-center justify-center">
+            <img alt="" className="w-full h-full object-contain" src={imgContainer} />
+          </div>
+          <div className="bg-[rgba(201,168,76,0.3)] h-[0.5px] w-[48px]" />
+        </div>
+        <p className="font-body italic text-[16px] text-center text-[rgba(95,95,88,0.7)] leading-[24px] pt-[11.8px] max-w-[320px]">
+          Kami sangat menantikan kehadiran Bapak/Ibu/Saudara/i
+        </p>
+      </div>
 
-          <FormField
-            id="attendance"
-            label="Kehadiran"
-            error={errors.attendance}
-          >
-            <select
-              id="attendance"
-              className={`${inputBase} ${errors.attendance ? inputError : ""}`}
-              value={formData.attendance}
-              onChange={(event) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  attendance: event.target.value as RSVPFormData["attendance"],
-                }))
-              }
-              aria-describedby={errors.attendance ? "attendance-error" : undefined}
-            >
-              <option value="">Pilih kehadiran</option>
-              <option value="Hadir">Hadir</option>
-              <option value="Tidak Hadir">Tidak Hadir</option>
-              <option value="Ragu">Ragu-ragu</option>
-            </select>
-          </FormField>
-
-          <FormField id="message" label="Ucapan & Doa" error={errors.message}>
-            <textarea
-              id="message"
-              className={`${inputBase} min-h-[120px] resize-none ${
-                errors.message ? inputError : ""
-              }`}
-              placeholder="Tulis ucapan singkat..."
-              value={formData.message}
-              onChange={(event) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  message: event.target.value,
-                }))
-              }
-              aria-describedby={errors.message ? "message-error" : undefined}
-            />
-          </FormField>
-
-          {submitError && (
-            <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-body-sm text-red-500">
-              {submitError}
+      <div className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col items-center pb-[49px] pt-[32px] px-[33px] rounded-[16px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] w-full">
+        {submitState === "success" ? (
+          <div className="w-full flex flex-col items-center py-8 text-center">
+            <span className="text-3xl mb-2">??</span>
+            <h4 className="font-body font-semibold text-[16px] text-[#585e4d] mb-1">
+              Terima kasih!
+            </h4>
+            <p className="font-body italic text-[13px] text-[rgba(95,95,88,0.7)]">
+              Konfirmasi kehadiran Anda telah kami simpan.
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="w-full flex flex-col gap-[23px] items-stretch">
+            <div className="w-full flex flex-col gap-[8px] items-start">
+              <label htmlFor="rsvp-name" className="font-body font-medium text-[11px] tracking-[1.32px] text-[#c9a84c]">
+                NAMA LENGKAP
+              </label>
+              <input
+                id="rsvp-name"
+                type="text"
+                required
+                value={formData.name}
+                onChange={(event) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    name: event.target.value,
+                  }))
+                }
+                placeholder="Masukkan nama Anda"
+                className={`w-full bg-[rgba(255,255,255,0.6)] border border-solid rounded-[48px] px-[17px] py-[19px] font-body text-[13px] text-[#1a1d14] placeholder-[rgba(95,95,88,0.3)] focus:outline-none focus:border-[#c9a84c] transition-colors ${
+                  errors.name ? "border-red-300" : "border-[rgba(201,168,76,0.1)]"
+                }`}
+                aria-describedby={errors.name ? "rsvp-name-error" : undefined}
+              />
+              {errors.name && (
+                <p id="rsvp-name-error" className="font-body text-[11px] text-red-500">
+                  {errors.name}
+                </p>
+              )}
             </div>
-          )}
 
-          <motion.button
-            type="submit"
-            className={`w-full h-12 rounded-xl text-white font-medium transition-colors ${
-              submitState === "success"
-                ? "bg-green-500"
-                : submitState === "error"
-                  ? "bg-red-400"
-                  : "bg-gold-400 hover:bg-gold-300"
-            } ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
-            whileTap={{ scale: 0.97 }}
-            disabled={isSubmitting}
-          >
-            {buttonLabel}
-          </motion.button>
-        </form>
+            <div className="w-full flex flex-col gap-[8px] items-start relative">
+              <span className="font-body font-medium text-[11px] tracking-[1.32px] text-[#c9a84c]">
+                KEHADIRAN
+              </span>
+              <div className="w-full grid grid-cols-3 gap-2" role="group" aria-label="Status Kehadiran">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      attendance: "Hadir",
+                    }))
+                  }
+                  className={`py-[14px] rounded-[48px] text-[12px] font-body text-center transition-all duration-300 cursor-pointer border border-solid ${
+                    formData.attendance === "Hadir"
+                      ? "bg-[#585e4d] text-white border-transparent shadow-[0_4px_12px_rgba(88,94,77,0.2)] font-medium"
+                      : "bg-[rgba(255,255,255,0.6)] text-[rgba(95,95,88,0.8)] border-[rgba(201,168,76,0.15)] hover:bg-white"
+                  } ${errors.attendance ? "border-red-300" : ""}`}
+                >
+                  Hadir
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      attendance: "Tidak Hadir",
+                    }))
+                  }
+                  className={`py-[14px] rounded-[48px] text-[12px] font-body text-center transition-all duration-300 cursor-pointer border border-solid ${
+                    formData.attendance === "Tidak Hadir"
+                      ? "bg-[#5f5f58]/20 text-[#5f5f58] border-transparent font-medium"
+                      : "bg-[rgba(255,255,255,0.6)] text-[rgba(95,95,88,0.8)] border-[rgba(201,168,76,0.15)] hover:bg-white"
+                  } ${errors.attendance ? "border-red-300" : ""}`}
+                >
+                  Tidak Hadir
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      attendance: "Ragu",
+                    }))
+                  }
+                  className={`py-[14px] rounded-[48px] text-[12px] font-body text-center transition-all duration-300 cursor-pointer border border-solid ${
+                    formData.attendance === "Ragu"
+                      ? "bg-[rgba(212,175,55,0.2)] text-[#d4af37] border-transparent font-medium"
+                      : "bg-[rgba(255,255,255,0.6)] text-[rgba(95,95,88,0.8)] border-[rgba(201,168,76,0.15)] hover:bg-white"
+                  } ${errors.attendance ? "border-red-300" : ""}`}
+                >
+                  Ragu-ragu
+                </button>
+              </div>
+              {errors.attendance && (
+                <p className="font-body text-[11px] text-red-500 mt-1">
+                  {errors.attendance}
+                </p>
+              )}
+            </div>
+
+            {submitError && (
+              <div className="rounded-[16px] border border-red-200 bg-red-50 px-4 py-3 font-body text-[12px] text-red-500">
+                {submitError}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`bg-[#c9a84c] relative rounded-[9999px] py-[20px] w-full flex items-center justify-center font-body font-medium text-[11px] text-white tracking-[2.2px] shadow-[0px_10px_15px_-3px_rgba(201,168,76,0.2),0px_4px_6px_-4px_rgba(201,168,76,0.2)] hover:bg-[#b5943f] active:scale-[0.98] transition-all ${
+                isSubmitting ? "opacity-70 cursor-not-allowed" : "cursor-pointer"
+              }`}
+            >
+              {isSubmitting ? "MENGIRIM..." : "KONFIRMASI KEHADIRAN"}
+            </button>
+          </form>
+        )}
       </div>
     </section>
   );

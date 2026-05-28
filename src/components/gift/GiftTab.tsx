@@ -2,7 +2,12 @@
 
 import React, { useState } from "react";
 
-export default function GiftTab() {
+interface GiftTabProps {
+  showHeader?: boolean;
+  showFooter?: boolean;
+}
+
+export default function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
@@ -25,13 +30,7 @@ export default function GiftTab() {
   };
 
   return (
-    <div
-      className="relative w-full min-h-screen flex flex-col items-center overflow-x-hidden"
-      style={{
-        backgroundImage:
-          "linear-gradient(90deg, rgb(253, 252, 249) 0%, rgb(253, 252, 249) 100%), linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%)",
-      }}
-    >
+    <div className="relative w-full flex flex-col items-center overflow-x-hidden">
       {/* Background Repeating Grid Pattern */}
       <div
         className="absolute inset-0 opacity-15 bg-[length:8px_8px] bg-left-top bg-repeat pointer-events-none z-3"
@@ -59,21 +58,26 @@ export default function GiftTab() {
         </div>
       </div>
 
+      {/* Smooth Transition Masks */}
+      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#FDFCF9] to-transparent pointer-events-none z-6" />
+
       {/* Header */}
-      <div className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border-b border-solid border-[rgba(201,168,76,0.1)] flex h-[64px] items-center justify-between px-6 relative w-full z-10">
-        <div className="w-[13.3px] h-[8.7px] relative cursor-pointer hover:opacity-75 transition-opacity">
-          <img alt="Menu" className="w-full h-full object-contain" src={imgHamburger} />
+      {showHeader && (
+        <div className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border-b border-solid border-[rgba(201,168,76,0.1)] flex h-[64px] items-center justify-between px-6 relative w-full z-10">
+          <div className="w-[13.3px] h-[8.7px] relative cursor-pointer hover:opacity-75 transition-opacity">
+            <img alt="Menu" className="w-full h-full object-contain" src={imgHamburger} />
+          </div>
+          <div className="absolute left-1/2 -translate-x-1/2">
+            <h1 className="font-display font-light italic text-[24px] tracking-[-0.6px] text-[#1a1d14]">
+              A & B
+            </h1>
+          </div>
+          <div className="w-4" /> {/* Spacer */}
         </div>
-        <div className="absolute left-1/2 -translate-x-1/2">
-          <h1 className="font-display font-light italic text-[24px] tracking-[-0.6px] text-[#1a1d14]">
-            A & B
-          </h1>
-        </div>
-        <div className="w-4" /> {/* Spacer */}
-      </div>
+      )}
 
       {/* Main Content */}
-      <div className="flex flex-col items-center w-full max-w-[480px] pt-[48px] pb-[40px] px-6 relative z-7">
+      <div className="flex flex-col items-center w-full max-w-[480px] pt-[32px] pb-[40px] px-6 relative z-7">
         
         {/* Section Header */}
         <div className="w-full flex flex-col gap-[16px] items-center mb-[40px]">
@@ -314,38 +318,40 @@ export default function GiftTab() {
       </div>
 
       {/* Footer */}
-      <div className="relative w-full bg-[#fdfcf9] flex flex-col items-center px-6 py-[64px] z-6 overflow-hidden border-t border-[rgba(201,168,76,0.1)]">
-        {/* Background Footer Leaf Illustration */}
-        <div className="absolute inset-0 opacity-3 pointer-events-none flex items-center justify-center">
-          <img
-            alt=""
-            className="w-full h-full object-cover max-w-none mix-blend-saturation scale-110"
-            src={imgFooterLeaf}
-          />
-        </div>
-
-        <div className="flex flex-col items-center pt-[32px] relative z-10 w-full">
-          <h2 className="font-display font-light italic text-[36px] text-center text-[#1a1d14] leading-[40px] mb-8">
-            A & B
-          </h2>
-          
-          <div className="flex gap-[32px] justify-center items-center mb-12">
-            <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase cursor-pointer hover:text-[#1a1d14] transition-colors">
-              SAVE THE DATE
-            </span>
-            <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase cursor-pointer hover:text-[#1a1d14] transition-colors">
-              LOCATION
-            </span>
-            <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase cursor-pointer hover:text-[#1a1d14] transition-colors">
-              GIFT REGISTRY
-            </span>
+      {showFooter && (
+        <div className="relative w-full flex flex-col items-center px-6 py-[64px] z-6 overflow-hidden border-t border-[rgba(201,168,76,0.1)]">
+          {/* Background Footer Leaf Illustration */}
+          <div className="absolute inset-0 opacity-3 pointer-events-none flex items-center justify-center">
+            <img
+              alt=""
+              className="w-full h-full object-cover max-w-none mix-blend-saturation scale-110"
+              src={imgFooterLeaf}
+            />
           </div>
 
-          <span className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.5)] tracking-[2px] uppercase text-center">
-            WITH LOVE, BRANDON & MEYCA — 2024
-          </span>
+          <div className="flex flex-col items-center pt-[32px] relative z-10 w-full">
+            <h2 className="font-display font-light italic text-[36px] text-center text-[#1a1d14] leading-[40px] mb-8">
+              A & B
+            </h2>
+            
+            <div className="flex gap-[32px] justify-center items-center mb-12">
+              <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase cursor-pointer hover:text-[#1a1d14] transition-colors">
+                SAVE THE DATE
+              </span>
+              <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase cursor-pointer hover:text-[#1a1d14] transition-colors">
+                LOCATION
+              </span>
+              <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase cursor-pointer hover:text-[#1a1d14] transition-colors">
+                GIFT REGISTRY
+              </span>
+            </div>
+
+            <span className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.5)] tracking-[2px] uppercase text-center">
+              WITH LOVE, BRANDON & MEYCA — 2024
+            </span>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

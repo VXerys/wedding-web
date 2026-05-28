@@ -5,7 +5,11 @@ import { useSearchParams } from "next/navigation";
 import { decodeGuestName } from "@/lib/utils";
 import CountdownTimer from "@/components/countdown/CountdownTimer";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  showFooter?: boolean;
+}
+
+export default function HeroSection({ showFooter = true }: HeroSectionProps) {
   const searchParams = useSearchParams();
   const guestName = decodeGuestName(searchParams.get("to") ?? "Tamu Undangan");
   const coupleRef = useRef<HTMLDivElement>(null);
@@ -22,7 +26,7 @@ export default function HeroSection() {
   const imgBotanicalSketchBottom = "/images/figma/botanical_sketch_bottom.png";
 
   return (
-    <div className="relative w-full min-h-screen bg-[#FDFCF9] text-[#1a1d14] font-body overflow-hidden">
+    <div className="relative w-full min-h-screen text-[#1a1d14] font-body overflow-hidden">
       {/* Styles Injection */}
       <style dangerouslySetInnerHTML={{ __html: `
         .paper-texture {
@@ -86,6 +90,8 @@ export default function HeroSection() {
         <div className="absolute bottom-1/3 left-2 w-24 h-24 opacity-[0.07] -rotate-45">
           <img alt="" className="w-full h-full object-contain" src={imgBotanicalSketchBottom} />
         </div>
+        {/* Bottom transition mask to blend with the next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#FDFCF9] to-transparent z-10" />
       </div>
 
       {/* Section 1: Hero Invitation */}
@@ -161,7 +167,7 @@ export default function HeroSection() {
       </div>
 
       {/* Section 2: The Happy Couple */}
-      <section ref={coupleRef} className="relative px-[24px] z-10 flex flex-col items-center py-10">
+      <section ref={coupleRef} className="relative px-[24px] z-10 flex flex-col items-center pt-10 pb-4">
         <p className="font-display text-[20px] text-[#5f5f58]/70 italic text-center mb-16 max-w-[320px] font-light leading-relaxed">
           &ldquo;With hearts full of joy, we invite you to share in the beginning of our new chapter together.&rdquo;
         </p>
@@ -202,7 +208,7 @@ export default function HeroSection() {
         </div>
         
         {/* Meyca Profile */}
-        <div className="flex flex-col items-center mb-20 w-full">
+        <div className="flex flex-col items-center mb-8 w-full">
           <div className="relative mb-8">
             {/* Frame Decoration */}
             <div className="absolute -bottom-6 -right-6 w-24 h-24 opacity-20 scale-x-[-1] pointer-events-none">
@@ -238,26 +244,28 @@ export default function HeroSection() {
       </section>
 
       {/* Footer / Closing */}
-      <footer className="relative min-h-[400px] flex flex-col items-center justify-center text-center px-[24px] pb-32 z-10">
-        {/* Ethereal Close Background */}
-        <div className="absolute inset-0 grayscale opacity-[0.02] pointer-events-none overflow-hidden">
-          <img alt="faded temple" className="w-full h-full object-cover scale-150" src={imgFadedTempleFooter} />
-        </div>
-        <div className="relative z-10 flex flex-col items-center gap-6">
-          <p className="font-display text-[20px] text-[#5f5f58]/60 italic max-w-[280px] font-light leading-relaxed">
-            With gratitude from the families of
-          </p>
-          <h2 className="font-display text-[48px] text-[#585e4d] italic font-light leading-none tracking-[-1.2px]">Brandon &amp; Meyca</h2>
-          <div className="flex flex-col items-center gap-4 pt-8">
-            <div className="w-10 h-[1px] bg-[#D4AF37]/30"></div>
-            {/* Heart Icon SVG */}
-            <svg className="w-7 h-7 text-[#D4AF37]" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-            </svg>
-            <span className="font-body text-[10px] tracking-[0.5em] text-[#5f5f58]/40 uppercase font-medium">Thank You</span>
+      {showFooter && (
+        <footer className="relative min-h-[400px] flex flex-col items-center justify-center text-center px-[24px] pb-32 z-10">
+          {/* Ethereal Close Background */}
+          <div className="absolute inset-0 grayscale opacity-[0.02] pointer-events-none overflow-hidden">
+            <img alt="faded temple" className="w-full h-full object-cover scale-150" src={imgFadedTempleFooter} />
           </div>
-        </div>
-      </footer>
+          <div className="relative z-10 flex flex-col items-center gap-6">
+            <p className="font-display text-[20px] text-[#5f5f58]/60 italic max-w-[280px] font-light leading-relaxed">
+              With gratitude from the families of
+            </p>
+            <h2 className="font-display text-[48px] text-[#585e4d] italic font-light leading-none tracking-[-1.2px]">Brandon &amp; Meyca</h2>
+            <div className="flex flex-col items-center gap-4 pt-8">
+              <div className="w-10 h-[1px] bg-[#D4AF37]/30"></div>
+              {/* Heart Icon SVG */}
+              <svg className="w-7 h-7 text-[#D4AF37]" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+              <span className="font-body text-[10px] tracking-[0.5em] text-[#5f5f58]/40 uppercase font-medium">Thank You</span>
+            </div>
+          </div>
+        </footer>
+      )}
     </div>
   );
 }
