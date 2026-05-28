@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   fadeIn,
@@ -11,6 +12,7 @@ import {
   slideLeft,
   slideRight,
   cardRise,
+  sectionViewport,
 } from "@/lib/motionVariants";
 
 interface GiftTabProps {
@@ -20,6 +22,7 @@ interface GiftTabProps {
 
 export default function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [canHover, setCanHover] = useState(false);
 
   const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
   const imgBotanical1 = "/images/figma/d540e9f3235a86d6904c5eb0df6518a696ba706e.png";
@@ -31,6 +34,16 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
   const imgGiftBoxIcon = "/images/figma/a67be60163fb2bf6ebdb1714f85f57a4de0e44d9.svg";
   const imgMapPinIcon = "/images/figma/cca2eb24a5239f24fdb67d5c4180683dbb6f8aff.svg";
   const imgHamburger = "/images/figma/531faefa967f7d215c032575637015a00825ce90.svg";
+
+  useEffect(() => {
+    const hoverQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const updateHoverCapability = () => setCanHover(hoverQuery.matches);
+
+    updateHoverCapability();
+    hoverQuery.addEventListener("change", updateHoverCapability);
+
+    return () => hoverQuery.removeEventListener("change", updateHoverCapability);
+  }, []);
 
   const handleCopy = (id: string, text: string) => {
     navigator.clipboard.writeText(text);
@@ -56,7 +69,7 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={sectionViewport}
         variants={fadeIn}
         className="absolute right-[4.1px] w-[151.8px] h-[151.8px] top-[28.09px] flex items-center justify-center pointer-events-none z-4"
       >
@@ -68,7 +81,7 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={sectionViewport}
         variants={fadeIn}
         className="absolute bottom-[826.05px] w-[158px] h-[158px] left-[-15.2px] flex items-center justify-center pointer-events-none z-5"
       >
@@ -106,7 +119,7 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={sectionViewport}
           variants={staggerContainer}
           className="w-full flex flex-col gap-[16px] items-center mb-[40px]"
         >
@@ -132,7 +145,7 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={sectionViewport}
           variants={fadeIn}
           className="w-full text-center px-4 mb-[48px]"
         >
@@ -151,9 +164,9 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={sectionViewport}
             variants={slideRight} // Slides from left
-            whileHover={{ scale: 1.02, rotateY: 8, rotateX: -4, transition: { duration: 0.3 } }}
+            whileHover={canHover ? { scale: 1.02, rotateY: 8, rotateX: -4, transition: { duration: 0.3 } } : undefined}
             className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[24px] sm:p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
           >
             {/* The physical BSI Card (Embedded and scaled down) */}
@@ -288,9 +301,9 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={sectionViewport}
             variants={slideLeft} // Slides from right
-            whileHover={{ scale: 1.02, rotateY: -8, rotateX: -4, transition: { duration: 0.3 } }}
+            whileHover={canHover ? { scale: 1.02, rotateY: -8, rotateX: -4, transition: { duration: 0.3 } } : undefined}
             className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
           >
             <div className="w-full flex justify-start mb-6">
@@ -335,7 +348,7 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={sectionViewport}
           variants={scaleIn} // Scales in
           className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col gap-[16px] items-center p-[41px] rounded-tl-[140px] rounded-tr-[140px] rounded-bl-[16px] rounded-br-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full mb-8"
         >
@@ -376,7 +389,7 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={sectionViewport}
           variants={fadeIn}
           className="w-full text-center py-8 mb-12"
         >
@@ -392,17 +405,20 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
         <div className="relative w-full flex flex-col items-center px-6 py-[64px] z-6 overflow-hidden border-t border-[rgba(201,168,76,0.1)]">
           {/* Background Footer Leaf Illustration */}
           <div className="absolute inset-0 opacity-3 pointer-events-none flex items-center justify-center">
-            <img
+            <Image
               alt=""
               className="w-full h-full object-cover max-w-none mix-blend-saturation scale-110"
               src={imgFooterLeaf}
+              width={430}
+              height={430}
+              sizes="430px"
             />
           </div>
 
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={sectionViewport}
             variants={staggerContainer}
             className="flex flex-col items-center pt-[32px] relative z-10 w-full"
           >
@@ -440,4 +456,3 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
     </div>
   );
 }
-

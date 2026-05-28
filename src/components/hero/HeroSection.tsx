@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import CountdownTimer from "@/components/countdown/CountdownTimer";
@@ -12,6 +13,7 @@ import {
   scaleIn,
   lineExpand,
   labelFade,
+  sectionViewport,
 } from "@/lib/motionVariants";
 
 interface HeroSectionProps {
@@ -247,12 +249,16 @@ export default function HeroSection({
                 className="pointer-events-none absolute -inset-y-32 -left-[150%] w-[150%] rotate-45 bg-gradient-to-r from-transparent via-white/50 to-transparent blur-md"
                 initial={{ x: "-100%" }}
                 animate={
-                  isOpening
+                  isOpened
+                    ? { opacity: 0 }
+                    : isOpening
                     ? { x: ["-100%", "200%"], opacity: [0, 1, 0] }
                     : { x: ["-100%", "200%"] }
                 }
                 transition={
-                  isOpening
+                  isOpened
+                    ? { duration: 0.35 }
+                    : isOpening
                     ? { duration: 0.85, ease: [0.25, 0.46, 0.45, 0.94] }
                     : { duration: 4.5, repeat: Infinity, ease: "linear", repeatDelay: 1 }
                 }
@@ -262,7 +268,11 @@ export default function HeroSection({
               <motion.div
                 className="pointer-events-none absolute -inset-0 rounded-[26px] border border-white/40"
                 animate={isOpening || isOpened ? { opacity: 0 } : { opacity: [0, 0.4, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                transition={
+                  isOpening || isOpened
+                    ? { duration: 0.35 }
+                    : { duration: 3, repeat: Infinity, ease: "easeInOut" }
+                }
               />
               {[
                 "left-[18%] top-[28%]",
@@ -331,7 +341,14 @@ export default function HeroSection({
           </div>
 
           <div className="absolute bottom-4 w-full h-1/5 opacity-10 flex justify-center grayscale pointer-events-none">
-            <img alt="temple illustration" className="w-full h-full object-contain object-bottom scale-110" src={imgTempleIllustration} />
+            <Image
+              alt="temple illustration"
+              className="w-full h-full object-contain object-bottom scale-110"
+              src={imgTempleIllustration}
+              width={486}
+              height={240}
+              sizes="376px"
+            />
           </div>
         </div>
 
@@ -363,7 +380,7 @@ export default function HeroSection({
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={sectionViewport}
         variants={fadeIn}
         className="relative w-full px-[24px] flex items-center justify-center py-10"
       >
@@ -389,7 +406,7 @@ export default function HeroSection({
         <motion.p
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={sectionViewport}
           variants={fadeUp}
           className="font-display text-[20px] text-[#5f5f58]/70 italic text-center mb-16 max-w-[320px] font-light leading-relaxed"
         >
@@ -400,19 +417,33 @@ export default function HeroSection({
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={sectionViewport}
           variants={slideRight}
           className="flex flex-col items-center mb-20 w-full"
         >
           <div className="relative mb-8">
             {/* Frame Decoration */}
             <div className="absolute -top-6 -left-6 w-24 h-24 opacity-20 pointer-events-none">
-              <img alt="foliage" className="w-full h-full object-contain" src={imgBotanicalSketchBottom} />
+              <Image
+                alt="foliage"
+                className="w-full h-full object-contain"
+                src={imgBotanicalSketchBottom}
+                width={96}
+                height={96}
+                sizes="96px"
+              />
             </div>
             <div className="w-52 h-64 rounded-full overflow-hidden border-[4px] border-white shadow-xl relative z-10 double-hairline-border rotate-[-1deg]">
               {/* Outer hairline helper */}
               <div className="absolute inset-[-8px] border border-[rgba(212,175,55,0.15)] rounded-full pointer-events-none" />
-              <img alt="Brandon" className="w-full h-full object-cover" src={imgBrandonProfile} />
+              <Image
+                alt="Brandon"
+                className="w-full h-full object-cover"
+                src={imgBrandonProfile}
+                width={208}
+                height={256}
+                sizes="208px"
+              />
             </div>
           </div>
           
@@ -441,19 +472,33 @@ export default function HeroSection({
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={sectionViewport}
           variants={slideLeft}
           className="flex flex-col items-center mb-8 w-full"
         >
           <div className="relative mb-8">
             {/* Frame Decoration */}
             <div className="absolute -bottom-6 -right-6 w-24 h-24 opacity-20 scale-x-[-1] pointer-events-none">
-              <img alt="foliage" className="w-full h-full object-contain" src={imgBotanicalSketchBottom} />
+              <Image
+                alt="foliage"
+                className="w-full h-full object-contain"
+                src={imgBotanicalSketchBottom}
+                width={96}
+                height={96}
+                sizes="96px"
+              />
             </div>
             <div className="w-52 h-64 rounded-full overflow-hidden border-[4px] border-white shadow-xl relative z-10 double-hairline-border rotate-[1deg]">
               {/* Outer hairline helper */}
               <div className="absolute inset-[-8px] border border-[rgba(212,175,55,0.15)] rounded-full pointer-events-none" />
-              <img alt="Meyca" className="w-full h-full object-cover" src={imgMeycaProfile} />
+              <Image
+                alt="Meyca"
+                className="w-full h-full object-cover"
+                src={imgMeycaProfile}
+                width={208}
+                height={256}
+                sizes="208px"
+              />
             </div>
           </div>
           
@@ -484,12 +529,19 @@ export default function HeroSection({
         <footer className="relative min-h-[400px] flex flex-col items-center justify-center text-center px-[24px] pb-32 z-10">
           {/* Ethereal Close Background */}
           <div className="absolute inset-0 grayscale opacity-[0.02] pointer-events-none overflow-hidden">
-            <img alt="faded temple" className="w-full h-full object-cover scale-150" src={imgFadedTempleFooter} />
+            <Image
+              alt="faded temple"
+              className="w-full h-full object-cover scale-150"
+              src={imgFadedTempleFooter}
+              width={430}
+              height={400}
+              sizes="430px"
+            />
           </div>
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={sectionViewport}
             variants={staggerContainer}
             className="relative z-10 flex flex-col items-center gap-6"
           >
@@ -532,4 +584,3 @@ export default function HeroSection({
     </div>
   );
 }
-

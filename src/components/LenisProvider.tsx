@@ -1,38 +1,71 @@
 "use client";
 
-import { ReactNode, useEffect, useRef } from "react";
+import type { ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 
 interface LenisProviderProps {
   children: ReactNode;
+  enabled?: boolean;
 }
 
-export function LenisProvider({ children }: LenisProviderProps) {
+const LenisContext = createContext<Lenis | null>(null);
+
+export const useLenis = () => useContext(LenisContext);
+
+export function LenisProvider({ children, enabled = true }: LenisProviderProps) {
   const lenisRef = useRef<Lenis | null>(null);
+  const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis smooth scroll
+    if (!enabled) {
+      setLenisInstance(null);
+      return undefined;
+    }
+
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.09,
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1,
-      // Touch multiplier set slightly lower to prevent over-scroll issues on mobile
-      touchMultiplier: 1.5,
+      syncTouch: true,
+      syncTouchLerp: 0.08,
+      touchMultiplier: 1,
+      wheelMultiplier: 0.9,
     });
 
     lenisRef.current = lenis;
+    setLenisInstance(lenis);
 
-    // RAF loop
-    let rafId: number;
+    let rafId: number | null = null;
     const raf = (time: number) => {
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);
     };
 
-    rafId = requestAnimationFrame(raf);
+    const startRaf = () => {
+      if (rafId === null) {
+        rafId = requestAnimationFrame(raf);
+      }
+    };
+
+    const stopRaf = () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopRaf();
+        return;
+      }
+
+      startRaf();
+    };
+
+    startRaf();
 
     // Sync Lenis scroll position with hash links
     const handleHashClick = (e: MouseEvent) => {
@@ -52,13 +85,17 @@ export function LenisProvider({ children }: LenisProviderProps) {
     };
 
     document.addEventListener("click", handleHashClick);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       document.removeEventListener("click", handleHashClick);
-      cancelAnimationFrame(rafId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      stopRaf();
       lenis.destroy();
+      lenisRef.current = null;
+      setLenisInstance(null);
     };
-  }, []);
+  }, [enabled]);
 
-  return <>{children}</>;
+  return <LenisContext.Provider value={lenisInstance}>{children}</LenisContext.Provider>;
 }

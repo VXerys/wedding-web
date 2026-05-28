@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import HeroSection from "@/components/hero/HeroSection";
@@ -7,6 +8,7 @@ import EventDetails from "@/components/details/EventDetails";
 import RSVPForm from "@/components/rsvp/RSVPForm";
 import GalleryTab from "@/components/gallery/GalleryTab";
 import GiftTab from "@/components/gift/GiftTab";
+import { useLenis } from "@/components/LenisProvider";
 import { useGuestbookFeed } from "@/hooks/useGuestbookFeed";
 
 interface InvitationTabsProps {
@@ -15,36 +17,75 @@ interface InvitationTabsProps {
   onOpen: () => void;
 }
 
-export default function InvitationTabs({ guestName, isOpened, onOpen }: InvitationTabsProps) {
-  const {
-    addOptimisticEntry,
-    confirmEntry,
-    removeEntry,
-  } = useGuestbookFeed();
+const sectionContainmentStyle: CSSProperties = {
+  contain: "layout paint",
+  isolation: "isolate",
+};
 
+export default function InvitationTabs({ guestName, isOpened, onOpen }: InvitationTabsProps) {
+  const lenis = useLenis();
   const [showHeader, setShowHeader] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
+  const showHeaderRef = useRef(true);
+  const scrollFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      // Hide header when scrolling down, show when scrolling up
-      if (currentScrollY > 100 && currentScrollY > lastScrollY.current) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
+    if (!isOpened) {
+      lastScrollY.current = 0;
+      showHeaderRef.current = true;
+      setShowHeader(true);
+
+      if (scrollFrameRef.current !== null) {
+        window.cancelAnimationFrame(scrollFrameRef.current);
+        scrollFrameRef.current = null;
       }
-      lastScrollY.current = currentScrollY;
+
+      return undefined;
+    }
+
+    const handleScroll = () => {
+      if (scrollFrameRef.current !== null) {
+        return;
+      }
+
+      scrollFrameRef.current = window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const shouldShowHeader = currentScrollY <= 100 || currentScrollY <= lastScrollY.current;
+
+        if (shouldShowHeader !== showHeaderRef.current) {
+          showHeaderRef.current = shouldShowHeader;
+          setShowHeader(shouldShowHeader);
+        }
+
+        lastScrollY.current = currentScrollY;
+        scrollFrameRef.current = null;
+      });
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+
+      if (scrollFrameRef.current !== null) {
+        window.cancelAnimationFrame(scrollFrameRef.current);
+        scrollFrameRef.current = null;
+      }
+    };
+  }, [isOpened]);
 
   const scrollToSection = (id: string) => {
     setIsMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
+      if (lenis) {
+        lenis.scrollTo(element, {
+          duration: 1.05,
+        });
+        return;
+      }
+
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
@@ -154,23 +195,45 @@ export default function InvitationTabs({ guestName, isOpened, onOpen }: Invitati
             showFooter={false}
           />
         </div>
-        <div id="section-gallery">
-          <GalleryTab showFooter={false} />
-        </div>
-        <div id="section-acara">
-          <EventDetails guestName={guestName} showFooter={false}>
-            <RSVPForm
-              guestName={guestName}
-              addOptimisticEntry={addOptimisticEntry}
-              confirmEntry={confirmEntry}
-              removeEntry={removeEntry}
-            />
-          </EventDetails>
-        </div>
-        <div id="section-gift">
-          <GiftTab showHeader={false} showFooter={true} />
-        </div>
+        {isOpened && <OpenedInvitationSections guestName={guestName} />}
       </div>
     </div>
+  );
+}
+
+function OpenedInvitationSections({ guestName }: { guestName: string }) {
+  const {
+    entries,
+    isLoading,
+    error,
+    addOptimisticEntry,
+    confirmEntry,
+    removeEntry,
+  } = useGuestbookFeed();
+
+  return (
+    <>
+      <div id="section-gallery" style={sectionContainmentStyle}>
+        <GalleryTab
+          showFooter={false}
+          entries={entries}
+          isLoading={isLoading}
+          error={error}
+        />
+      </div>
+      <div id="section-acara" style={sectionContainmentStyle}>
+        <EventDetails guestName={guestName} showFooter={false}>
+          <RSVPForm
+            guestName={guestName}
+            addOptimisticEntry={addOptimisticEntry}
+            confirmEntry={confirmEntry}
+            removeEntry={removeEntry}
+          />
+        </EventDetails>
+      </div>
+      <div id="section-gift" style={sectionContainmentStyle}>
+        <GiftTab showHeader={false} showFooter={true} />
+      </div>
+    </>
   );
 }

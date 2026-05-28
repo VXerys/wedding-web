@@ -41,6 +41,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  html.overflow-hidden,
   body.overflow-hidden {
     overflow: hidden;
   }

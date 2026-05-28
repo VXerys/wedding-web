@@ -9,6 +9,7 @@ import {
   labelFade,
   lineExpand,
   cardRise,
+  sectionViewport,
 } from "@/lib/motionVariants";
 
 interface EventDetailsProps {
@@ -50,7 +51,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={sectionViewport}
         variants={fadeIn}
         className="absolute right-[4.1px] w-[151.8px] h-[151.8px] top-[68.09px] flex items-center justify-center pointer-events-none z-10"
       >
@@ -66,7 +67,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={sectionViewport}
         variants={fadeIn}
         className="absolute bottom-[140.12px] w-[135.7px] h-[135.7px] left-[-11.88px] flex items-center justify-center pointer-events-none z-10"
       >
@@ -90,7 +91,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={sectionViewport}
           variants={staggerContainer}
           className="w-full flex flex-col gap-[4px] items-center relative"
         >
@@ -122,7 +123,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={sectionViewport}
           variants={staggerContainer}
           className="w-full flex flex-col gap-[16px] items-center relative"
         >
@@ -271,7 +272,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={sectionViewport}
             variants={staggerContainer}
             className="w-full flex flex-col items-center pb-[128px] pt-[32px]"
           >
@@ -311,4 +312,3 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
     </div>
   );
 }
-

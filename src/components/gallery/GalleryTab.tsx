@@ -1,7 +1,7 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo } from "react";
-import { useGuestbookFeed } from "@/hooks/useGuestbookFeed";
 import type { GuestbookEntry } from "@/types/guestbook";
 import { motion } from "framer-motion";
 import {
@@ -14,13 +14,22 @@ import {
   cardRise,
   labelFade,
   lineExpand,
+  sectionViewport,
 } from "@/lib/motionVariants";
 
 interface GalleryTabProps {
   showFooter?: boolean;
+  entries: GuestbookEntry[];
+  isLoading: boolean;
+  error: string | null;
 }
 
-export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
+export default function GalleryTab({
+  showFooter = true,
+  entries,
+  isLoading,
+  error,
+}: GalleryTabProps) {
   const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
   const imgBotanical1 = "/images/figma/d540e9f3235a86d6904c5eb0df6518a696ba706e.png";
   const imgBotanical2 = "/images/figma/0075a5a667093bb6693efe3ca1de31736ffe19a9.png";
@@ -30,7 +39,6 @@ export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
   const imgContainer = "/images/figma/68c0a575e0429a3317cb3b9703ca1501cde92e9a.svg";
   const imgContainer1 = "/images/figma/28e90c3f7da422ea4d9d412db4bafb955718abd2.svg";
   const imgIcon = "/images/figma/f0a0985e4ec65be955672ab2b838ad9b600c13e5.svg";
-  const { entries, isLoading, error } = useGuestbookFeed();
 
   const visibleEntries = useMemo(() => entries.slice(0, 2), [entries]);
 
@@ -73,7 +81,7 @@ export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={sectionViewport}
         variants={fadeIn}
         className="absolute right-[4.1px] w-[151.8px] h-[151.8px] top-[68.09px] flex items-center justify-center pointer-events-none z-10"
       >
@@ -89,7 +97,7 @@ export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={sectionViewport}
         variants={fadeIn}
         className="absolute bottom-[140.12px] w-[135.7px] h-[135.7px] left-[-11.88px] flex items-center justify-center pointer-events-none z-10"
       >
@@ -116,7 +124,7 @@ export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={sectionViewport}
             variants={staggerContainer}
             className="w-full flex flex-col gap-[4.2px] items-center relative"
           >
@@ -151,16 +159,19 @@ export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.15 }}
+              viewport={sectionViewport}
               variants={photoMain}
               className="-rotate-1 w-[345.7px] flex justify-center items-center"
             >
               <div className="aspect-[4/5] bg-[rgba(255,255,255,0.4)] flex flex-col items-center justify-center overflow-clip p-[4px] relative rounded-[96px] shadow-[0px_0px_0px_1px_rgba(212,175,55,0.3),0px_0px_0px_4px_rgba(212,175,55,0.08)] w-full">
                 <div className="w-full h-[419.5px] relative rounded-[92.8px] overflow-hidden">
-                  <img
+                  <Image
                     alt="Main Moment"
                     className="absolute h-full left-[-44.29%] max-w-none top-0 w-[188.58%] object-cover"
                     src={imgMainMoment}
+                    width={652}
+                    height={420}
+                    sizes="346px"
                   />
                 </div>
                 {/* Thin internal border */}
@@ -175,16 +186,19 @@ export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
               <motion.div
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.15 }}
+                viewport={sectionViewport}
                 variants={photoLeft}
                 className="rotate-2 w-[149.5px] justify-self-center"
               >
                 <div className="aspect-[3/4] bg-[rgba(255,255,255,0.4)] flex flex-col items-center justify-center overflow-clip p-[4px] relative rounded-[80px] shadow-[0px_0px_0px_1px_rgba(212,175,55,0.3),0px_0px_0px_4px_rgba(212,175,55,0.08)] w-full">
                   <div className="w-full h-[182.6px] relative rounded-[76.8px] overflow-hidden">
-                    <img
+                    <Image
                       alt="Detail Moment 1"
                       className="absolute h-[110.98%] left-0 max-w-none top-[-5.49%] w-full object-cover"
                       src={imgDetailMoment}
+                      width={150}
+                      height={203}
+                      sizes="150px"
                     />
                   </div>
                   <div className="absolute border border-[rgba(212,175,55,0.15)] border-solid inset-[-6px] rounded-[80px] pointer-events-none" />
@@ -195,16 +209,19 @@ export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
               <motion.div
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.15 }}
+                viewport={sectionViewport}
                 variants={photoRight}
                 className="-rotate-2 w-[149.5px] justify-self-center"
               >
                 <div className="aspect-[3/4] bg-[rgba(255,255,255,0.4)] flex flex-col items-center justify-center overflow-clip p-[4px] relative rounded-[80px] shadow-[0px_0px_0px_1px_rgba(212,175,55,0.3),0px_0px_0px_4px_rgba(212,175,55,0.08)] w-full">
                   <div className="w-full h-[182.6px] relative rounded-[76.8px] overflow-hidden">
-                    <img
+                    <Image
                       alt="Detail Moment 2"
                       className="absolute h-full left-[-51.58%] max-w-none top-0 w-[203.15%] object-cover"
                       src={imgDetailMoment1}
+                      width={304}
+                      height={183}
+                      sizes="150px"
                     />
                   </div>
                   <div className="absolute border border-[rgba(212,175,55,0.15)] border-solid inset-[-6px] rounded-[80px] pointer-events-none" />
@@ -224,7 +241,7 @@ export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={sectionViewport}
             variants={staggerContainer}
             className="w-full flex flex-col gap-[4.2px] items-center relative"
           >
@@ -262,7 +279,7 @@ export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
+            viewport={sectionViewport}
             variants={staggerContainer}
             className="w-full flex flex-col gap-[16px] items-stretch relative"
           >
@@ -334,7 +351,7 @@ export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={sectionViewport}
             variants={staggerContainer}
             className="w-full flex flex-col items-center pb-[128px] pt-px relative"
           >
@@ -394,4 +411,3 @@ export default function GalleryTab({ showFooter = true }: GalleryTabProps) {
     </div>
   );
 }
-

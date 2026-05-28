@@ -9,6 +9,7 @@ import {
   labelFade,
   lineExpand,
   scaleIn,
+  sectionViewport,
 } from "@/lib/motionVariants";
 
 /** A single countdown digit box with label */
@@ -48,7 +49,7 @@ export default function CountdownTimer() {
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={sectionViewport}
         variants={staggerContainer}
         className="max-w-md mx-auto px-4 sm:px-6 text-center"
       >
@@ -104,5 +105,4 @@ export default function CountdownTimer() {
     </section>
   );
 }
-
 

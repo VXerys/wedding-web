@@ -14,6 +14,12 @@ const easeOut = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number];
 /** Spring-like overshoot ease for interactive elements */
 const easeSpring = [0.34, 1.56, 0.64, 1] as [number, number, number, number];
 
+export const sectionViewport = {
+  once: true,
+  amount: 0.16,
+  margin: "0px 0px -12% 0px",
+} as const;
+
 // ─── Fade + Translate ─────────────────────────────────────────────────────────
 
 export const fadeUp: Variants = {
@@ -153,10 +159,10 @@ export const textRevealWord: Variants = {
 
 /** Label above heading (e.g. "GALLERY") */
 export const labelFade: Variants = {
-  hidden: { opacity: 0, letterSpacing: "0.3em" },
+  hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
-    letterSpacing: "0.12em",
+    y: 0,
     transition: { duration: 0.7, ease: easeOut },
   },
 };
