@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import InvitationTabs from "@/components/InvitationTabs";
+import InvitationClient from "@/components/InvitationClient";
 import HeroFallback from "@/components/hero/HeroFallback";
 
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
       <div className="desktop-bg min-h-screen w-full bg-cream-100 md:flex md:items-start md:justify-center md:py-0">
         <div className="w-full md:max-w-[430px] md:min-h-screen md:shadow-[0_0_60px_rgba(44,62,80,0.12)] md:relative">
           <Suspense fallback={<HeroFallback />}>
-            <InvitationTabs />
+            <InvitationClient />
           </Suspense>
         </div>
       </div>

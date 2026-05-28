@@ -1,21 +1,21 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import CoverEnvelope from "@/components/cover/CoverEnvelope";
 import HeroSection from "@/components/hero/HeroSection";
 import EventDetails from "@/components/details/EventDetails";
 import RSVPForm from "@/components/rsvp/RSVPForm";
 import GalleryTab from "@/components/gallery/GalleryTab";
 import GiftTab from "@/components/gift/GiftTab";
 import { useGuestbookFeed } from "@/hooks/useGuestbookFeed";
-import { decodeGuestName } from "@/lib/utils";
 
-export default function InvitationTabs() {
-  const searchParams = useSearchParams();
-  const guestName = decodeGuestName(searchParams.get("to"));
+interface InvitationTabsProps {
+  guestName: string;
+  isOpened: boolean;
+  onOpen: () => void;
+}
 
+export default function InvitationTabs({ guestName, isOpened, onOpen }: InvitationTabsProps) {
   const {
     addOptimisticEntry,
     confirmEntry,
@@ -51,46 +51,46 @@ export default function InvitationTabs() {
 
   return (
     <div className="flex-1 flex flex-col w-full relative bg-[#FDFCF9]">
-      <CoverEnvelope guestName={guestName} />
-
       {/* Top Header */}
-      <header
-        className={`fixed top-0 z-40 w-full md:max-w-[430px] md:left-1/2 md:-translate-x-1/2 backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] border-b border-solid border-[rgba(201,168,76,0.1)] flex h-[64px] items-center justify-between px-6 transition-transform duration-300 ${
-          showHeader ? "translate-y-0" : "-translate-y-full"
-        }`}
-      >
-        <div className="w-[20px]" /> {/* Spacer to balance the burger icon on the right */}
-        <div className="absolute left-1/2 -translate-x-1/2">
-          <h1 className="font-display font-light italic text-[24px] tracking-[-0.6px] text-[#1a1d14]">
-            A & B
-          </h1>
-        </div>
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="w-[20px] h-[14px] flex flex-col justify-between items-center relative z-50 cursor-pointer"
-          aria-label="Menu"
+      {isOpened && (
+        <header
+          className={`fixed top-0 z-40 w-full md:max-w-[430px] md:left-1/2 md:-translate-x-1/2 backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] border-b border-solid border-[rgba(201,168,76,0.1)] flex h-[64px] items-center justify-between px-6 transition-transform duration-300 ${
+            showHeader ? "translate-y-0" : "-translate-y-full"
+          }`}
         >
-          <span
-            className={`w-full h-[1.5px] bg-[#585e4d] rounded-full transition-all duration-300 origin-center ${
-              isMenuOpen ? "rotate-45 translate-y-[6.25px]" : ""
-            }`}
-          />
-          <span
-            className={`w-full h-[1.5px] bg-[#585e4d] rounded-full transition-all duration-300 ${
-              isMenuOpen ? "opacity-0" : ""
-            }`}
-          />
-          <span
-            className={`w-full h-[1.5px] bg-[#585e4d] rounded-full transition-all duration-300 origin-center ${
-              isMenuOpen ? "-rotate-45 -translate-y-[6.25px]" : ""
-            }`}
-          />
-        </button>
-      </header>
+          <div className="w-[20px]" /> {/* Spacer to balance the burger icon on the right */}
+          <div className="absolute left-1/2 -translate-x-1/2">
+            <h1 className="font-display font-light italic text-[24px] tracking-[-0.6px] text-[#1a1d14]">
+              A & B
+            </h1>
+          </div>
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="w-[20px] h-[14px] flex flex-col justify-between items-center relative z-50 cursor-pointer"
+            aria-label="Menu"
+          >
+            <span
+              className={`w-full h-[1.5px] bg-[#585e4d] rounded-full transition-all duration-300 origin-center ${
+                isMenuOpen ? "rotate-45 translate-y-[6.25px]" : ""
+              }`}
+            />
+            <span
+              className={`w-full h-[1.5px] bg-[#585e4d] rounded-full transition-all duration-300 ${
+                isMenuOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`w-full h-[1.5px] bg-[#585e4d] rounded-full transition-all duration-300 origin-center ${
+                isMenuOpen ? "-rotate-45 -translate-y-[6.25px]" : ""
+              }`}
+            />
+          </button>
+        </header>
+      )}
 
       {/* Slide-over Menu Overlay */}
       <AnimatePresence>
-        {isMenuOpen && (
+        {isOpened && isMenuOpen && (
           <>
             {/* Backdrop */}
             <motion.div
@@ -145,9 +145,14 @@ export default function InvitationTabs() {
       </AnimatePresence>
 
       {/* Main active tab contents */}
-      <div className="flex-1 flex flex-col w-full pt-[64px]">
+      <div className="flex-1 flex flex-col w-full">
         <div id="section-home">
-          <HeroSection showFooter={false} />
+          <HeroSection
+            guestName={guestName}
+            isOpened={isOpened}
+            onOpen={onOpen}
+            showFooter={false}
+          />
         </div>
         <div id="section-gallery">
           <GalleryTab showFooter={false} />

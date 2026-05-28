@@ -1,6 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  fadeIn,
+  fadeUp,
+  staggerContainer,
+  lineExpand,
+  scaleIn,
+  slideLeft,
+  slideRight,
+  cardRise,
+} from "@/lib/motionVariants";
 
 interface GiftTabProps {
   showHeader?: boolean;
@@ -42,13 +53,25 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
       <div className="absolute bg-[#e2e8df] blur-[30px] bottom-[849.25px] mix-blend-multiply opacity-25 right-[-160px] rounded-full w-[450px] h-[450px] pointer-events-none z-2" />
 
       {/* Botanical Sketches */}
-      <div className="absolute right-[4.1px] w-[151.8px] h-[151.8px] top-[28.09px] flex items-center justify-center pointer-events-none z-4">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        className="absolute right-[4.1px] w-[151.8px] h-[151.8px] top-[28.09px] flex items-center justify-center pointer-events-none z-4"
+      >
         <div className="rotate-12 w-[128px] h-[128px] opacity-10 relative">
           <img alt="" className="absolute left-0 max-w-none w-full h-full top-0 object-contain" src={imgBotanical1} />
         </div>
-      </div>
+      </motion.div>
 
-      <div className="absolute bottom-[826.05px] w-[158px] h-[158px] left-[-15.2px] flex items-center justify-center pointer-events-none z-5">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        className="absolute bottom-[826.05px] w-[158px] h-[158px] left-[-15.2px] flex items-center justify-center pointer-events-none z-5"
+      >
         <div className="-rotate-45 w-[112px] h-[112px] opacity-10 relative">
           <img
             alt=""
@@ -56,7 +79,7 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
             src={imgBotanical2}
           />
         </div>
-      </div>
+      </motion.div>
 
       {/* Smooth Transition Masks */}
       <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#FDFCF9] to-transparent pointer-events-none z-6" />
@@ -80,34 +103,62 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
       <div className="flex flex-col items-center w-full max-w-[480px] pt-[32px] pb-[40px] px-6 relative z-7">
         
         {/* Section Header */}
-        <div className="w-full flex flex-col gap-[16px] items-center mb-[40px]">
-          <h2 className="font-display font-light italic text-[36px] text-center text-[#1a1d14] leading-[40px]">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={staggerContainer}
+          className="w-full flex flex-col gap-[16px] items-center mb-[40px]"
+        >
+          <motion.h2
+            variants={fadeUp}
+            className="font-display font-light italic text-[36px] text-center text-[#1a1d14] leading-[40px]"
+          >
             Wedding Gift
-          </h2>
-          <div className="flex gap-[12px] items-center justify-center w-[228px]">
+          </motion.h2>
+          <motion.div
+            variants={lineExpand}
+            className="flex gap-[12px] items-center justify-center w-[228px]"
+          >
             <div className="bg-gradient-to-r from-transparent to-[#c9a84c] h-[0.5px] flex-1 opacity-30" />
             <div className="w-[12px] h-[12px] relative flex items-center justify-center">
               <img alt="" className="w-full h-full object-contain" src={imgDivider} />
             </div>
             <div className="bg-gradient-to-r from-[#c9a84c] to-transparent h-[0.5px] flex-1 opacity-30" />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Opening Message */}
-        <div className="w-full text-center px-4 mb-[48px]">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeIn}
+          className="w-full text-center px-4 mb-[48px]"
+        >
           <p className="font-display font-light italic text-[20px] text-[#5f5f58] leading-[32.5px]">
             &ldquo;Your presence is our greatest gift, but if you wish to honor us with a gift, your kindness would be deeply appreciated.&rdquo;
           </p>
-        </div>
+        </motion.div>
 
         {/* Bank Cards Container */}
-        <div className="w-full flex flex-col gap-[32px] items-center mb-[48px]">
+        <div 
+          className="w-full flex flex-col gap-[32px] items-center mb-[48px]"
+          style={{ perspective: 1000 }} // For 3D Tilt Hover
+        >
           
           {/* Card 1: Bank BSI */}
-          <div className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[24px] sm:p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            variants={slideRight} // Slides from left
+            whileHover={{ scale: 1.02, rotateY: 8, rotateX: -4, transition: { duration: 0.3 } }}
+            className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[24px] sm:p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
+          >
             {/* The physical BSI Card (Embedded and scaled down) */}
             <div 
-              className="w-full max-w-[280px] relative aspect-[1.58/1] rounded-[12px] overflow-hidden border border-[#1b1c1e] bg-[#9ca0a5] shadow-[0px_8px_16px_rgba(0,0,0,0.12)] flex flex-col justify-between p-[5%] text-white select-none mb-6 transition-all duration-300 hover:shadow-[0px_12px_20px_rgba(0,0,0,0.18)] hover:scale-[1.01]"
+              className="w-full max-w-[280px] relative aspect-[1.58/1] rounded-[12px] overflow-hidden border border-[#1b1c1e] bg-[#9ca0a5] shadow-[0px_8px_16px_rgba(0,0,0,0.12)] flex flex-col justify-between p-[5%] text-white select-none mb-6"
               style={{ containerType: "inline-size" }}
             >
               {/* Wavy Background SVG */}
@@ -218,7 +269,7 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
             {/* Copy Button */}
             <button
               onClick={() => handleCopy("bsi", "7147778888")}
-              className="bg-[rgba(201,168,76,0.05)] border border-solid border-[rgba(201,168,76,0.3)] flex gap-[8px] items-center px-[25px] py-[9px] rounded-full hover:bg-[rgba(201,168,76,0.1)] active:scale-[0.97] transition-all cursor-pointer"
+              className="bg-[rgba(201,168,76,0.05)] border border-solid border-[rgba(201,168,76,0.3)] flex gap-[8px] items-center px-[25px] py-[9px] rounded-full hover:bg-[rgba(201,168,76,0.1)] active:scale-[0.97] transition-all cursor-pointer relative z-10"
             >
               <div className="w-[8.1px] h-[9.9px] relative flex items-center justify-center">
                 {copiedId === "bsi" ? (
@@ -231,10 +282,17 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
                 {copiedId === "bsi" ? "COPIED!" : "COPY NUMBER"}
               </span>
             </button>
-          </div>
+          </motion.div>
 
           {/* Card 2: Bank BCA */}
-          <div className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            variants={slideLeft} // Slides from right
+            whileHover={{ scale: 1.02, rotateY: -8, rotateX: -4, transition: { duration: 0.3 } }}
+            className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
+          >
             <div className="w-full flex justify-start mb-6">
               <div className="h-[24px] w-[75px] relative opacity-50 mix-blend-multiply">
                 <img alt="BCA Logo" className="w-full h-full object-contain" src={imgBcaLogo} />
@@ -256,7 +314,7 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
             {/* Copy Button */}
             <button
               onClick={() => handleCopy("bca", "1234567890")}
-              className="bg-[rgba(201,168,76,0.05)] border border-solid border-[rgba(201,168,76,0.3)] flex gap-[8px] items-center px-[25px] py-[9px] rounded-full hover:bg-[rgba(201,168,76,0.1)] active:scale-[0.97] transition-all cursor-pointer"
+              className="bg-[rgba(201,168,76,0.05)] border border-solid border-[rgba(201,168,76,0.3)] flex gap-[8px] items-center px-[25px] py-[9px] rounded-full hover:bg-[rgba(201,168,76,0.1)] active:scale-[0.97] transition-all cursor-pointer relative z-10"
             >
               <div className="w-[8.1px] h-[9.9px] relative flex items-center justify-center">
                 {copiedId === "bca" ? (
@@ -269,14 +327,20 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
                 {copiedId === "bca" ? "COPIED!" : "COPY NUMBER"}
               </span>
             </button>
-          </div>
+          </motion.div>
 
         </div>
 
         {/* Gift Registry / Physical Address */}
-        <div className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col gap-[16px] items-center p-[41px] rounded-tl-[140px] rounded-tr-[140px] rounded-bl-[16px] rounded-br-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full mb-8">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={scaleIn} // Scales in
+          className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col gap-[16px] items-center p-[41px] rounded-tl-[140px] rounded-tr-[140px] rounded-bl-[16px] rounded-br-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full mb-8"
+        >
           <div className="w-[24px] h-[21.2px] relative flex items-center justify-center">
-            <img alt="Gift Box" className="w-full h-full object-contain" src={imgGiftBoxIcon} />
+            <img alt="Gift Box" className="w-full h-full object-contain animate-bounce-slow" src={imgGiftBoxIcon} />
           </div>
           <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.7)] text-center tracking-[3.3px] uppercase">
             PHYSICAL GIFTS
@@ -306,14 +370,20 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
               VIEW ON MAPS
             </span>
           </a>
-        </div>
+        </motion.div>
 
         {/* Closing Note */}
-        <div className="w-full text-center py-8 mb-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeIn}
+          className="w-full text-center py-8 mb-12"
+        >
           <p className="font-display font-light italic text-[20px] text-[rgba(95,95,88,0.7)] leading-[28px]">
             Terima kasih atas doa dan restu Anda.
           </p>
-        </div>
+        </motion.div>
 
       </div>
 
@@ -329,12 +399,24 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
             />
           </div>
 
-          <div className="flex flex-col items-center pt-[32px] relative z-10 w-full">
-            <h2 className="font-display font-light italic text-[36px] text-center text-[#1a1d14] leading-[40px] mb-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            variants={staggerContainer}
+            className="flex flex-col items-center pt-[32px] relative z-10 w-full"
+          >
+            <motion.h2
+              variants={fadeUp}
+              className="font-display font-light italic text-[36px] text-center text-[#1a1d14] leading-[40px] mb-8"
+            >
               A & B
-            </h2>
+            </motion.h2>
             
-            <div className="flex gap-[32px] justify-center items-center mb-12">
+            <motion.div
+              variants={fadeUp}
+              className="flex gap-[32px] justify-center items-center mb-12"
+            >
               <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase cursor-pointer hover:text-[#1a1d14] transition-colors">
                 SAVE THE DATE
               </span>
@@ -344,14 +426,18 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
               <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase cursor-pointer hover:text-[#1a1d14] transition-colors">
                 GIFT REGISTRY
               </span>
-            </div>
+            </motion.div>
 
-            <span className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.5)] tracking-[2px] uppercase text-center">
+            <motion.span
+              variants={fadeUp}
+              className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.5)] tracking-[2px] uppercase text-center"
+            >
               WITH LOVE, BRANDON & MEYCA — 2024
-            </span>
-          </div>
+            </motion.span>
+          </motion.div>
         </div>
       )}
     </div>
   );
 }
+

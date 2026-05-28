@@ -1,6 +1,15 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { motion } from "framer-motion";
+import {
+  fadeIn,
+  fadeUp,
+  staggerContainer,
+  labelFade,
+  lineExpand,
+  cardRise,
+} from "@/lib/motionVariants";
 
 interface EventDetailsProps {
   guestName?: string;
@@ -38,7 +47,13 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
       <div className="absolute bg-[#e2e8df] blur-[30px] bottom-[574.5px] mix-blend-multiply opacity-25 right-[-160px] rounded-full w-[450px] h-[450px] pointer-events-none" />
 
       {/* Botanical Sketches */}
-      <div className="absolute right-[4.1px] w-[151.8px] h-[151.8px] top-[68.09px] flex items-center justify-center pointer-events-none z-10">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        className="absolute right-[4.1px] w-[151.8px] h-[151.8px] top-[68.09px] flex items-center justify-center pointer-events-none z-10"
+      >
         <div className="rotate-12 w-[128px] h-[128px] opacity-10 relative">
           <img
             alt=""
@@ -46,9 +61,15 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
             src={imgBotanical1}
           />
         </div>
-      </div>
+      </motion.div>
 
-      <div className="absolute bottom-[140.12px] w-[135.7px] h-[135.7px] left-[-11.88px] flex items-center justify-center pointer-events-none z-10">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        className="absolute bottom-[140.12px] w-[135.7px] h-[135.7px] left-[-11.88px] flex items-center justify-center pointer-events-none z-10"
+      >
         <div className="-rotate-45 w-[96px] h-[96px] opacity-7 relative">
           <img
             alt=""
@@ -56,7 +77,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
             src={imgBotanical2}
           />
         </div>
-      </div>
+      </motion.div>
 
       {/* Smooth Transition Masks */}
       <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#FDFCF9] to-transparent pointer-events-none z-15" />
@@ -66,29 +87,53 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
       <div className="flex flex-col gap-[32px] items-center w-full max-w-[480px] pb-[48px] pt-[40px] px-[24px] relative z-25">
         
         {/* Section Intro */}
-        <div className="w-full flex flex-col gap-[4px] items-center relative">
-          <span className="font-body font-semibold text-[13px] text-center tracking-[1.56px] text-[#5f5f58] uppercase">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={staggerContainer}
+          className="w-full flex flex-col gap-[4px] items-center relative"
+        >
+          <motion.span
+            variants={labelFade}
+            className="font-body font-semibold text-[13px] text-center tracking-[1.56px] text-[#5f5f58] uppercase"
+          >
             EVENT DETAILS
-          </span>
-          <h2 className="font-display font-light italic text-[42px] text-center text-[#585e4d] leading-[42px] tracking-[-0.42px]">
+          </motion.span>
+          <motion.h2
+            variants={fadeUp}
+            className="font-display font-light italic text-[42px] text-center text-[#585e4d] leading-[42px] tracking-[-0.42px]"
+          >
             Detail Acara
-          </h2>
-          <div className="flex gap-[12px] items-center justify-center pt-[12px] w-full">
+          </motion.h2>
+          <motion.div
+            variants={lineExpand}
+            className="flex gap-[12px] items-center justify-center pt-[12px] w-full"
+          >
             <div className="bg-[rgba(201,168,76,0.3)] h-[0.5px] w-[48px]" />
             <div className="w-[11.397px] h-[11.397px] relative flex items-center justify-center">
               <img alt="" className="w-full h-full object-contain" src={imgContainer} />
             </div>
             <div className="bg-[rgba(201,168,76,0.3)] h-[0.5px] w-[48px]" />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Event Cards Container */}
-        <div className="w-full flex flex-col gap-[16px] items-center relative">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={staggerContainer}
+          className="w-full flex flex-col gap-[16px] items-center relative"
+        >
           
           {/* Card 1: Akad Nikah */}
-          <div className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-[100px] rounded-tr-[100px] rounded-bl-none rounded-br-none w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)]">
+          <motion.div
+            variants={cardRise}
+            className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-[100px] rounded-tr-[100px] rounded-bl-none rounded-br-none w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)]"
+          >
             <div className="w-full flex flex-col items-center">
-              <div className="w-[27px] h-[24px] relative flex items-center justify-center">
+              <div className="w-[27px] h-[24px] relative flex items-center justify-center animate-bounce-slow">
                 <img alt="Heart icon" className="w-full h-full object-contain" src={imgIcon} />
               </div>
             </div>
@@ -130,16 +175,17 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Interactive Tiles */}
           <div className="grid grid-cols-2 gap-[16px] w-full">
             {/* Tile 1: Buka Maps */}
-            <a
+            <motion.a
+              variants={cardRise}
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center px-[20px] py-[32.5px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] cursor-pointer hover:bg-white/70 transition-all duration-300"
+              className="backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center px-[20px] py-[32.5px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] cursor-pointer hover:bg-white/70 transition-all duration-300 active:scale-95"
             >
               <div className="w-[22.5px] h-[22.5px] relative flex items-center justify-center">
                 <img alt="Compass" className="w-full h-full object-contain" src={imgContainer3} />
@@ -147,10 +193,13 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
               <span className="font-body font-medium text-[11px] text-center tracking-[1.32px] text-[#c9a84c]">
                 BUKA MAPS
               </span>
-            </a>
+            </motion.a>
 
             {/* Tile 2: Dress Code */}
-            <div className="backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center p-[25px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)]">
+            <motion.div
+              variants={cardRise}
+              className="backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center p-[25px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)]"
+            >
               <div className="w-[22.524px] h-[17.5px] relative flex items-center justify-center">
                 <img alt="Hanger" className="w-full h-full object-contain" src={imgContainer4} />
               </div>
@@ -162,13 +211,16 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
                   Earth Tones / Pastel
                 </span>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Card 2: Resepsi Pernikahan */}
-          <div className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-none rounded-tr-none rounded-bl-[100px] rounded-br-[100px] w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)]">
+          <motion.div
+            variants={cardRise}
+            className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-none rounded-tr-none rounded-bl-[100px] rounded-br-[100px] w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)]"
+          >
             <div className="w-full flex flex-col items-center">
-              <div className="w-[27.5px] h-[26px] relative flex items-center justify-center">
+              <div className="w-[27.5px] h-[26px] relative flex items-center justify-center animate-bounce-slow">
                 <img alt="Confetti icon" className="w-full h-full object-contain" src={imgIcon1} />
               </div>
             </div>
@@ -210,34 +262,53 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
         {children}
         {/* Footer */}
         {showFooter && (
-          <div className="w-full flex flex-col items-center pb-[128px] pt-[32px]">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            variants={staggerContainer}
+            className="w-full flex flex-col items-center pb-[128px] pt-[32px]"
+          >
             <div className="flex flex-col gap-[23.6px] items-center">
-              <p className="font-display font-light italic text-[18px] text-[rgba(95,95,88,0.6)] text-center leading-[29.25px]">
+              <motion.p
+                variants={fadeUp}
+                className="font-display font-light italic text-[18px] text-[rgba(95,95,88,0.6)] text-center leading-[29.25px]"
+              >
                 With gratitude from the families of
-              </p>
-              <h2 className="font-display font-light italic text-[48px] text-center text-[#585e4d] leading-[48px] tracking-[-1.2px]">
+              </motion.p>
+              <motion.h2
+                variants={fadeUp}
+                className="font-display font-light italic text-[48px] text-center text-[#585e4d] leading-[48px] tracking-[-1.2px]"
+              >
                 Brandon & Meyca
-              </h2>
-              <div className="flex flex-col gap-[11.8px] items-center pt-[24px]">
-                <div className="bg-[rgba(201,168,76,0.3)] h-[1px] w-[40px]" />
-                <div className="w-[18px] h-[16px] relative flex items-center justify-center">
+              </motion.h2>
+              <motion.div
+                variants={staggerContainer}
+                className="flex flex-col gap-[11.8px] items-center pt-[24px]"
+              >
+                <motion.div variants={lineExpand} className="bg-[rgba(201,168,76,0.3)] h-[1px] w-[40px]" />
+                <motion.div variants={fadeUp} className="w-[18px] h-[16px] relative flex items-center justify-center">
                   <img alt="Heart" className="w-full h-full object-contain" src={imgIcon2} />
-                </div>
-                <span className="font-body font-normal text-[9px] text-[rgba(95,95,88,0.4)] text-center tracking-[4.5px] uppercase">
+                </motion.div>
+                <motion.span
+                  variants={labelFade}
+                  className="font-body font-normal text-[9px] text-[rgba(95,95,88,0.4)] text-center tracking-[4.5px] uppercase"
+                >
                   THANK YOU — 2024
-                </span>
-              </div>
+                </motion.span>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         )}
 
       </div>
     </div>
   );
 }
+

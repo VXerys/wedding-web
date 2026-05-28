@@ -1,6 +1,15 @@
 "use client";
 
 import { useCountdown } from "@/hooks/useCountdown";
+import { motion } from "framer-motion";
+import {
+  fadeIn,
+  fadeUp,
+  staggerContainer,
+  labelFade,
+  lineExpand,
+  scaleIn,
+} from "@/lib/motionVariants";
 
 /** A single countdown digit box with label */
 function CountdownUnit({
@@ -36,42 +45,64 @@ export default function CountdownTimer() {
 
   return (
     <section className="py-12">
-      <div className="max-w-md mx-auto px-4 sm:px-6 text-center">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={staggerContainer}
+        className="max-w-md mx-auto px-4 sm:px-6 text-center"
+      >
         {/* Heading */}
-        <p className="text-label text-gold-400 tracking-[0.32em] uppercase">
+        <motion.p
+          variants={labelFade}
+          className="text-label text-gold-400 tracking-[0.32em] uppercase"
+        >
           Save
-        </p>
-        <h2 className="mt-2 font-display font-light text-display-lg italic text-slate-700">
+        </motion.p>
+        <motion.h2
+          variants={fadeUp}
+          className="mt-2 font-display font-light text-display-lg italic text-slate-700"
+        >
           The Date
-        </h2>
+        </motion.h2>
 
         {/* Ornamental divider */}
-        <div className="flex items-center justify-center gap-3 my-6">
+        <motion.div
+          variants={lineExpand}
+          className="flex items-center justify-center gap-3 my-6"
+        >
           <span className="block h-px w-12 bg-gold-400/40" />
           <span className="text-gold-400 text-body-sm">◆</span>
           <span className="block h-px w-12 bg-gold-400/40" />
-        </div>
+        </motion.div>
 
         {/* Countdown boxes or expired message */}
         {isExpired && isMounted ? (
-          <div className="glass-card px-6 py-8">
+          <motion.div
+            variants={scaleIn}
+            className="glass-card px-6 py-8"
+          >
             <p className="font-display font-light text-display-md italic text-slate-700">
               Terima kasih atas
             </p>
             <p className="font-display font-light text-display-md italic text-slate-700">
               kehadirannya 💕
             </p>
-          </div>
+          </motion.div>
         ) : (
-          <div className="flex items-center justify-center gap-3 sm:gap-4">
+          <motion.div
+            variants={scaleIn}
+            className="flex items-center justify-center gap-3 sm:gap-4"
+          >
             <CountdownUnit value={days} label="Hari" isMounted={isMounted} />
             <CountdownUnit value={hours} label="Jam" isMounted={isMounted} />
             <CountdownUnit value={minutes} label="Menit" isMounted={isMounted} />
             <CountdownUnit value={seconds} label="Detik" isMounted={isMounted} />
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
     </section>
   );
 }
+
 

@@ -48,6 +48,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { LenisProvider } from "@/components/LenisProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -58,7 +60,9 @@ export default function RootLayout({
       <body
         className={`${cormorant.variable} ${dmSans.variable} min-h-full flex flex-col font-body text-slate-700 antialiased`}
       >
-        {children}
+        <LenisProvider>
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );

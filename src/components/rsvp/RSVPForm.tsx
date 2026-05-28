@@ -4,6 +4,14 @@ import { useState } from "react";
 import { RSVPSubmitError, useRSVPSubmit } from "@/hooks/useRSVPSubmit";
 import type { AttendanceStatus, FormErrors, RSVPFormData } from "@/types/guestbook";
 import type { GuestbookEntry } from "@/types/guestbook";
+import { motion } from "framer-motion";
+import {
+  fadeUp,
+  staggerContainer,
+  labelFade,
+  lineExpand,
+  scaleIn,
+} from "@/lib/motionVariants";
 
 interface RSVPFormProps {
   guestName: string;
@@ -90,29 +98,53 @@ export default function RSVPForm({
 
   return (
     <section className="w-full flex flex-col gap-[40px] items-center pt-[31px]" id="rsvp">
-      <div className="w-full flex flex-col gap-[4.2px] items-center relative">
-        <span className="font-body font-semibold text-[13px] text-center tracking-[1.56px] text-[#5f5f58] uppercase">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={staggerContainer}
+        className="w-full flex flex-col gap-[4.2px] items-center relative"
+      >
+        <motion.span
+          variants={labelFade}
+          className="font-body font-semibold text-[13px] text-center tracking-[1.56px] text-[#5f5f58] uppercase"
+        >
           RSVP
-        </span>
-        <h2 className="font-display font-light italic text-[42px] text-center text-[#585e4d] leading-[42px] tracking-[-0.42px]">
+        </motion.span>
+        <motion.h2
+          variants={fadeUp}
+          className="font-display font-light italic text-[42px] text-center text-[#585e4d] leading-[42px] tracking-[-0.42px]"
+        >
           Konfirmasi Kehadiran
-        </h2>
-        <div className="flex gap-[12px] items-center justify-center pt-[11.8px] w-full">
+        </motion.h2>
+        <motion.div
+          variants={lineExpand}
+          className="flex gap-[12px] items-center justify-center pt-[11.8px] w-full"
+        >
           <div className="bg-[rgba(201,168,76,0.3)] h-[0.5px] w-[48px]" />
           <div className="w-[11.397px] h-[11.397px] relative flex items-center justify-center">
             <img alt="" className="w-full h-full object-contain" src={imgContainer} />
           </div>
           <div className="bg-[rgba(201,168,76,0.3)] h-[0.5px] w-[48px]" />
-        </div>
-        <p className="font-body italic text-[16px] text-center text-[rgba(95,95,88,0.7)] leading-[24px] pt-[11.8px] max-w-[320px]">
+        </motion.div>
+        <motion.p
+          variants={fadeUp}
+          className="font-body italic text-[16px] text-center text-[rgba(95,95,88,0.7)] leading-[24px] pt-[11.8px] max-w-[320px]"
+        >
           Kami sangat menantikan kehadiran Bapak/Ibu/Saudara/i
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
-      <div className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col items-center pb-[49px] pt-[32px] px-[33px] rounded-[16px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] w-full">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={scaleIn}
+        className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col items-center pb-[49px] pt-[32px] px-[33px] rounded-[16px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] w-full"
+      >
         {submitState === "success" ? (
           <div className="w-full flex flex-col items-center py-8 text-center">
-            <span className="text-3xl mb-2">??</span>
+            <span className="text-3xl mb-2">🎉</span>
             <h4 className="font-body font-semibold text-[16px] text-[#585e4d] mb-1">
               Terima kasih!
             </h4>
@@ -228,7 +260,7 @@ export default function RSVPForm({
             </button>
           </form>
         )}
-      </div>
+      </motion.div>
     </section>
   );
 }
