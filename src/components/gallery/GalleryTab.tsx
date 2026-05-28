@@ -171,7 +171,7 @@ export default function GalleryTab() {
                   </span>
                 </div>
               </div>
-              <div className="w-full font-display font-normal italic text-[17px] text-[rgba(95,95,88,0.9)] leading-[27.63px]">
+              <div className="w-full font-display font-light italic text-[17px] text-[rgba(95,95,88,0.9)] leading-[27.63px]">
                 <p>
                   &ldquo;Wishing you both a lifetime of love and happiness! The ceremony was absolutely breathtaking.&rdquo;
                 </p>
@@ -195,7 +195,7 @@ export default function GalleryTab() {
                   </span>
                 </div>
               </div>
-              <div className="w-full font-display font-normal italic text-[17px] text-[rgba(95,95,88,0.9)] leading-[27.63px]">
+              <div className="w-full font-display font-light italic text-[17px] text-[rgba(95,95,88,0.9)] leading-[27.63px]">
                 <p>
                   &ldquo;Sending all my love from afar. Wishing I could be there to see you walk down the aisle.&rdquo;
                 </p>

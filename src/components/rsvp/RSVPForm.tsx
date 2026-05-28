@@ -104,7 +104,7 @@ export default function RSVPForm({
   return (
     <section className="pt-12 pb-16" id="rsvp">
       <div className="max-w-md mx-auto px-4 sm:px-6">
-        <h2 className="font-display text-display-lg italic text-slate-700 text-center mb-6">
+        <h2 className="font-display font-light text-display-lg italic text-slate-700 text-center mb-6">
           RSVP & Ucapan
         </h2>
         <form onSubmit={handleSubmit} className="space-y-5">

@@ -29,7 +29,7 @@ export default function AdminPage() {
   return (
     <main className="min-h-screen py-16">
       <div className="max-w-md mx-auto px-4 sm:px-6">
-        <h1 className="font-display text-display-lg italic text-slate-700 text-center">
+        <h1 className="font-display font-light text-display-lg italic text-slate-700 text-center">
           Admin Dashboard
         </h1>
         <p className="mt-2 text-body-sm text-slate-500 text-center">

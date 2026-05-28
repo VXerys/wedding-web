@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@config "../../tailwind.config.ts";
 
 :root {
   --color-bg: #faf9f6;
@@ -66,5 +67,23 @@
 
   .cover-overlay {
     will-change: transform, opacity;
+  }
+
+  /* Cormorant Garamond display text — matches Figma's full OpenType rendering:
+     font-optical-sizing: auto  → adjusts stroke contrast per size (key for Figma fidelity)
+     swsh/calt/liga             → enables calligraphic swashes & ligatures (the ornate & ampersand)
+     text-rendering             → hint browser to prioritise legibility like Figma does */
+  .font-display {
+    font-family: var(--font-display), Georgia, serif;
+    font-style: italic;
+    font-optical-sizing: auto;
+    font-feature-settings: "liga" 1, "clig" 1, "kern" 1, "calt" 1, "swsh" 1, "salt" 1, "ss01" 1;
+    font-variant-ligatures: common-ligatures contextual;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .font-body {
+    font-family: var(--font-body), system-ui, sans-serif;
   }
 }

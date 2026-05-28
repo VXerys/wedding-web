@@ -65,7 +65,7 @@ export default function GiftTab() {
           <img alt="Menu" className="w-full h-full object-contain" src={imgHamburger} />
         </div>
         <div className="absolute left-1/2 -translate-x-1/2">
-          <h1 className="font-display italic text-[24px] tracking-[-0.6px] text-[#1a1d14]">
+          <h1 className="font-display font-light italic text-[24px] tracking-[-0.6px] text-[#1a1d14]">
             A & B
           </h1>
         </div>
@@ -77,7 +77,7 @@ export default function GiftTab() {
         
         {/* Section Header */}
         <div className="w-full flex flex-col gap-[16px] items-center mb-[40px]">
-          <h2 className="font-display italic text-[36px] text-center text-[#1a1d14] leading-[40px]">
+          <h2 className="font-display font-light italic text-[36px] text-center text-[#1a1d14] leading-[40px]">
             Wedding Gift
           </h2>
           <div className="flex gap-[12px] items-center justify-center w-[228px]">
@@ -91,7 +91,7 @@ export default function GiftTab() {
 
         {/* Opening Message */}
         <div className="w-full text-center px-4 mb-[48px]">
-          <p className="font-display italic text-[20px] text-[#5f5f58] leading-[32.5px]">
+          <p className="font-display font-light italic text-[20px] text-[#5f5f58] leading-[32.5px]">
             &ldquo;Your presence is our greatest gift, but if you wish to honor us with a gift, your kindness would be deeply appreciated.&rdquo;
           </p>
         </div>
@@ -241,7 +241,7 @@ export default function GiftTab() {
               ACCOUNT NUMBER
             </span>
             
-            <h3 className="font-display italic text-[30px] text-center text-[#1a1d14] leading-[36px] mb-2">
+            <h3 className="font-display font-light italic text-[30px] text-center text-[#1a1d14] leading-[36px] mb-2">
               1234567890
             </h3>
 
@@ -279,7 +279,7 @@ export default function GiftTab() {
           </span>
           
           <div className="w-full flex flex-col gap-[11.2px] items-center py-2">
-            <h4 className="font-display font-normal text-[24px] text-center text-[#1a1d14] leading-[32px]">
+            <h4 className="font-display font-light italic text-[24px] text-center text-[#1a1d14] leading-[32px]">
               The Penthouse Residences
             </h4>
             <p className="font-body font-normal text-[14px] text-[rgba(95,95,88,0.8)] text-center leading-[22.75px]">
@@ -306,7 +306,7 @@ export default function GiftTab() {
 
         {/* Closing Note */}
         <div className="w-full text-center py-8 mb-12">
-          <p className="font-display italic text-[20px] text-[rgba(95,95,88,0.7)] leading-[28px]">
+          <p className="font-display font-light italic text-[20px] text-[rgba(95,95,88,0.7)] leading-[28px]">
             Terima kasih atas doa dan restu Anda.
           </p>
         </div>
@@ -325,7 +325,7 @@ export default function GiftTab() {
         </div>
 
         <div className="flex flex-col items-center pt-[32px] relative z-10 w-full">
-          <h2 className="font-display italic text-[36px] text-center text-[#1a1d14] leading-[40px] mb-8">
+          <h2 className="font-display font-light italic text-[36px] text-center text-[#1a1d14] leading-[40px] mb-8">
             A & B
           </h2>
           

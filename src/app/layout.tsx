@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 
+/* Cormorant Garamond — Normal & Italic, variable weight 300–700
+   Matches exactly: fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300..700 */
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -9,6 +11,7 @@ const cormorant = Cormorant_Garamond({
   variable: "--font-display",
   display: "swap",
 });
+
 
 const dmSans = DM_Sans({
   subsets: ["latin"],

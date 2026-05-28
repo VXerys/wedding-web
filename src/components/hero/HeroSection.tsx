@@ -247,7 +247,7 @@ export default function HeroSection() {
           <p className="font-display text-[20px] text-[#5f5f58]/60 italic max-w-[280px] font-light leading-relaxed">
             With gratitude from the families of
           </p>
-          <h2 className="font-display text-5xl text-[#585e4d] italic font-light tracking-tight">Brandon &amp; Meyca</h2>
+          <h2 className="font-display text-[48px] text-[#585e4d] italic font-light leading-none tracking-[-1.2px]">Brandon &amp; Meyca</h2>
           <div className="flex flex-col items-center gap-4 pt-8">
             <div className="w-10 h-[1px] bg-[#D4AF37]/30"></div>
             {/* Heart Icon SVG */}

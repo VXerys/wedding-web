@@ -109,7 +109,7 @@ export default function EventDetails({ guestName = "" }: EventDetailsProps) {
             </div>
 
             <div className="w-full flex flex-col items-center">
-              <h3 className="font-display font-normal italic text-[30px] text-center text-[#585e4d] leading-[36px]">
+              <h3 className="font-display font-light italic text-[30px] text-center text-[#585e4d] leading-[36px]">
                 Akad Nikah
               </h3>
             </div>
@@ -156,7 +156,7 @@ export default function EventDetails({ guestName = "" }: EventDetailsProps) {
             </div>
 
             <div className="w-full flex flex-col items-center">
-              <h3 className="font-display font-normal italic text-[30px] text-center text-[#585e4d] leading-[36px]">
+              <h3 className="font-display font-light italic text-[30px] text-center text-[#585e4d] leading-[36px]">
                 Resepsi Pernikahan
               </h3>
             </div>

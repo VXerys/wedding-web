@@ -16,7 +16,7 @@ function CountdownUnit({
     <div className="flex flex-col items-center gap-1.5">
       <div className="glass-card-elevated w-[72px] h-[72px] sm:w-20 sm:h-20 flex items-center justify-center">
         <span
-          className={`font-display text-display-md text-slate-700 tabular-nums transition-opacity duration-500 ${
+          className={`font-display font-light text-display-md text-slate-700 tabular-nums transition-opacity duration-500 ${
             isMounted ? "opacity-100" : "opacity-30"
           }`}
         >
@@ -41,7 +41,7 @@ export default function CountdownTimer() {
         <p className="text-label text-gold-400 tracking-[0.32em] uppercase">
           Save
         </p>
-        <h2 className="mt-2 font-display text-display-lg italic text-slate-700">
+        <h2 className="mt-2 font-display font-light text-display-lg italic text-slate-700">
           The Date
         </h2>
 
@@ -55,10 +55,10 @@ export default function CountdownTimer() {
         {/* Countdown boxes or expired message */}
         {isExpired && isMounted ? (
           <div className="glass-card px-6 py-8">
-            <p className="font-display text-display-md italic text-slate-700">
+            <p className="font-display font-light text-display-md italic text-slate-700">
               Terima kasih atas
             </p>
-            <p className="font-display text-display-md italic text-slate-700">
+            <p className="font-display font-light text-display-md italic text-slate-700">
               kehadirannya 💕
             </p>
           </div>

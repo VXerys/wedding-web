@@ -85,7 +85,7 @@ export default function CoverEnvelope({ guestName }: CoverEnvelopeProps) {
               <span className="h-px w-10 bg-gold-400/50" />
             </div>
             <p className="mt-6 text-body-md text-slate-500">Kepada Yth.</p>
-            <h2 className="mt-2 font-display text-display-lg italic text-slate-700">
+            <h2 className="mt-2 font-display font-light text-display-lg italic text-slate-700">
               {guestName}
             </h2>
             <div className="mt-10 flex flex-col items-center gap-3 text-slate-500">

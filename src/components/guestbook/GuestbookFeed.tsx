@@ -23,7 +23,7 @@ export default function GuestbookFeed({
   return (
     <section className="py-12" id="guestbook">
       <div className="max-w-md mx-auto px-4 sm:px-6">
-        <h2 className="font-display text-display-lg italic text-slate-700 text-center mb-6">
+        <h2 className="font-display font-light text-display-lg italic text-slate-700 text-center mb-6">
           Buku Ucapan
         </h2>
 

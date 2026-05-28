@@ -28,7 +28,7 @@ export default function GuestbookCard({ entry }: GuestbookCardProps) {
     >
       <div className="flex items-start gap-3">
         <div className="w-9 h-9 rounded-full bg-gold-400/15 flex items-center justify-center flex-shrink-0">
-          <span className="font-display text-gold-600 text-lg italic">
+          <span className="font-display font-light text-gold-600 text-lg italic">
             {entry.guest_name.charAt(0)}
           </span>
         </div>
