@@ -53,6 +53,7 @@ export function useCountdown(targetDate: string): CountdownValues {
 
   useEffect(() => {
     // Sync immediately on mount
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- sync on mount
     setRemaining(computeRemaining());
 
     const id = setInterval(() => {
