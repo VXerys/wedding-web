@@ -146,7 +146,7 @@ export default function GalleryTab() {
               </div>
               <div className="bg-[rgba(212,175,55,0.2)] h-[0.5px] w-[32px]" />
             </div>
-            <p className="font-work italic text-[13px] text-center text-[#454840] leading-[20.8px] pt-[6.8px]">
+            <p className="font-body italic text-[13px] text-center text-[#454840] leading-[20.8px] pt-[6.8px]">
               Sharing the love from our dearest ones.
             </p>
           </div>

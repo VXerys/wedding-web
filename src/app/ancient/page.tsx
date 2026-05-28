@@ -50,6 +50,7 @@ function useGuestName() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- sync guest name decoding on mount
     setGuestName(decodeGuestName(params.get("to")));
   }, []);
 

@@ -22,7 +22,7 @@ export default function HeroSection() {
   const imgBotanicalSketchBottom = "/images/figma/botanical_sketch_bottom.png";
 
   return (
-    <div className="relative w-full min-h-screen bg-[#FDFCF9] text-[#1a1d14] font-work overflow-hidden">
+    <div className="relative w-full min-h-screen bg-[#FDFCF9] text-[#1a1d14] font-body overflow-hidden">
       {/* Styles Injection */}
       <style dangerouslySetInnerHTML={{ __html: `
         .paper-texture {
@@ -97,7 +97,7 @@ export default function HeroSection() {
           
           {/* Content */}
           <div className="relative z-10 flex flex-col items-center gap-6">
-            <span className="font-work text-[11px] text-[#5f5f58]/70 tracking-[0.4em] uppercase font-medium">The Wedding of</span>
+            <span className="font-body text-[11px] text-[#5f5f58]/70 tracking-[0.4em] uppercase font-medium">The Wedding of</span>
             <div className="flex flex-col items-center gap-1">
               <h1 className="font-display text-[54px] text-[#585e4d] italic font-light tracking-tight leading-none">Brandon</h1>
               <span className="font-display text-[36px] text-[#D4AF37] font-light leading-none">&amp;</span>
@@ -106,8 +106,8 @@ export default function HeroSection() {
             
             {/* Guest Card */}
             <div className="bg-white/60 backdrop-blur-md rounded-2xl p-[32px_40px] border border-white shadow-[0_8px_30px_rgba(0,0,0,0.03)] max-w-[320px] carved-shadow mt-4">
-              <p className="font-work text-[10px] text-[#5f5f58]/60 mb-3 uppercase tracking-widest font-medium">Dear Sir / Madam</p>
-              <h3 className="font-work text-[14px] text-[#585e4d] mb-5 tracking-[0.2em] font-semibold uppercase">{guestName}</h3>
+              <p className="font-body text-[10px] text-[#5f5f58]/60 mb-3 uppercase tracking-widest font-medium">Dear Sir / Madam</p>
+              <h3 className="font-body text-[14px] text-[#585e4d] mb-5 tracking-[0.2em] font-semibold uppercase">{guestName}</h3>
               <p className="font-display text-[18px] text-[#5f5f58]/80 italic mb-8 font-light leading-snug">You are cordially invited to celebrate our union.</p>
               <button 
                 onClick={handleScrollToCouple}
@@ -117,7 +117,7 @@ export default function HeroSection() {
                 <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                 </svg>
-                <span className="font-work text-[11px] tracking-[0.2em] font-semibold uppercase">Open Invitation</span>
+                <span className="font-body text-[11px] tracking-[0.2em] font-semibold uppercase">Open Invitation</span>
               </button>
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function HeroSection() {
           <svg className="w-5 h-5 text-[#D4AF37] animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
           </svg>
-          <p className="font-work text-[9px] text-[#5f5f58]/50 mt-3 tracking-[0.5em]">DISCOVER MORE</p>
+          <p className="font-body text-[9px] text-[#5f5f58]/50 mt-3 tracking-[0.5em]">DISCOVER MORE</p>
         </div>
       </section>
 
@@ -181,7 +181,7 @@ export default function HeroSection() {
           </div>
           
           <div className="text-center flex flex-col items-center gap-2">
-            <span className="font-work text-[10px] text-[#5f5f58]/40 tracking-[0.3em] uppercase">Only Child of Mr &amp; Mrs Lorem</span>
+            <span className="font-body text-[10px] text-[#5f5f58]/40 tracking-[0.3em] uppercase">Only Child of Mr &amp; Mrs Lorem</span>
             <h2 className="font-display text-4xl text-[#585e4d] tracking-[0.15em] font-light flex items-center justify-center gap-2 leading-none mt-1">
               <span className="text-[#D4AF37] opacity-60 text-[0.6em] select-none">❦</span>BRANDON
             </h2>
@@ -216,7 +216,7 @@ export default function HeroSection() {
           </div>
           
           <div className="text-center flex flex-col items-center gap-2">
-            <span className="font-work text-[10px] text-[#5f5f58]/40 tracking-[0.3em] uppercase">Eldest Daughter of Mr &amp; Mrs Ipsum</span>
+            <span className="font-body text-[10px] text-[#5f5f58]/40 tracking-[0.3em] uppercase">Eldest Daughter of Mr &amp; Mrs Ipsum</span>
             <h2 className="font-display text-4xl text-[#585e4d] tracking-[0.15em] font-light flex items-center justify-center gap-2 leading-none mt-1">
               <span className="text-[#D4AF37] opacity-60 text-[0.6em] select-none">❦</span>MEYCA
             </h2>
@@ -254,7 +254,7 @@ export default function HeroSection() {
             <svg className="w-7 h-7 text-[#D4AF37]" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
             </svg>
-            <span className="font-work text-[10px] tracking-[0.5em] text-[#5f5f58]/40 uppercase font-medium">Thank You</span>
+            <span className="font-body text-[10px] tracking-[0.5em] text-[#5f5f58]/40 uppercase font-medium">Thank You</span>
           </div>
         </div>
       </footer>

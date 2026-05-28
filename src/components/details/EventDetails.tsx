@@ -140,7 +140,7 @@ export default function EventDetails({ guestName = "" }: EventDetailsProps) {
                 <h4 className="font-body font-normal text-[16px] text-[#585e4d] text-center leading-[24px]">
                   Masjid Raya Al-Ikhlas
                 </h4>
-                <p className="font-work italic text-[12px] text-[rgba(95,95,88,0.8)] text-center leading-[18px] opacity-70 max-w-[280px]">
+                <p className="font-body italic text-[12px] text-[rgba(95,95,88,0.8)] text-center leading-[18px] opacity-70 max-w-[280px]">
                   Jl. Melati No. 45, Kebayoran Baru, Jakarta Selatan
                 </p>
               </div>
@@ -187,7 +187,7 @@ export default function EventDetails({ guestName = "" }: EventDetailsProps) {
                 <h4 className="font-body font-normal text-[16px] text-[#585e4d] text-center leading-[24px]">
                   The Glass House Garden
                 </h4>
-                <p className="font-work italic text-[12px] text-[rgba(95,95,88,0.8)] text-center leading-[18px] opacity-70 max-w-[280px]">
+                <p className="font-body italic text-[12px] text-[rgba(95,95,88,0.8)] text-center leading-[18px] opacity-70 max-w-[280px]">
                   Jl. Mawar Indah Blok B2, Jakarta Selatan
                 </p>
               </div>
@@ -247,7 +247,7 @@ export default function EventDetails({ guestName = "" }: EventDetailsProps) {
               </div>
               <div className="bg-[rgba(201,168,76,0.3)] h-[0.5px] w-[48px]" />
             </div>
-            <p className="font-work italic text-[16px] text-center text-[rgba(95,95,88,0.7)] leading-[24px] pt-[11.8px] max-w-[320px]">
+            <p className="font-body italic text-[16px] text-center text-[rgba(95,95,88,0.7)] leading-[24px] pt-[11.8px] max-w-[320px]">
               Kami sangat menantikan kehadiran Bapak/Ibu/Saudara/i
             </p>
           </div>
@@ -260,7 +260,7 @@ export default function EventDetails({ guestName = "" }: EventDetailsProps) {
                 <h4 className="font-body font-semibold text-[16px] text-[#585e4d] mb-1">
                   Terima kasih!
                 </h4>
-                <p className="font-work italic text-[13px] text-[rgba(95,95,88,0.7)]">
+                <p className="font-body italic text-[13px] text-[rgba(95,95,88,0.7)]">
                   Konfirmasi kehadiran Anda telah kami simpan.
                 </p>
               </div>

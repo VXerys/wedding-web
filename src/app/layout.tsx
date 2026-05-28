@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans, Work_Sans } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["300", "400", "600"],
+  weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-display",
   display: "swap",
@@ -12,16 +12,8 @@ const cormorant = Cormorant_Garamond({
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-body",
-  display: "swap",
-});
-
-const workSans = Work_Sans({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["italic"],
-  variable: "--font-work",
   display: "swap",
 });
 
@@ -61,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="id" className="h-full" suppressHydrationWarning>
       <body
-        className={`${cormorant.variable} ${dmSans.variable} ${workSans.variable} min-h-full flex flex-col font-body text-slate-700 antialiased`}
+        className={`${cormorant.variable} ${dmSans.variable} min-h-full flex flex-col font-body text-slate-700 antialiased`}
       >
         {children}
       </body>
