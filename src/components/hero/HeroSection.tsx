@@ -1,16 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import CountdownTimer from "@/components/countdown/CountdownTimer";
+import InvitationPaperCard from "@/components/hero/InvitationPaperCard";
 import {
   fadeIn,
   fadeUp,
   staggerContainer,
   slideLeft,
   slideRight,
-  scaleIn,
   lineExpand,
   labelFade,
   sectionViewport,
@@ -29,7 +28,6 @@ export default function HeroSection({
   onOpen,
   showFooter = true,
 }: HeroSectionProps) {
-  const [isOpening, setIsOpening] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const eventDate = process.env.NEXT_PUBLIC_EVENT_DATE ?? "2026-07-12T09:00:00+07:00";
   const eventDateText = new Intl.DateTimeFormat("id-ID", {
@@ -56,35 +54,9 @@ export default function HeroSection({
         },
       };
 
-  const handleOpenInvitation = () => {
-    if (isOpened || isOpening) return;
-    setIsOpening(true);
-    window.setTimeout(() => {
-      onOpen?.();
-    }, prefersReducedMotion ? 0 : 520);
-  };
-
-  const cardMotion = prefersReducedMotion
-    ? {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        transition: { duration: 0.25, delay: 0.1 },
-      }
-    : {
-        initial: { opacity: 0, y: 18, scale: 0.98 },
-        animate: { opacity: 1, y: 0, scale: 1 },
-        transition: {
-          duration: 0.75,
-          delay: 0.35,
-          ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
-        },
-      };
-
-  const imgTempleIllustration = "/images/figma/temple_illustration.png";
   const imgBrandonProfile = "/images/figma/brandon_profile.png";
   const imgMeycaProfile = "/images/figma/meyca_profile.png";
   const imgFadedTempleFooter = "/images/figma/faded_temple_footer.png";
-  const imgBotanicalSketchBottom = "/images/figma/botanical_sketch_bottom.png";
 
   return (
     <div className="relative w-full min-h-screen text-[#1a1d14] font-body overflow-hidden">
@@ -95,9 +67,8 @@ export default function HeroSection({
           opacity: 0.15;
         }
         .watercolor-bloom {
-          filter: blur(60px);
-          opacity: 0.25;
-          mix-blend-mode: multiply;
+          background: radial-gradient(circle, rgba(226, 232, 223, 0.44) 0%, rgba(226, 232, 223, 0.18) 42%, transparent 72%);
+          opacity: 0.55;
         }
         .gold-vignette {
           background: radial-gradient(circle at center, transparent 70%, rgba(212, 175, 55, 0.03) 100%);
@@ -164,9 +135,19 @@ export default function HeroSection({
         animate={heroMotion.animate}
         transition={heroMotion.transition}
       >
-        <div className="relative w-full max-w-[376px] min-h-[690px] bg-white/30 backdrop-blur-[1px] rounded-[15rem] flex flex-col items-center justify-center px-7 py-10 text-center double-hairline-border">
+        <div className="relative w-full max-w-[376px] min-h-[690px] bg-white/30 md:backdrop-blur-[1px] rounded-[15rem] flex flex-col items-center justify-center px-7 py-10 text-center double-hairline-border">
           <div className="absolute inset-[-8px] border border-[rgba(212,175,55,0.15)] rounded-[15.5rem] pointer-events-none" />
           <div className="relative z-10 flex w-full flex-col items-center gap-4">
+            <div className="w-[90px] h-[90px] relative flex items-center justify-center mb-2">
+              <Image
+                alt="centered home"
+                className="w-full h-full object-contain"
+                style={{ filter: "sepia(1) saturate(2) hue-rotate(5deg) brightness(0.85)" }}
+                src="/images/centered-home.svg"
+                width={90}
+                height={90}
+              />
+            </div>
             <span className="font-body text-[11px] text-[#5f5f58]/70 tracking-[0.4em] uppercase font-medium">
               THE WEDDING OF
             </span>
@@ -185,171 +166,10 @@ export default function HeroSection({
               {eventDateText}
             </p>
 
-            <motion.div
-              suppressHydrationWarning={true}
-              className="relative mt-8 w-full max-w-[284px] overflow-hidden rounded-[26px] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.78),rgba(255,255,255,0.46))] px-6 py-7 shadow-[0_26px_70px_rgba(88,94,77,0.14),inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-1px_0_rgba(212,175,55,0.08)] backdrop-blur-[22px]"
-              initial={cardMotion.initial}
-              animate={
-                isOpening
-                  ? { opacity: 1, y: -4, scale: 1.015 }
-                  : isOpened
-                    ? { opacity: 1, y: 0, scale: 1 }
-                    : cardMotion.animate
-              }
-              whileHover={
-                isOpened || isOpening
-                  ? undefined
-                  : {
-                      scale: 1.025,
-                      y: -4,
-                      boxShadow: "0 30px 80px rgba(88,94,77,0.22)",
-                      transition: { duration: 0.3, ease: "easeOut" }
-                    }
-              }
-              transition={
-                isOpening
-                  ? { duration: 0.42, ease: [0.25, 0.46, 0.45, 0.94] }
-                  : cardMotion.transition
-              }
-            >
-              {/* Top radial glow */}
-              <div className="pointer-events-none absolute inset-0 rounded-[26px] bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.78),transparent_42%)] opacity-70" />
-              
-              {/* Gorgeous slanted white gloss shine sweeping across */}
-              <motion.div
-                className="pointer-events-none absolute -inset-y-32 -left-[100%] w-[200%] bg-[linear-gradient(115deg,transparent_35%,rgba(255,255,255,0)_40%,rgba(255,255,255,0.6)_50%,rgba(255,255,255,0)_60%,transparent_65%)] opacity-80"
-                animate={
-                  isOpening || isOpened
-                    ? { opacity: 0 }
-                    : {
-                        x: ["-30%", "130%"],
-                      }
-                }
-                transition={
-                  isOpening || isOpened
-                    ? { duration: 0.5 }
-                    : {
-                        duration: 3.5,
-                        repeat: Infinity,
-                        ease: [0.25, 0.46, 0.45, 0.94],
-                        repeatDelay: 2,
-                      }
-                }
-              />
-              
-              <motion.div
-                className="pointer-events-none absolute inset-[-1px] rounded-[27px] border border-[#d4af37]/35"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={isOpening || isOpened ? { opacity: [0, 1, 0.45], scale: [0.96, 1.03, 1] } : { opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.75, ease: [0.25, 0.46, 0.45, 0.94] }}
-              />
-
-              {/* Continuous subtle shimmer effect */}
-              <motion.div
-                className="pointer-events-none absolute -inset-y-32 -left-[150%] w-[150%] rotate-45 bg-gradient-to-r from-transparent via-white/50 to-transparent blur-md"
-                initial={{ x: "-100%" }}
-                animate={
-                  isOpened
-                    ? { opacity: 0 }
-                    : isOpening
-                    ? { x: ["-100%", "200%"], opacity: [0, 1, 0] }
-                    : { x: ["-100%", "200%"] }
-                }
-                transition={
-                  isOpened
-                    ? { duration: 0.35 }
-                    : isOpening
-                    ? { duration: 0.85, ease: [0.25, 0.46, 0.45, 0.94] }
-                    : { duration: 4.5, repeat: Infinity, ease: "linear", repeatDelay: 1 }
-                }
-              />
-              
-              {/* Interactive glow (optional pulse if not opening) */}
-              <motion.div
-                className="pointer-events-none absolute -inset-0 rounded-[26px] border border-white/40"
-                animate={isOpening || isOpened ? { opacity: 0 } : { opacity: [0, 0.4, 0] }}
-                transition={
-                  isOpening || isOpened
-                    ? { duration: 0.35 }
-                    : { duration: 3, repeat: Infinity, ease: "easeInOut" }
-                }
-              />
-              {[
-                "left-[18%] top-[28%]",
-                "right-[20%] top-[34%]",
-                "left-[24%] bottom-[26%]",
-                "right-[18%] bottom-[30%]",
-              ].map((position, index) => (
-                <motion.span
-                  key={position}
-                  className={`pointer-events-none absolute h-1.5 w-1.5 rounded-full bg-[#d4af37]/70 ${position}`}
-                  initial={{ opacity: 0, scale: 0.4, y: 0 }}
-                  animate={
-                    isOpening
-                      ? { opacity: [0, 1, 0], scale: [0.4, 1.15, 0.6], y: [0, -18, -26] }
-                      : { opacity: 0, scale: 0.4, y: 0 }
-                  }
-                  transition={{
-                    duration: 0.9,
-                    delay: index * 0.08,
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                  }}
-                />
-              ))}
-
-              <div className="relative z-10">
-                <p className="font-body text-[9px] font-medium uppercase tracking-[0.24em] text-[#5f5f58]/60">
-                  Dear Sir / Madam
-                </p>
-                <h2 className="mt-3 max-w-full break-words font-body text-[13px] font-semibold uppercase leading-[1.5] tracking-[0.18em] text-[#585e4d]">
-                  {guestName}
-                </h2>
-                <p className="mx-auto mt-5 max-w-[200px] font-display text-[17px] font-light italic leading-[1.55] text-[#5f5f58]/80">
-                  You are cordially invited to celebrate our union.
-                </p>
-                <motion.button
-                  type="button"
-                  onClick={handleOpenInvitation}
-                  disabled={isOpened || isOpening}
-                  suppressHydrationWarning={true}
-                  className={`mx-auto mt-7 flex w-full max-w-[220px] items-center justify-center gap-3 rounded-full px-5 py-[15px] font-body text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_18px_34px_rgba(88,94,77,0.18)] transition-colors ${
-                    isOpened || isOpening
-                      ? "bg-[#c9a84c] cursor-default"
-                      : "bg-[#585e4d] hover:bg-[#4e5545] cursor-pointer"
-                  }`}
-                  whileTap={prefersReducedMotion || isOpened || isOpening ? undefined : { scale: 0.97 }}
-                  animate={
-                    isOpening
-                      ? { scale: [1, 0.97, 1.04, 1], y: [0, 1, -3, 0], opacity: 1 }
-                      : prefersReducedMotion || isOpened
-                        ? { opacity: 1 }
-                        : { y: [0, -2, 0], opacity: [0.92, 1, 0.92] }
-                  }
-                  transition={
-                    isOpening
-                      ? { duration: 0.62, ease: [0.25, 0.46, 0.45, 0.94] }
-                      : { duration: 2.2, repeat: isOpened ? 0 : Infinity, ease: "easeInOut" }
-                  }
-                >
-                  <svg className="h-[17px] w-[17px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                  </svg>
-                  {isOpening ? "Opening" : isOpened ? "Opened" : "Open Invitation"}
-                </motion.button>
-              </div>
-            </motion.div>
+            <InvitationPaperCard guestName={guestName} />
           </div>
 
-          <div className="absolute bottom-4 w-full h-1/5 opacity-10 flex justify-center grayscale pointer-events-none">
-            <Image
-              alt="temple illustration"
-              className="w-full h-full object-contain object-bottom scale-110"
-              src={imgTempleIllustration}
-              width={486}
-              height={240}
-              sizes="376px"
-            />
-          </div>
+          {/* Temple illustration removed as requested */}
         </div>
 
         <motion.div
@@ -382,22 +202,16 @@ export default function HeroSection({
         whileInView="visible"
         viewport={sectionViewport}
         variants={fadeIn}
-        className="relative w-full px-[24px] flex items-center justify-center py-10"
+        className="w-full px-[24px] flex flex-col items-center justify-center py-8"
       >
-        <div className="h-[0.5px] w-full bg-[#D4AF37]/20"></div>
-        <div className="absolute bg-[#FDFCF9] px-6 flex items-center gap-2">
-          {/* Flare icon SVG */}
-          <svg className="w-3.5 h-3.5 text-[#D4AF37]" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12,2 L14.5,9.5 L22,12 L14.5,14.5 L12,22 L9.5,14.5 L2,12 L9.5,9.5 Z" />
-          </svg>
-          {/* Spa/Lotus icon SVG */}
-          <svg className="w-5 h-5 text-[#D4AF37]" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12,3 C12,3 15,7 15,11 C15,15 12,19 12,21 C12,19 9,15 9,11 C9,7 12,3 12,3 Z" />
-          </svg>
-          {/* Flare icon SVG */}
-          <svg className="w-3.5 h-3.5 text-[#D4AF37]" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12,2 L14.5,9.5 L22,12 L14.5,14.5 L12,22 L9.5,14.5 L2,12 L9.5,9.5 Z" />
-          </svg>
+        <div className="flex items-center justify-center w-full gap-4">
+          <span className="block h-px flex-1 bg-[#D4AF37]/30" />
+          <img
+            alt="divider ornament"
+            src="/images/centered-divider.svg"
+            style={{ width: 80, height: 80, objectFit: "contain", filter: "sepia(1) saturate(3) hue-rotate(5deg) brightness(0.75)" }}
+          />
+          <span className="block h-px flex-1 bg-[#D4AF37]/30" />
         </div>
       </motion.div>
 
@@ -422,15 +236,13 @@ export default function HeroSection({
           className="flex flex-col items-center mb-20 w-full"
         >
           <div className="relative mb-8">
-            {/* Frame Decoration */}
-            <div className="absolute -top-6 -left-6 w-24 h-24 opacity-20 pointer-events-none">
-              <Image
-                alt="foliage"
+            {/* Frame Decoration - top left */}
+            <div className="absolute -top-5 -left-5 w-20 h-20 pointer-events-none overflow-hidden">
+              <img
+                alt=""
                 className="w-full h-full object-contain"
-                src={imgBotanicalSketchBottom}
-                width={96}
-                height={96}
-                sizes="96px"
+                style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.85) opacity(0.22)" }}
+                src="/images/corner-acara.svg"
               />
             </div>
             <div className="w-52 h-64 rounded-full overflow-hidden border-[4px] border-white shadow-xl relative z-10 double-hairline-border rotate-[-1deg]">
@@ -477,15 +289,13 @@ export default function HeroSection({
           className="flex flex-col items-center mb-8 w-full"
         >
           <div className="relative mb-8">
-            {/* Frame Decoration */}
-            <div className="absolute -bottom-6 -right-6 w-24 h-24 opacity-20 scale-x-[-1] pointer-events-none">
-              <Image
-                alt="foliage"
-                className="w-full h-full object-contain"
-                src={imgBotanicalSketchBottom}
-                width={96}
-                height={96}
-                sizes="96px"
+            {/* Frame Decoration - bottom right */}
+            <div className="absolute -bottom-5 -right-5 w-20 h-20 pointer-events-none overflow-hidden">
+              <img
+                alt=""
+                className="w-full h-full object-contain rotate-180"
+                style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.85) opacity(0.22)" }}
+                src="/images/corner-acara.svg"
               />
             </div>
             <div className="w-52 h-64 rounded-full overflow-hidden border-[4px] border-white shadow-xl relative z-10 double-hairline-border rotate-[1deg]">

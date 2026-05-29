@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import CoverEnvelope from "@/components/cover/CoverEnvelope";
 import HeroSection from "@/components/hero/HeroSection";
 import EventDetails from "@/components/details/EventDetails";
 import RSVPForm from "@/components/rsvp/RSVPForm";
@@ -92,10 +93,20 @@ export default function InvitationTabs({ guestName, isOpened, onOpen }: Invitati
 
   return (
     <div className="flex-1 flex flex-col w-full relative bg-[#FDFCF9]">
+      {/* Cover Envelope Overlay */}
+      <AnimatePresence>
+        {!isOpened && (
+          <CoverEnvelope
+            guestName={guestName}
+            onOpened={onOpen}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Top Header */}
       {isOpened && (
         <header
-          className={`fixed top-0 z-40 w-full md:max-w-[430px] md:left-1/2 md:-translate-x-1/2 backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] border-b border-solid border-[rgba(201,168,76,0.1)] flex h-[64px] items-center justify-between px-6 transition-transform duration-300 ${
+          className={`fixed top-0 z-40 w-full md:max-w-[430px] md:left-1/2 md:-translate-x-1/2 md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] border-b border-solid border-[rgba(201,168,76,0.1)] flex h-[64px] items-center justify-between px-6 transition-transform duration-300 ${
             showHeader ? "translate-y-0" : "-translate-y-full"
           }`}
         >
@@ -139,7 +150,7 @@ export default function InvitationTabs({ guestName, isOpened, onOpen }: Invitati
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMenuOpen(false)}
-              className="fixed inset-0 z-45 bg-black/20 backdrop-blur-sm w-full md:max-w-[430px] md:left-1/2 md:-translate-x-1/2"
+              className="fixed inset-0 z-45 bg-black/20 md:backdrop-blur-sm w-full md:max-w-[430px] md:left-1/2 md:-translate-x-1/2"
             />
             {/* Drawer */}
             <motion.div
@@ -147,7 +158,7 @@ export default function InvitationTabs({ guestName, isOpened, onOpen }: Invitati
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 bottom-0 z-50 w-[260px] right-0 md:right-[calc(50vw-215px)] bg-[#faf9f6]/95 backdrop-blur-[20px] border-l border-[rgba(201,168,76,0.15)] shadow-[0_0_50px_rgba(0,0,0,0.1)] p-8 flex flex-col justify-center items-center"
+              className="fixed top-0 bottom-0 z-50 w-[260px] right-0 md:right-[calc(50vw-215px)] bg-[#faf9f6]/95 md:backdrop-blur-[20px] border-l border-[rgba(201,168,76,0.15)] shadow-[0_0_50px_rgba(0,0,0,0.1)] p-8 flex flex-col justify-center items-center"
               style={{
                 backgroundImage: "url('https://www.transparenttextures.com/patterns/p6.png')",
                 backgroundSize: "100px 100px",

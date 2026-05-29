@@ -20,16 +20,16 @@ interface GiftTabProps {
   showFooter?: boolean;
 }
 
-export default function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
+function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [canHover, setCanHover] = useState(false);
 
   const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
-  const imgBotanical1 = "/images/figma/d540e9f3235a86d6904c5eb0df6518a696ba706e.png";
-  const imgBotanical2 = "/images/figma/2dfcc31b063ebffde38e5d0972cc794cda55e33f.png";
+  const imgBotanical1 = "/images/corner-acara.svg";
+  const imgBotanical2 = "/images/corner-acara.svg";
   const imgFooterLeaf = "/images/figma/4950129f7a7d256f5721da392cec38d7d6b33daf.png";
   const imgBcaLogo = "/images/figma/2139e2a34812c4176a0c78762207328e71174ec3.png";
-  const imgDivider = "/images/figma/e7ce555d4dd99e804110c48ea5c526aeca13df72.svg";
+  const imgDivider = "/images/centered-divider.svg";
   const imgCopyIcon = "/images/figma/1596a5ebf350c38a8e0ccdfd74a40ed2bada6a04.svg";
   const imgGiftBoxIcon = "/images/figma/a67be60163fb2bf6ebdb1714f85f57a4de0e44d9.svg";
   const imgMapPinIcon = "/images/figma/cca2eb24a5239f24fdb67d5c4180683dbb6f8aff.svg";
@@ -62,44 +62,35 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
       />
 
       {/* Decorative Blurs */}
-      <div className="absolute bg-[#e2e8df] blur-[30px] left-[-80px] mix-blend-multiply opacity-25 rounded-full w-[400px] h-[400px] top-[-80px] pointer-events-none z-1" />
-      <div className="absolute bg-[#e2e8df] blur-[30px] bottom-[849.25px] mix-blend-multiply opacity-25 right-[-160px] rounded-full w-[450px] h-[450px] pointer-events-none z-2" />
+      <div className="absolute bg-[radial-gradient(circle,rgba(226,232,223,0.46)_0%,rgba(226,232,223,0.18)_45%,transparent_72%)] left-[-80px] opacity-25 rounded-full w-[400px] h-[400px] top-[-80px] pointer-events-none z-1" />
+      <div className="absolute bg-[radial-gradient(circle,rgba(226,232,223,0.46)_0%,rgba(226,232,223,0.18)_45%,transparent_72%)] bottom-[849.25px] opacity-25 right-[-160px] rounded-full w-[450px] h-[450px] pointer-events-none z-2" />
 
-      {/* Botanical Sketches */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={sectionViewport}
-        variants={fadeIn}
-        className="absolute right-[4.1px] w-[151.8px] h-[151.8px] top-[28.09px] flex items-center justify-center pointer-events-none z-4"
-      >
-        <div className="rotate-12 w-[128px] h-[128px] opacity-10 relative">
-          <img alt="" className="absolute left-0 max-w-none w-full h-full top-0 object-contain" src={imgBotanical1} />
-        </div>
-      </motion.div>
+      {/* Botanical Corner Decoration - top right */}
+      <div className="absolute right-0 top-0 w-[160px] h-[160px] flex items-start justify-end pointer-events-none z-4 overflow-hidden">
+        <img
+          alt=""
+          className="w-full h-full object-contain"
+          style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.9) opacity(0.12)" }}
+          src={imgBotanical1}
+        />
+      </div>
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={sectionViewport}
-        variants={fadeIn}
-        className="absolute bottom-[826.05px] w-[158px] h-[158px] left-[-15.2px] flex items-center justify-center pointer-events-none z-5"
-      >
-        <div className="-rotate-45 w-[112px] h-[112px] opacity-10 relative">
-          <img
-            alt=""
-            className="absolute left-0 max-w-none w-full h-full top-0 object-contain mix-blend-saturation"
-            src={imgBotanical2}
-          />
-        </div>
-      </motion.div>
+      {/* Botanical Corner Decoration - bottom left */}
+      <div className="absolute left-0 bottom-0 w-[140px] h-[140px] flex items-end justify-start pointer-events-none z-4 overflow-hidden">
+        <img
+          alt=""
+          className="w-full h-full object-contain rotate-180"
+          style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.9) opacity(0.10)" }}
+          src={imgBotanical2}
+        />
+      </div>
 
       {/* Smooth Transition Masks */}
       <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#FDFCF9] to-transparent pointer-events-none z-6" />
 
       {/* Header */}
       {showHeader && (
-        <div className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border-b border-solid border-[rgba(201,168,76,0.1)] flex h-[64px] items-center justify-between px-6 relative w-full z-10">
+        <div className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border-b border-solid border-[rgba(201,168,76,0.1)] flex h-[64px] items-center justify-between px-6 relative w-full z-10">
           <div className="w-[13.3px] h-[8.7px] relative cursor-pointer hover:opacity-75 transition-opacity">
             <img alt="Menu" className="w-full h-full object-contain" src={imgHamburger} />
           </div>
@@ -131,13 +122,17 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
           </motion.h2>
           <motion.div
             variants={lineExpand}
-            className="flex gap-[12px] items-center justify-center w-[228px]"
+            className="flex items-center justify-center w-full"
           >
-            <div className="bg-gradient-to-r from-transparent to-[#c9a84c] h-[0.5px] flex-1 opacity-30" />
-            <div className="w-[12px] h-[12px] relative flex items-center justify-center">
-              <img alt="" className="w-full h-full object-contain" src={imgDivider} />
+            <div className="flex items-center justify-center w-full max-w-[240px] gap-4">
+              <span className="block h-px flex-1 bg-[#c9a84c]/30" />
+              <img
+                alt="divider ornament"
+                src="/images/centered-divider.svg"
+                style={{ width: 72, height: 72, objectFit: "contain", filter: "sepia(1) saturate(3) hue-rotate(5deg) brightness(0.75)" }}
+              />
+              <span className="block h-px flex-1 bg-[#c9a84c]/30" />
             </div>
-            <div className="bg-gradient-to-r from-[#c9a84c] to-transparent h-[0.5px] flex-1 opacity-30" />
           </motion.div>
         </motion.div>
 
@@ -167,12 +162,13 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
             viewport={sectionViewport}
             variants={slideRight} // Slides from left
             whileHover={canHover ? { scale: 1.02, rotateY: 8, rotateX: -4, transition: { duration: 0.3 } } : undefined}
-            className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[24px] sm:p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
+            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[24px] sm:p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
+            style={{ contain: "paint", isolation: "isolate" }}
           >
             {/* The physical BSI Card (Embedded and scaled down) */}
             <div 
               className="w-full max-w-[280px] relative aspect-[1.58/1] rounded-[12px] overflow-hidden border border-[#1b1c1e] bg-[#9ca0a5] shadow-[0px_8px_16px_rgba(0,0,0,0.12)] flex flex-col justify-between p-[5%] text-white select-none mb-6"
-              style={{ containerType: "inline-size" }}
+              style={{ containerType: "inline-size", contain: "paint", isolation: "isolate" }}
             >
               {/* Wavy Background SVG */}
               <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 316 200" preserveAspectRatio="none">
@@ -304,10 +300,11 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
             viewport={sectionViewport}
             variants={slideLeft} // Slides from right
             whileHover={canHover ? { scale: 1.02, rotateY: -8, rotateX: -4, transition: { duration: 0.3 } } : undefined}
-            className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
+            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
+            style={{ contain: "paint", isolation: "isolate" }}
           >
             <div className="w-full flex justify-start mb-6">
-              <div className="h-[24px] w-[75px] relative opacity-50 mix-blend-multiply">
+              <div className="h-[24px] w-[75px] relative opacity-50">
                 <img alt="BCA Logo" className="w-full h-full object-contain" src={imgBcaLogo} />
               </div>
             </div>
@@ -350,7 +347,8 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
           whileInView="visible"
           viewport={sectionViewport}
           variants={scaleIn} // Scales in
-          className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col gap-[16px] items-center p-[41px] rounded-tl-[140px] rounded-tr-[140px] rounded-bl-[16px] rounded-br-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full mb-8"
+          className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col gap-[16px] items-center p-[41px] rounded-tl-[140px] rounded-tr-[140px] rounded-bl-[16px] rounded-br-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full mb-8"
+          style={{ contain: "paint", isolation: "isolate" }}
         >
           <div className="w-[24px] h-[21.2px] relative flex items-center justify-center">
             <img alt="Gift Box" className="w-full h-full object-contain animate-bounce-slow" src={imgGiftBoxIcon} />
@@ -407,7 +405,7 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
           <div className="absolute inset-0 opacity-3 pointer-events-none flex items-center justify-center">
             <Image
               alt=""
-              className="w-full h-full object-cover max-w-none mix-blend-saturation scale-110"
+              className="w-full h-full object-cover max-w-none scale-110"
               src={imgFooterLeaf}
               width={430}
               height={430}
@@ -456,3 +454,5 @@ export default function GiftTab({ showHeader = true, showFooter = true }: GiftTa
     </div>
   );
 }
+
+export default React.memo(GiftTab);

@@ -35,7 +35,7 @@
         rgba(212, 175, 55, 0.04) 0%,
         transparent 70%
       );
-    background-attachment: fixed;
+    background-attachment: scroll;
     color: var(--color-text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -49,6 +49,10 @@
 
 @layer components {
   @media (min-width: 768px) {
+    body {
+      background-attachment: fixed;
+    }
+
     .desktop-bg {
       background-image:
         radial-gradient(ellipse at 20% 10%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
@@ -58,8 +62,6 @@
 
   .glass-card {
     background: var(--color-glass-fill);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
     border: 1px solid var(--color-glass-border);
     border-radius: 1rem;
     box-shadow: var(--shadow-card);
@@ -67,11 +69,21 @@
 
   .glass-card-elevated {
     background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(212, 175, 55, 0.2);
     border-radius: 1rem;
     box-shadow: var(--shadow-card-hover);
+  }
+
+  @media (min-width: 768px) {
+    .glass-card {
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+    }
+
+    .glass-card-elevated {
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+    }
   }
 
   .cover-overlay {

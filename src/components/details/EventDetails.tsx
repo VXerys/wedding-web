@@ -3,7 +3,6 @@
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import {
-  fadeIn,
   fadeUp,
   staggerContainer,
   labelFade,
@@ -20,9 +19,9 @@ interface EventDetailsProps {
 
 export default function EventDetails({ guestName: _guestName = "", children, showFooter = true }: EventDetailsProps) {
   const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
-  const imgBotanical1 = "/images/figma/d540e9f3235a86d6904c5eb0df6518a696ba706e.png";
-  const imgBotanical2 = "/images/figma/0075a5a667093bb6693efe3ca1de31736ffe19a9.png";
-  const imgContainer = "/images/figma/d745edfa5a6618dd70dff20b2a6531d6e9e0306d.svg";
+  const imgBotanical1 = "/images/corner-acara.svg";
+  const imgBotanical2 = "/images/corner-acara.svg";
+  const imgContainer = "/images/centered-divider.svg";
   const imgIcon = "/images/figma/8bb27d8679887499077b1019b0deade4bec132f9.svg";
   const imgContainer1 = "/images/figma/e009ff2efd2048f5dc22b9cc5eabd9fb1beed9bb.svg";
   const imgContainer2 = "/images/figma/970b3fe4ee7db38ce0afbe3361524e81fe190ad9.svg";
@@ -44,41 +43,28 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
       />
 
       {/* Decorative background blurs */}
-      <div className="absolute bg-[#e2e8df] blur-[30px] left-[-80px] mix-blend-multiply opacity-25 rounded-full w-[400px] h-[400px] top-[-80px] pointer-events-none" />
-      <div className="absolute bg-[#e2e8df] blur-[30px] bottom-[574.5px] mix-blend-multiply opacity-25 right-[-160px] rounded-full w-[450px] h-[450px] pointer-events-none" />
+      <div className="absolute bg-[radial-gradient(circle,rgba(226,232,223,0.46)_0%,rgba(226,232,223,0.18)_45%,transparent_72%)] left-[-80px] opacity-25 rounded-full w-[400px] h-[400px] top-[-80px] pointer-events-none" />
+      <div className="absolute bg-[radial-gradient(circle,rgba(226,232,223,0.46)_0%,rgba(226,232,223,0.18)_45%,transparent_72%)] bottom-[574.5px] opacity-25 right-[-160px] rounded-full w-[450px] h-[450px] pointer-events-none" />
 
-      {/* Botanical Sketches */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={sectionViewport}
-        variants={fadeIn}
-        className="absolute right-[4.1px] w-[151.8px] h-[151.8px] top-[68.09px] flex items-center justify-center pointer-events-none z-10"
-      >
-        <div className="rotate-12 w-[128px] h-[128px] opacity-10 relative">
-          <img
-            alt=""
-            className="absolute left-0 max-w-none w-full h-full top-0 object-contain"
-            src={imgBotanical1}
-          />
-        </div>
-      </motion.div>
+      {/* Botanical Corner Decoration - top right */}
+      <div className="absolute right-0 top-0 w-[160px] h-[160px] flex items-start justify-end pointer-events-none z-0 overflow-hidden">
+        <img
+          alt=""
+          className="w-full h-full object-contain"
+          style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.9) opacity(0.12)" }}
+          src={imgBotanical1}
+        />
+      </div>
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={sectionViewport}
-        variants={fadeIn}
-        className="absolute bottom-[140.12px] w-[135.7px] h-[135.7px] left-[-11.88px] flex items-center justify-center pointer-events-none z-10"
-      >
-        <div className="-rotate-45 w-[96px] h-[96px] opacity-7 relative">
-          <img
-            alt=""
-            className="absolute left-0 max-w-none w-full h-full top-0 object-contain"
-            src={imgBotanical2}
-          />
-        </div>
-      </motion.div>
+      {/* Botanical Corner Decoration - bottom left */}
+      <div className="absolute left-0 bottom-0 w-[140px] h-[140px] flex items-end justify-start pointer-events-none z-0 overflow-hidden">
+        <img
+          alt=""
+          className="w-full h-full object-contain rotate-180"
+          style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.9) opacity(0.10)" }}
+          src={imgBotanical2}
+        />
+      </div>
 
       {/* Smooth Transition Masks */}
       <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#FDFCF9] to-transparent pointer-events-none z-15" />
@@ -109,13 +95,17 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
           </motion.h2>
           <motion.div
             variants={lineExpand}
-            className="flex gap-[12px] items-center justify-center pt-[12px] w-full"
+            className="flex items-center justify-center pt-[12px] w-full"
           >
-            <div className="bg-[rgba(201,168,76,0.3)] h-[0.5px] w-[48px]" />
-            <div className="w-[11.397px] h-[11.397px] relative flex items-center justify-center">
-              <img alt="" className="w-full h-full object-contain" src={imgContainer} />
+            <div className="flex items-center justify-center gap-3 w-full max-w-[240px]">
+              <span className="block h-px flex-1 bg-[rgba(201,168,76,0.4)]" />
+              <img
+                alt="divider icon"
+                src="/images/figma/d745edfa5a6618dd70dff20b2a6531d6e9e0306d.svg"
+                style={{ width: 16, height: 16, objectFit: "contain" }}
+              />
+              <span className="block h-px flex-1 bg-[rgba(201,168,76,0.4)]" />
             </div>
-            <div className="bg-[rgba(201,168,76,0.3)] h-[0.5px] w-[48px]" />
           </motion.div>
         </motion.div>
 
@@ -131,7 +121,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
           {/* Card 1: Akad Nikah */}
           <motion.div
             variants={cardRise}
-            className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-[100px] rounded-tr-[100px] rounded-bl-none rounded-br-none w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)]"
+            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-[100px] rounded-tr-[100px] rounded-bl-none rounded-br-none w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)]"
           >
             <div className="w-full flex flex-col items-center">
               <div className="w-[27px] h-[24px] relative flex items-center justify-center animate-bounce-slow">
@@ -186,7 +176,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center px-[20px] py-[32.5px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] cursor-pointer hover:bg-white/70 transition-all duration-300 active:scale-95"
+              className="md:backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center px-[20px] py-[32.5px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] cursor-pointer hover:bg-white/70 transition-all duration-300 active:scale-95"
             >
               <div className="w-[22.5px] h-[22.5px] relative flex items-center justify-center">
                 <img alt="Compass" className="w-full h-full object-contain" src={imgContainer3} />
@@ -199,7 +189,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
             {/* Tile 2: Dress Code */}
             <motion.div
               variants={cardRise}
-              className="backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center p-[25px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)]"
+              className="md:backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center p-[25px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)]"
             >
               <div className="w-[22.524px] h-[17.5px] relative flex items-center justify-center">
                 <img alt="Hanger" className="w-full h-full object-contain" src={imgContainer4} />
@@ -218,7 +208,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
           {/* Card 2: Resepsi Pernikahan */}
           <motion.div
             variants={cardRise}
-            className="backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-none rounded-tr-none rounded-bl-[100px] rounded-br-[100px] w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)]"
+            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-none rounded-tr-none rounded-bl-[100px] rounded-br-[100px] w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)]"
           >
             <div className="w-full flex flex-col items-center">
               <div className="w-[27.5px] h-[26px] relative flex items-center justify-center animate-bounce-slow">

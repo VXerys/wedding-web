@@ -24,14 +24,15 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
     }
 
     const lenis = new Lenis({
-      lerp: 0.09,
+      lerp: 0.11,
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
       syncTouch: true,
-      syncTouchLerp: 0.08,
-      touchMultiplier: 1,
-      wheelMultiplier: 0.9,
+      syncTouchLerp: 0.12,
+      touchMultiplier: 0.85,
+      wheelMultiplier: 0.85,
+      overscroll: false,
     });
 
     lenisRef.current = lenis;

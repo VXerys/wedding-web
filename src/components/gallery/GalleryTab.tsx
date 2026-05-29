@@ -5,7 +5,6 @@ import { useMemo } from "react";
 import type { GuestbookEntry } from "@/types/guestbook";
 import { motion } from "framer-motion";
 import {
-  fadeIn,
   fadeUp,
   photoMain,
   photoLeft,
@@ -31,13 +30,13 @@ export default function GalleryTab({
   error,
 }: GalleryTabProps) {
   const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
-  const imgBotanical1 = "/images/figma/d540e9f3235a86d6904c5eb0df6518a696ba706e.png";
-  const imgBotanical2 = "/images/figma/0075a5a667093bb6693efe3ca1de31736ffe19a9.png";
+  const imgBotanical1 = "/images/corner-acara.svg";
+  const imgBotanical2 = "/images/corner-acara.svg";
   const imgMainMoment = "/images/figma/539710a16a8e4593b04177a7287d1a686cb3c49f.png";
   const imgDetailMoment = "/images/figma/58df4d3861d556a32d9611d7ebe181f409759b8b.png";
   const imgDetailMoment1 = "/images/figma/bc72238c81bb18fc6dc53a32f0916a126009f9d5.png";
-  const imgContainer = "/images/figma/68c0a575e0429a3317cb3b9703ca1501cde92e9a.svg";
-  const imgContainer1 = "/images/figma/28e90c3f7da422ea4d9d412db4bafb955718abd2.svg";
+  const imgContainer = "/images/centered-divider.svg";
+  const imgContainer1 = "/images/centered-divider.svg";
   const imgIcon = "/images/figma/f0a0985e4ec65be955672ab2b838ad9b600c13e5.svg";
 
   const visibleEntries = useMemo(() => entries.slice(0, 2), [entries]);
@@ -74,41 +73,28 @@ export default function GalleryTab({
       />
 
       {/* Decorative blurs */}
-      <div className="absolute bg-[#e2e8df] blur-[30px] left-[-80px] mix-blend-multiply opacity-25 rounded-full w-[400px] h-[400px] top-[-80px] pointer-events-none" />
-      <div className="absolute bg-[#e2e8df] blur-[30px] bottom-[507.25px] mix-blend-multiply opacity-25 right-[-160px] rounded-full w-[450px] h-[450px] pointer-events-none" />
+      <div className="absolute bg-[radial-gradient(circle,rgba(226,232,223,0.46)_0%,rgba(226,232,223,0.18)_45%,transparent_72%)] left-[-80px] opacity-25 rounded-full w-[400px] h-[400px] top-[-80px] pointer-events-none" />
+      <div className="absolute bg-[radial-gradient(circle,rgba(226,232,223,0.46)_0%,rgba(226,232,223,0.18)_45%,transparent_72%)] bottom-[507.25px] opacity-25 right-[-160px] rounded-full w-[450px] h-[450px] pointer-events-none" />
 
-      {/* Botanical Sketches */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={sectionViewport}
-        variants={fadeIn}
-        className="absolute right-[4.1px] w-[151.8px] h-[151.8px] top-[68.09px] flex items-center justify-center pointer-events-none z-10"
-      >
-        <div className="rotate-12 w-[128px] h-[128px] opacity-10 relative">
-          <img
-            alt=""
-            className="absolute left-0 max-w-none w-full h-full top-0 object-contain"
-            src={imgBotanical1}
-          />
-        </div>
-      </motion.div>
+      {/* Botanical Corner Decoration - top right */}
+      <div className="absolute right-0 top-0 w-[160px] h-[160px] flex items-start justify-end pointer-events-none z-0 overflow-hidden">
+        <img
+          alt=""
+          className="w-full h-full object-contain"
+          style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.9) opacity(0.12)" }}
+          src={imgBotanical1}
+        />
+      </div>
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={sectionViewport}
-        variants={fadeIn}
-        className="absolute bottom-[140.12px] w-[135.7px] h-[135.7px] left-[-11.88px] flex items-center justify-center pointer-events-none z-10"
-      >
-        <div className="-rotate-45 w-[96px] h-[96px] opacity-7 relative">
-          <img
-            alt=""
-            className="absolute left-0 max-w-none w-full h-full top-0 object-contain"
-            src={imgBotanical2}
-          />
-        </div>
-      </motion.div>
+      {/* Botanical Corner Decoration - bottom left */}
+      <div className="absolute left-0 bottom-0 w-[140px] h-[140px] flex items-end justify-start pointer-events-none z-0 overflow-hidden">
+        <img
+          alt=""
+          className="w-full h-full object-contain rotate-180"
+          style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.9) opacity(0.10)" }}
+          src={imgBotanical2}
+        />
+      </div>
 
       {/* Smooth Transition Masks */}
       <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#FDFCF9] to-transparent pointer-events-none z-15" />
@@ -142,13 +128,13 @@ export default function GalleryTab({
             </motion.h2>
             <motion.div
               variants={lineExpand}
-              className="flex gap-[12px] items-center justify-center pt-[11.8px] w-full"
+              className="flex items-center justify-center pt-[11.8px] w-full"
             >
-              <div className="bg-[rgba(212,175,55,0.3)] h-[0.5px] w-[48px]" />
-              <div className="w-[11.397px] h-[11.397px] relative flex items-center justify-center">
-                <img alt="" className="w-full h-full object-contain" src={imgContainer} />
+              <div className="flex items-center justify-center gap-3 w-full max-w-[240px]">
+                <span className="block h-px flex-1 bg-[rgba(212,175,55,0.4)]" />
+                <span className="text-[#D4AF37] text-sm">◆</span>
+                <span className="block h-px flex-1 bg-[rgba(212,175,55,0.4)]" />
               </div>
-              <div className="bg-[rgba(212,175,55,0.3)] h-[0.5px] w-[48px]" />
             </motion.div>
           </motion.div>
 
@@ -259,13 +245,17 @@ export default function GalleryTab({
             </motion.h2>
             <motion.div
               variants={lineExpand}
-              className="flex gap-[12px] items-center justify-center pt-[7.8px] w-full"
+              className="flex items-center justify-center pt-[7.8px] w-full"
             >
-              <div className="bg-[rgba(212,175,55,0.2)] h-[0.5px] w-[32px]" />
-              <div className="w-[8.615px] h-[8.346px] relative flex items-center justify-center">
-                <img alt="" className="w-full h-full object-contain" src={imgContainer1} />
+              <div className="flex items-center justify-center gap-3 w-full max-w-[240px]">
+                <span className="block h-px flex-1 bg-[rgba(212,175,55,0.4)]" />
+                <img
+                  alt="divider icon"
+                  src="/images/figma/d745edfa5a6618dd70dff20b2a6531d6e9e0306d.svg"
+                  style={{ width: 16, height: 16, objectFit: "contain" }}
+                />
+                <span className="block h-px flex-1 bg-[rgba(212,175,55,0.4)]" />
               </div>
-              <div className="bg-[rgba(212,175,55,0.2)] h-[0.5px] w-[32px]" />
             </motion.div>
             <motion.p
               variants={fadeUp}
@@ -285,10 +275,10 @@ export default function GalleryTab({
           >
             {isLoading && (
               <>
-                <div className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
+                <div className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
                   <div className="w-full h-[96px] rounded-[12px] bg-[rgba(95,95,88,0.08)] animate-pulse" />
                 </div>
-                <div className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
+                <div className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
                   <div className="w-full h-[96px] rounded-[12px] bg-[rgba(95,95,88,0.08)] animate-pulse" />
                 </div>
               </>
@@ -298,7 +288,7 @@ export default function GalleryTab({
               <motion.div
                 key={entry.id}
                 variants={cardRise}
-                className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
+                className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
               >
                 <div className="w-full flex items-start justify-between">
                   <div className="flex flex-col gap-[3px] items-start">
@@ -324,7 +314,7 @@ export default function GalleryTab({
             {!isLoading && visibleEntries.length === 0 && (
               <motion.div
                 variants={cardRise}
-                className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
+                className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
               >
                 <p className="font-body font-normal text-[14px] text-[rgba(95,95,88,0.6)] text-center">
                   Belum ada ucapan.
@@ -335,7 +325,7 @@ export default function GalleryTab({
             {!isLoading && error && (
               <motion.div
                 variants={cardRise}
-                className="backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
+                className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
               >
                 <p className="font-body font-normal text-[12px] text-red-500 text-center">
                   {error}
