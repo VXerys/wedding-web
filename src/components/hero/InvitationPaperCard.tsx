@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 
 interface InvitationPaperCardProps {
   guestName: string;
+  variant?: 'cover' | 'home';
+  showButton?: boolean;
+  onOpen?: () => void;
 }
 
 const cardVariants = {
@@ -18,45 +21,96 @@ const cardVariants = {
   },
 };
 
-export default function InvitationPaperCard({ guestName }: InvitationPaperCardProps) {
-  return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={cardVariants}
-      className="relative w-full max-w-[320px] bg-gradient-to-br from-white via-[#faf9f6]/95 to-[#f5f0e8]/90 backdrop-blur-md border border-[#D4AF37]/30 rounded-2xl shadow-card p-3 z-10 mx-auto"
+const GoldDivider = () => (
+  <div className="flex items-center gap-2 w-full justify-center">
+    <div className="w-6 h-[0.5px] bg-[#D4AF37]/30" />
+    <span className="text-[#D4AF37] text-[8px] select-none leading-none">◆</span>
+    <div className="w-6 h-[0.5px] bg-[#D4AF37]/30" />
+  </div>
+);
+
+export default function InvitationPaperCard({
+  guestName,
+  variant = "home",
+  showButton = false,
+  onOpen,
+}: InvitationPaperCardProps) {
+  const isCover = variant === "cover";
+  
+  // Landscape dimensions:
+  // - Cover variant: w-[280px] h-[168px] rounded-[18px]
+  // - Home variant: w-[86vw] max-w-[340px] h-[168px] rounded-[22px]
+  const sizeClasses = isCover
+    ? "w-[280px] h-[168px] rounded-[18px]"
+    : "w-[86vw] max-w-[340px] h-[168px] rounded-[22px]";
+
+  const CardContent = () => (
+    <div
+      className={`relative ${sizeClasses} bg-gradient-to-br from-white via-[#faf9f6]/95 to-[#f5f0e8]/90 border border-[#D4AF37]/30 shadow-card p-3 flex items-center justify-center select-none overflow-hidden mx-auto`}
     >
-      {/* Inner border */}
-      <div className="border-[0.5px] border-[#D4AF37]/15 rounded-[14px] p-6 flex flex-col items-center justify-center text-center">
+      {/* Double hairline gold border */}
+      <div className="absolute inset-[3px] border border-[#D4AF37]/15 rounded-[inherit] pointer-events-none" />
+
+      {/* Fine inner border */}
+      <div className="w-full h-full border-[0.5px] border-[#D4AF37]/15 rounded-[inherit] p-2 flex flex-col items-center justify-center text-center">
         {/* Top Ornament */}
-        <div className="flex items-center gap-2 mb-4 w-full justify-center">
-          <div className="w-8 h-[0.5px] bg-[#D4AF37]/30" />
-          <span className="text-[#D4AF37] text-[10px] select-none">◆</span>
-          <div className="w-8 h-[0.5px] bg-[#D4AF37]/30" />
-        </div>
+        <GoldDivider />
 
         {/* Salutation */}
-        <p className="font-body text-[10px] uppercase tracking-[0.2em] text-slate-500">
+        <p className="font-body text-[9px] uppercase tracking-[0.2em] text-slate-500 mt-1">
           Dear Sir / Madam
         </p>
 
         {/* Guest Name */}
-        <h2 className="font-display text-2xl font-light italic text-slate-700 mt-2 max-w-full break-words">
+        <h2
+          className={`font-display font-light italic text-slate-700 text-center break-words max-w-full leading-tight ${
+            isCover ? "text-xl mt-1 px-2" : "text-2xl mt-2 px-3"
+          }`}
+        >
           {guestName}
         </h2>
 
         {/* Invitation Text */}
-        <p className="font-display text-sm italic text-slate-500 mt-3 max-w-[240px] leading-relaxed">
+        <p
+          className={`font-display italic text-slate-500 ${
+            isCover
+              ? "text-[10px] mt-1.5 max-w-[200px] leading-normal"
+              : "text-xs mt-2.5 max-w-[240px] leading-relaxed"
+          }`}
+        >
           You are cordially invited to celebrate our union.
         </p>
 
-        {/* Bottom Ornament */}
-        <div className="flex items-center gap-2 mt-4 w-full justify-center">
-          <div className="w-8 h-[0.5px] bg-[#D4AF37]/30" />
-          <span className="text-[#D4AF37] text-[10px] select-none">◆</span>
-          <div className="w-8 h-[0.5px] bg-[#D4AF37]/30" />
-        </div>
+        {/* Bottom Ornament or Button */}
+        {showButton ? (
+          <button
+            type="button"
+            onClick={onOpen}
+            className="mt-2 px-6 py-1 bg-[#D4AF37] hover:bg-[#B8962E] active:scale-[0.98] text-white text-[10px] uppercase tracking-wider rounded-full shadow-md font-semibold transition-all cursor-pointer pointer-events-auto"
+          >
+            Buka Undangan
+          </button>
+        ) : (
+          <div className="mt-1">
+            <GoldDivider />
+          </div>
+        )}
       </div>
-    </motion.div>
+    </div>
   );
+
+  if (variant === "home") {
+    return (
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={cardVariants}
+      >
+        <CardContent />
+      </motion.div>
+    );
+  }
+
+  return <CardContent />;
 }
+

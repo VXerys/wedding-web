@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
+import InvitationPaperCard from "../hero/InvitationPaperCard";
 
 type CoverState = "closed" | "opening" | "opened";
 
@@ -18,23 +19,10 @@ export default function CoverEnvelope({
 }: CoverEnvelopeProps) {
   const [coverState, setCoverState] = useState<CoverState>("closed");
   const [mounted, setMounted] = useState(false);
-  const [cardTranslateY, setCardTranslateY] = useState(-65);
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     setMounted(true);
-
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setCardTranslateY(-70);
-      } else {
-        setCardTranslateY(-65);
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const shouldReduceMotion = mounted && prefersReducedMotion;
@@ -131,10 +119,11 @@ export default function CoverEnvelope({
 
       {/* 
         ENVELOPE SCENE CONTAINER
-        - Dimensions: 300px x 200px (Landscape 3:2 aspect ratio)
+        - Dimensions: 340px x 220px
+        - Responsive CSS scale transform classes in className
       */}
       <div
-        className="relative w-[300px] h-[200px] overflow-visible rounded-2xl flex flex-col items-center justify-end z-10 cursor-pointer"
+        className="relative w-[340px] h-[220px] scale-[0.88] xs:scale-95 sm:scale-100 origin-center overflow-visible rounded-2xl flex flex-col items-center justify-end z-10 cursor-pointer"
         style={{ perspective: "1200px" }}
       >
         {/* ── 1. ENVELOPE BACK PANEL (z-10) ── */}
@@ -145,17 +134,17 @@ export default function CoverEnvelope({
           }}
         />
 
-        {/* ── 2. ENVELOPE TOP FLAP (Dynamic z-index: 50 closed, 5 open/opening) ── */}
+        {/* ── 2. ENVELOPE TOP FLAP (Dynamic z-index: 60 closed, 20 open/opening) ── */}
         <motion.div
-          className="absolute top-0 left-0 right-0 h-[130px] pointer-events-none"
+          className="absolute top-0 left-0 right-0 h-[135px] pointer-events-none"
           style={{
             transformOrigin: "top center",
             transformStyle: "preserve-3d",
           }}
-          initial={{ rotateX: 0, zIndex: 50, opacity: 1 }}
+          initial={{ rotateX: 0, zIndex: 60, opacity: 1 }}
           animate={{
             rotateX: coverState === "closed" ? 0 : -160,
-            zIndex: coverState === "closed" ? 50 : 5,
+            zIndex: coverState === "closed" ? 60 : 20,
             opacity: coverState === "closed" ? 1 : 0.9,
           }}
           transition={{
@@ -175,12 +164,12 @@ export default function CoverEnvelope({
           >
             <svg
               className="w-full h-full filter drop-shadow-md"
-              viewBox="0 0 300 130"
+              viewBox="0 0 340 135"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M0 0 L150 130 L300 0 Z" fill="#E8ECE9" />
-              <path d="M0 0 L150 130 L300 0" stroke="rgba(150,165,155,0.3)" strokeWidth="1.5" />
+              <path d="M0 0 L170 135 L340 0 Z" fill="#E8ECE9" />
+              <path d="M0 0 L170 135 L340 0" stroke="rgba(150,165,155,0.3)" strokeWidth="1.5" />
             </svg>
           </div>
 
@@ -195,14 +184,14 @@ export default function CoverEnvelope({
           >
             <svg
               className="w-full h-full filter drop-shadow-sm"
-              viewBox="0 0 300 130"
+              viewBox="0 0 340 135"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               {/* Rich Gold Gradient Lining */}
-              <path d="M0 0 L150 130 L300 0 Z" fill="url(#goldGrad)" />
+              <path d="M0 0 L170 135 L340 0 Z" fill="url(#goldGrad)" />
               {/* Decorative dashed gold crease line */}
-              <path d="M8 0 L150 120 L292 0" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="3 3" />
+              <path d="M8 0 L170 125 L332 0" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="3 3" />
               
               <defs>
                 <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -223,16 +212,16 @@ export default function CoverEnvelope({
 
         {/* ── 3. INVITATION CARD (z-30, Slides out of top-[-150px] clipping zone) ── */}
         <div 
-          className="absolute top-[-150px] left-0 right-0 h-[350px] overflow-hidden rounded-b-2xl z-30 pointer-events-none"
-          style={{ clipPath: "inset(0px round 0px 0px 16px 16px)" }}
+          className="absolute top-[-150px] left-0 right-0 h-[370px] overflow-hidden z-30 pointer-events-none"
+          style={{ clipPath: "inset(0px round 0px 0px 22px 22px)" }}
         >
           <motion.div
-            className="absolute top-[155px] left-3 right-3 h-[190px] bg-white rounded-xl shadow-md border border-gold-200/20 flex flex-col items-center justify-between p-5 text-center pointer-events-auto"
-            initial={shouldReduceMotion ? { y: cardTranslateY, scale: 1, opacity: 1 } : { y: 40, scale: 0.96, opacity: 0.95 }}
+            className="absolute top-[150px] left-1/2 -translate-x-1/2 w-[280px] h-[168px] pointer-events-auto"
+            initial={shouldReduceMotion ? { y: -60, scale: 1, opacity: 1 } : { y: 110, scale: 0.96, opacity: 0 }}
             animate={
               coverState === "closed"
-                ? { y: 40, scale: 0.96, opacity: 0.95 }
-                : { y: cardTranslateY, scale: 1, opacity: 1 }
+                ? { y: 110, scale: 0.96, opacity: 0 }
+                : { y: -60, scale: 1, opacity: 1 }
             }
             transition={{
               type: "spring",
@@ -241,45 +230,26 @@ export default function CoverEnvelope({
               delay: coverState === "opening" ? 0.45 : 0,
             }}
           >
-            <div className="w-full flex flex-col items-center pt-2">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-gold-500 font-medium">
-                Kepada Yth.
-              </p>
-              <h2 className="mt-2.5 font-display font-light text-xl italic text-slate-800 max-w-full break-words leading-tight px-1">
-                {guestName}
-              </h2>
-              <div className="w-6 h-[0.5px] bg-gold-400/30 mt-3" />
-            </div>
-
-            <button
-              type="button"
-              disabled={coverState !== "opened"}
-              onClick={(e) => {
-                e.stopPropagation();
-                onOpened();
-              }}
-              className={`w-full max-w-[160px] py-2 text-white rounded-full text-[10px] font-semibold tracking-wider transition-all uppercase shadow-gold mb-1 ${
-                coverState === "opened"
-                  ? "bg-gold-400 hover:bg-gold-500 cursor-pointer active:scale-[0.98]"
-                  : "bg-gold-300/40 cursor-default opacity-50"
-              }`}
-            >
-              Buka Undangan
-            </button>
+            <InvitationPaperCard
+              guestName={guestName}
+              variant="cover"
+              showButton={coverState === "opened"}
+              onOpen={onOpened}
+            />
           </motion.div>
         </div>
 
         {/* ── 4. ENVELOPE FRONT POCKET (z-40, Pure CSS Folds with Shadow & Depth) ── */}
-        <div className="absolute bottom-0 left-0 right-0 h-[85px] z-40 pointer-events-none filter drop-shadow-[0_-3px_6px_rgba(0,0,0,0.06)]">
+        <div className="absolute bottom-0 left-0 right-0 h-[120px] z-40 pointer-events-none filter drop-shadow-[0_-3px_6px_rgba(0,0,0,0.06)]">
           {/* Left fold */}
           <div
             className="absolute inset-0 bg-[#EFF2F0] border-r border-black/5"
-            style={{ clipPath: "polygon(0% 0%, 43.3% 100%, 0% 100%)" }}
+            style={{ clipPath: "polygon(0% 0%, 44% 100%, 0% 100%)" }}
           />
           {/* Right fold */}
           <div
             className="absolute inset-0 bg-[#EFF2F0] border-l border-black/5"
-            style={{ clipPath: "polygon(100% 0%, 56.7% 100%, 100% 100%)" }}
+            style={{ clipPath: "polygon(100% 0%, 56% 100%, 100% 100%)" }}
           />
           {/* Bottom fold */}
           <div
@@ -287,16 +257,16 @@ export default function CoverEnvelope({
             style={{ clipPath: "polygon(0% 100%, 50% 47%, 100% 100%)" }}
           />
           {/* Gold seam trim lines */}
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 300 85" fill="none">
-            <path d="M0 0 L130 85" stroke="rgba(150,165,155,0.3)" strokeWidth="1.2" />
-            <path d="M300 0 L170 85" stroke="rgba(150,165,155,0.3)" strokeWidth="1.2" />
-            <path d="M0 85 L150 40 L300 85" stroke="rgba(150,165,155,0.18)" strokeWidth="1.2" />
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 340 120" fill="none">
+            <path d="M0 0 L150 120" stroke="rgba(150,165,155,0.3)" strokeWidth="1.2" />
+            <path d="M340 0 L190 120" stroke="rgba(150,165,155,0.3)" strokeWidth="1.2" />
+            <path d="M0 120 L170 56 L340 120" stroke="rgba(150,165,155,0.18)" strokeWidth="1.2" />
           </svg>
         </div>
 
-        {/* ── 5. OPEN BUTTON / WAX SEAL (z-60, Fades/scales out on click) ── */}
+        {/* ── 5. OPEN BUTTON / WAX SEAL (z-70, Fades/scales out on click) ── */}
         <motion.div
-          className="absolute left-1/2 -translate-x-1/2 top-[102px] z-60"
+          className="absolute left-1/2 -translate-x-1/2 top-[107px] z-70"
           initial={{ scale: 1, opacity: 1 }}
           animate={
             coverState === "closed"

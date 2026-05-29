@@ -4,6 +4,14 @@ const config: Config = {
   content: ["./src/app/**/*.{ts,tsx}", "./src/components/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      screens: {
+        xs: "375px",
+      },
+      zIndex: {
+        45: "45",
+        60: "60",
+        70: "70",
+      },
       fontFamily: {
         display: ["var(--font-display)", "Georgia", "serif"],
         body: ["var(--font-body)", "system-ui", "sans-serif"],
