@@ -101,19 +101,7 @@ export default function CoverEnvelope({
             background: "radial-gradient(circle at center, transparent 70%, rgba(212, 175, 55, 0.03) 100%)",
           }}
         />
-        {/* Sage Watercolor Washes */}
-        <div
-          className="absolute -top-20 -left-20 w-[300px] h-[300px] rounded-full opacity-[0.45]"
-          style={{
-            background: "radial-gradient(circle, rgba(226, 232, 223, 0.44) 0%, rgba(226, 232, 223, 0.18) 42%, transparent 72%)",
-          }}
-        />
-        <div
-          className="absolute -bottom-20 -right-20 w-[350px] h-[350px] rounded-full opacity-[0.45]"
-          style={{
-            background: "radial-gradient(circle, rgba(226, 232, 223, 0.44) 0%, rgba(226, 232, 223, 0.18) 42%, transparent 72%)",
-          }}
-        />
+        {/* Sage Watercolor Washes removed */}
       </div>
 
       {/* Subtitle / Header */}

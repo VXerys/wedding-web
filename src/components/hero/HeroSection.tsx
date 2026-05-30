@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import { useMemo } from "react";
 import CountdownTimer from "@/components/countdown/CountdownTimer";
 import InvitationPaperCard from "@/components/hero/InvitationPaperCard";
 import {
@@ -22,6 +23,10 @@ interface HeroSectionProps {
   showFooter?: boolean;
 }
 
+const IMG_BRANDON_PROFILE = "/images/figma/brandon_profile.png";
+const IMG_MEYCA_PROFILE = "/images/figma/meyca_profile.png";
+const IMG_FADED_TEMPLE_FOOTER = "/images/figma/faded_temple_footer.png";
+
 export default function HeroSection({
   guestName = "Tamu Undangan",
   isOpened = true,
@@ -30,13 +35,17 @@ export default function HeroSection({
 }: HeroSectionProps) {
   const prefersReducedMotion = useReducedMotion();
   const eventDate = process.env.NEXT_PUBLIC_EVENT_DATE ?? "2026-07-12T09:00:00+07:00";
-  const eventDateText = new Intl.DateTimeFormat("id-ID", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "Asia/Jakarta",
-  }).format(new Date(eventDate));
+  const eventDateText = useMemo(
+    () =>
+      new Intl.DateTimeFormat("id-ID", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        timeZone: "Asia/Jakarta",
+      }).format(new Date(eventDate)),
+    [eventDate]
+  );
 
   const heroMotion = prefersReducedMotion
     ? {
@@ -54,74 +63,14 @@ export default function HeroSection({
         },
       };
 
-  const imgBrandonProfile = "/images/figma/brandon_profile.png";
-  const imgMeycaProfile = "/images/figma/meyca_profile.png";
-  const imgFadedTempleFooter = "/images/figma/faded_temple_footer.png";
-
   return (
     <div className="relative w-full min-h-screen text-[#1a1d14] font-body overflow-hidden">
-      {/* Styles Injection */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        .paper-texture {
-          background-image: url('https://www.transparenttextures.com/patterns/p6.png');
-          opacity: 0.15;
-        }
-        .watercolor-bloom {
-          background: radial-gradient(circle, rgba(226, 232, 223, 0.44) 0%, rgba(226, 232, 223, 0.18) 42%, transparent 72%);
-          opacity: 0.55;
-        }
-        .gold-vignette {
-          background: radial-gradient(circle at center, transparent 70%, rgba(212, 175, 55, 0.03) 100%);
-        }
-        .double-hairline-border {
-          position: relative;
-          box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.3), 0 0 0 4px rgba(212, 175, 55, 0.08);
-        }
-        .double-hairline-border::after {
-          content: '';
-          position: absolute;
-          inset: -8px;
-          border: 0.5px solid rgba(212, 175, 55, 0.15);
-          border-radius: inherit;
-          pointer-events: none;
-        }
-        .floating-leaf {
-          animation: float 12s ease-in-out infinite;
-        }
-        @keyframes float {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          33% { transform: translate(10px, -15px) rotate(5deg); }
-          66% { transform: translate(-8px, -25px) rotate(-3deg); }
-        }
-        .fade-in {
-          animation: fadeIn 1.5s ease-out forwards;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .carved-shadow {
-          box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);
-        }
-        @keyframes shine {
-          0% { x: -100%; }
-          100% { x: 200%; }
-        }
-        .animate-shine {
-          animation: shine 4.5s infinite linear;
-        }
-      ` }} />
-
       {/* Botanical Heritage Background Layers */}
       <div className="absolute inset-0 pointer-events-none z-0">
         {/* Base Texture */}
         <div className="absolute inset-0 paper-texture"></div>
         <div className="absolute inset-0 gold-vignette"></div>
-        {/* Sage Watercolor Washes */}
-        <div className="absolute -top-20 -left-20 w-[400px] h-[400px] watercolor-bloom bg-[#e2e8df] rounded-full"></div>
-        <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] watercolor-bloom bg-[#e2e8df] rounded-full"></div>
-        <div className="absolute bottom-1/4 -left-40 w-[450px] h-[450px] watercolor-bloom bg-[#e9ece3] rounded-full"></div>
-        <div className="absolute -bottom-20 right-0 w-[600px] h-[600px] watercolor-bloom bg-[#e2e8df] rounded-full"></div>
+        {/* Sage Watercolor Washes removed */}
         {/* Background images removed as requested */}
         {/* Bottom transition mask to blend with the next section */}
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#FDFCF9] to-transparent z-10" />
@@ -250,7 +199,7 @@ export default function HeroSection({
               <Image
                 alt="Brandon"
                 className="w-full h-full object-cover"
-                src={imgBrandonProfile}
+                src={IMG_BRANDON_PROFILE}
                 width={208}
                 height={256}
                 sizes="208px"
@@ -303,7 +252,7 @@ export default function HeroSection({
               <Image
                 alt="Meyca"
                 className="w-full h-full object-cover"
-                src={imgMeycaProfile}
+                src={IMG_MEYCA_PROFILE}
                 width={208}
                 height={256}
                 sizes="208px"
@@ -341,7 +290,7 @@ export default function HeroSection({
             <Image
               alt="faded temple"
               className="w-full h-full object-cover scale-150"
-              src={imgFadedTempleFooter}
+              src={IMG_FADED_TEMPLE_FOOTER}
               width={430}
               height={400}
               sizes="430px"

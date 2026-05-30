@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import {
   fadeUp,
@@ -17,22 +17,21 @@ interface EventDetailsProps {
   showFooter?: boolean;
 }
 
-export default function EventDetails({ guestName: _guestName = "", children, showFooter = true }: EventDetailsProps) {
-  const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
-  const imgBotanical1 = "/images/corner-acara.svg";
-  const imgBotanical2 = "/images/corner-acara.svg";
-  const imgContainer = "/images/centered-divider.svg";
-  const imgIcon = "/images/figma/8bb27d8679887499077b1019b0deade4bec132f9.svg";
-  const imgContainer1 = "/images/figma/e009ff2efd2048f5dc22b9cc5eabd9fb1beed9bb.svg";
-  const imgContainer2 = "/images/figma/970b3fe4ee7db38ce0afbe3361524e81fe190ad9.svg";
-  const imgIcon1 = "/images/figma/59b5a93121e1d44887e59105049029be0124e467.svg";
-  const imgContainer3 = "/images/figma/74cbb449b4007381b2e0d44b230d55a566c8aefd.svg";
-  const imgContainer4 = "/images/figma/3c32ef3ac9d7a54e19a727e671662fdb5289ea62.svg";
-  const imgIcon2 = "/images/figma/cea24c81bc9873e3acccde10cb974e063df0d38a.svg";
+const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
+const imgBotanical1 = "/images/corner-acara.svg";
+const imgBotanical2 = "/images/corner-acara.svg";
+const imgIcon = "/images/figma/8bb27d8679887499077b1019b0deade4bec132f9.svg";
+const imgContainer1 = "/images/figma/e009ff2efd2048f5dc22b9cc5eabd9fb1beed9bb.svg";
+const imgContainer2 = "/images/figma/970b3fe4ee7db38ce0afbe3361524e81fe190ad9.svg";
+const imgIcon1 = "/images/figma/59b5a93121e1d44887e59105049029be0124e467.svg";
+const imgContainer3 = "/images/figma/74cbb449b4007381b2e0d44b230d55a566c8aefd.svg";
+const imgContainer4 = "/images/figma/3c32ef3ac9d7a54e19a727e671662fdb5289ea62.svg";
+const imgIcon2 = "/images/figma/cea24c81bc9873e3acccde10cb974e063df0d38a.svg";
+const mapsUrl =
+  process.env.NEXT_PUBLIC_MAPS_URL ??
+  "https://maps.google.com/?q=-6.2088,106.8456";
 
-  const mapsUrl =
-    process.env.NEXT_PUBLIC_MAPS_URL ??
-    "https://maps.google.com/?q=-6.2088,106.8456";
+function EventDetails({ guestName: _guestName = "", children, showFooter = true }: EventDetailsProps) {
 
   return (
     <div className="relative w-full flex flex-col items-center overflow-x-hidden">
@@ -42,9 +41,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
         style={{ backgroundImage: `url('${imgImage}')` }}
       />
 
-      {/* Decorative background blurs */}
-      <div className="absolute bg-[radial-gradient(circle,rgba(226,232,223,0.46)_0%,rgba(226,232,223,0.18)_45%,transparent_72%)] left-[-80px] opacity-25 rounded-full w-[400px] h-[400px] top-[-80px] pointer-events-none" />
-      <div className="absolute bg-[radial-gradient(circle,rgba(226,232,223,0.46)_0%,rgba(226,232,223,0.18)_45%,transparent_72%)] bottom-[574.5px] opacity-25 right-[-160px] rounded-full w-[450px] h-[450px] pointer-events-none" />
+      {/* Decorative background blurs removed */}
 
       {/* Botanical Corner Decoration - top right */}
       <div className="absolute right-0 top-0 w-[160px] h-[160px] flex items-start justify-end pointer-events-none z-0 overflow-hidden">
@@ -304,3 +301,5 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
     </div>
   );
 }
+
+export default memo(EventDetails);

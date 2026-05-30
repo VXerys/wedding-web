@@ -13,12 +13,36 @@ export interface CountdownValues {
   isMounted: boolean;
 }
 
+const INITIAL_COUNTDOWN_VALUES: CountdownValues = {
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  isExpired: false,
+  isMounted: false,
+};
+
+function areCountdownValuesEqual(a: CountdownValues, b: CountdownValues) {
+  return (
+    a.days === b.days &&
+    a.hours === b.hours &&
+    a.minutes === b.minutes &&
+    a.seconds === b.seconds &&
+    a.isExpired === b.isExpired &&
+    a.isMounted === b.isMounted
+  );
+}
+
+function getNextSecondDelay() {
+  return Math.max(250, 1000 - (Date.now() % 1000) + 20);
+}
+
 /**
  * Calculates the remaining time between now and the given target date.
  *
- * @param targetDate — ISO 8601 string (e.g. "2026-07-12T09:00:00+07:00")
- *                     or date-only string (e.g. "2026-07-12"), which defaults
- *                     to midnight local time.
+ * @param targetDate ISO 8601 string (e.g. "2026-07-12T09:00:00+07:00")
+ *                   or date-only string (e.g. "2026-07-12"), which defaults
+ *                   to midnight local time.
  * @returns live countdown values that update every second.
  */
 export function useCountdown(targetDate: string): CountdownValues {
@@ -42,31 +66,33 @@ export function useCountdown(targetDate: string): CountdownValues {
   }, [targetDate]);
 
   // Initial state uses a stable placeholder to avoid hydration mismatch.
-  const [remaining, setRemaining] = useState<CountdownValues>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-    isExpired: false,
-    isMounted: false,
-  });
+  const [remaining, setRemaining] = useState<CountdownValues>(INITIAL_COUNTDOWN_VALUES);
 
   useEffect(() => {
-    // Sync immediately on mount
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- sync on mount
-    setRemaining(computeRemaining());
+    let timeoutId: number | null = null;
+    let isCancelled = false;
 
-    const id = setInterval(() => {
+    const tick = () => {
       const next = computeRemaining();
-      setRemaining(next);
+      setRemaining((current) => (areCountdownValuesEqual(current, next) ? current : next));
 
-      // Stop the timer once expired — no reason to keep ticking
-      if (next.isExpired) clearInterval(id);
-    }, 1000);
+      if (next.isExpired || isCancelled) {
+        return;
+      }
 
-    return () => clearInterval(id);
+      timeoutId = window.setTimeout(tick, getNextSecondDelay());
+    };
+
+    tick();
+
+    return () => {
+      isCancelled = true;
+
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+      }
+    };
   }, [computeRemaining]);
 
   return remaining;
 }
-

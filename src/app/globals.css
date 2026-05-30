@@ -90,6 +90,67 @@
     will-change: transform, opacity;
   }
 
+
+  .paper-texture {
+    background-image: url('https://www.transparenttextures.com/patterns/p6.png');
+    opacity: 0.15;
+  }
+
+  .watercolor-bloom {
+    background: radial-gradient(circle, rgba(226, 232, 223, 0.44) 0%, rgba(226, 232, 223, 0.18) 42%, transparent 72%);
+    opacity: 0.55;
+  }
+
+  .gold-vignette {
+    background: radial-gradient(circle at center, transparent 70%, rgba(212, 175, 55, 0.03) 100%);
+  }
+
+  .double-hairline-border {
+    position: relative;
+    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.3), 0 0 0 4px rgba(212, 175, 55, 0.08);
+  }
+
+  .double-hairline-border::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border: 0.5px solid rgba(212, 175, 55, 0.15);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .floating-leaf {
+    animation: float 12s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(10px, -15px) rotate(5deg); }
+    66% { transform: translate(-8px, -25px) rotate(-3deg); }
+  }
+
+  .fade-in {
+    animation: fadeIn 1.5s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .carved-shadow {
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+
+  @keyframes shine {
+    0% { x: -100%; }
+    100% { x: 200%; }
+  }
+
+  .animate-shine {
+    animation: shine 4.5s infinite linear;
+  }
+
   /* Cormorant Garamond display text — matches Figma's full OpenType rendering:
      font-optical-sizing: auto  → adjusts stroke contrast per size (key for Figma fidelity)
      swsh/calt/liga             → enables calligraphic swashes & ligatures (the ornate & ampersand)

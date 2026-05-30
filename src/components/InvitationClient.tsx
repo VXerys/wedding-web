@@ -6,17 +6,26 @@ import InvitationTabs from "@/components/InvitationTabs";
 import { LenisProvider } from "@/components/LenisProvider";
 import { decodeGuestName } from "@/lib/utils";
 
-const invitationImagePaths = [
-  "/images/figma/temple_illustration.png",
+const nearHomeImagePaths = [
   "/images/figma/brandon_profile.png",
   "/images/figma/meyca_profile.png",
+];
+
+const deferredInvitationImagePaths = [
   "/images/figma/faded_temple_footer.png",
-  "/images/figma/botanical_sketch_bottom.png",
   "/images/figma/539710a16a8e4593b04177a7287d1a686cb3c49f.png",
   "/images/figma/58df4d3861d556a32d9611d7ebe181f409759b8b.png",
   "/images/figma/bc72238c81bb18fc6dc53a32f0916a126009f9d5.png",
   "/images/figma/4950129f7a7d256f5721da392cec38d7d6b33daf.png",
 ];
+
+function decodeImages(paths: string[]) {
+  paths.forEach((src) => {
+    const image = new window.Image();
+    image.src = src;
+    void image.decode?.().catch(() => undefined);
+  });
+}
 
 export default function InvitationClient() {
   const searchParams = useSearchParams();
@@ -64,14 +73,6 @@ export default function InvitationClient() {
       return undefined;
     }
 
-    const preloadImages = () => {
-      invitationImagePaths.forEach((src) => {
-        const image = new window.Image();
-        image.src = src;
-        void image.decode?.().catch(() => undefined);
-      });
-    };
-
     const idleWindow = window as Window & {
       requestIdleCallback?: (
         callback: IdleRequestCallback,
@@ -80,16 +81,32 @@ export default function InvitationClient() {
       cancelIdleCallback?: (handle: number) => void;
     };
 
-    if (typeof idleWindow.requestIdleCallback === "function") {
-      const idleId = idleWindow.requestIdleCallback(preloadImages, {
-        timeout: 1200,
-      });
+    const timeoutIds: number[] = [];
+    const idleIds: number[] = [];
 
-      return () => idleWindow.cancelIdleCallback?.(idleId);
-    }
+    const scheduleDecode = (paths: string[], delay: number, timeout: number) => {
+      const timeoutId = window.setTimeout(() => {
+        if (typeof idleWindow.requestIdleCallback === "function") {
+          const idleId = idleWindow.requestIdleCallback(() => decodeImages(paths), {
+            timeout,
+          });
+          idleIds.push(idleId);
+          return;
+        }
 
-    const timeoutId = window.setTimeout(preloadImages, 250);
-    return () => window.clearTimeout(timeoutId);
+        decodeImages(paths);
+      }, delay);
+
+      timeoutIds.push(timeoutId);
+    };
+
+    scheduleDecode(nearHomeImagePaths, 120, 700);
+    scheduleDecode(deferredInvitationImagePaths, 900, 1600);
+
+    return () => {
+      timeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      idleIds.forEach((idleId) => idleWindow.cancelIdleCallback?.(idleId));
+    };
   }, [isOpened]);
 
   return (

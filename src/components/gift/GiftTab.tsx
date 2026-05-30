@@ -62,9 +62,7 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
         style={{ backgroundImage: `url('${imgImage}')` }}
       />
 
-      {/* Decorative Blurs */}
-      <div className="absolute bg-[radial-gradient(circle,rgba(226,232,223,0.46)_0%,rgba(226,232,223,0.18)_45%,transparent_72%)] left-[-80px] opacity-25 rounded-full w-[400px] h-[400px] top-[-80px] pointer-events-none z-1" />
-      <div className="absolute bg-[radial-gradient(circle,rgba(226,232,223,0.46)_0%,rgba(226,232,223,0.18)_45%,transparent_72%)] bottom-[849.25px] opacity-25 right-[-160px] rounded-full w-[450px] h-[450px] pointer-events-none z-2" />
+      {/* Decorative Blurs removed */}
 
       {/* Botanical Corner Decoration - top right */}
       <div className="absolute right-0 top-0 w-[160px] h-[160px] flex items-start justify-end pointer-events-none z-4 overflow-hidden">

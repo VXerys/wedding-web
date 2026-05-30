@@ -48,34 +48,58 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
     updateInstance(lenis);
 
     let rafId: number | null = null;
+    let idleFrames = 0;
     const raf = (time: number) => {
       lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
+
+      const isIdle = lenis.isScrolling === false && Math.abs(lenis.velocity) < 0.01;
+      if (isIdle) {
+        idleFrames += 1;
+      } else {
+        idleFrames = 0;
+      }
+
+      if (idleFrames >= 3) {
+        rafId = null;
+        idleFrames = 0;
+        return;
+      }
+
+      rafId = window.requestAnimationFrame(raf);
     };
 
     const startRaf = () => {
-      if (rafId === null) {
-        rafId = requestAnimationFrame(raf);
+      if (document.hidden || rafId !== null) {
+        return;
       }
+
+      idleFrames = 0;
+      rafId = window.requestAnimationFrame(raf);
     };
 
     const stopRaf = () => {
       if (rafId !== null) {
-        cancelAnimationFrame(rafId);
+        window.cancelAnimationFrame(rafId);
         rafId = null;
       }
+
+      idleFrames = 0;
     };
 
     const handleVisibilityChange = () => {
       if (document.hidden) {
         stopRaf();
-        return;
       }
-
-      startRaf();
     };
 
-    startRaf();
+    const originalScrollTo = lenis.scrollTo.bind(lenis);
+    lenis.scrollTo = ((target, options) => {
+      startRaf();
+      return originalScrollTo(target, options);
+    }) as Lenis["scrollTo"];
+
+    const unsubscribeVirtualScroll = lenis.on("virtual-scroll", startRaf);
+    const startRafFromInput = () => startRaf();
 
     // Sync Lenis scroll position with hash links
     const handleHashClick = (e: MouseEvent) => {
@@ -96,11 +120,18 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
 
     document.addEventListener("click", handleHashClick);
     document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("wheel", startRafFromInput, { passive: true });
+    window.addEventListener("touchmove", startRafFromInput, { passive: true });
+    window.addEventListener("keydown", startRafFromInput);
 
     return () => {
       active = false;
       document.removeEventListener("click", handleHashClick);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("wheel", startRafFromInput);
+      window.removeEventListener("touchmove", startRafFromInput);
+      window.removeEventListener("keydown", startRafFromInput);
+      unsubscribeVirtualScroll();
       stopRaf();
       lenis.destroy();
       lenisRef.current = null;
