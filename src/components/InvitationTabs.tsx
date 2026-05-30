@@ -155,17 +155,23 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
   const scrollFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
+    let active = true;
     if (!isOpened) {
       lastScrollY.current = 0;
       showHeaderRef.current = true;
-      setShowHeader(true);
+      const handle = requestAnimationFrame(() => {
+        if (active) setShowHeader(true);
+      });
 
       if (scrollFrameRef.current !== null) {
         window.cancelAnimationFrame(scrollFrameRef.current);
         scrollFrameRef.current = null;
       }
 
-      return undefined;
+      return () => {
+        active = false;
+        cancelAnimationFrame(handle);
+      };
     }
 
     const handleScroll = () => {

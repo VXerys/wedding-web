@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InvitationPaperCard from "../hero/InvitationPaperCard";
 
 type CoverState = "closed" | "opening" | "opened";
@@ -20,9 +20,19 @@ export default function CoverEnvelope({
   const [coverState, setCoverState] = useState<CoverState>("closed");
   const [mounted, setMounted] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const openTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    setMounted(true);
+    const handle = requestAnimationFrame(() => {
+      setMounted(true);
+    });
+
+    return () => {
+      cancelAnimationFrame(handle);
+      if (openTimerRef.current !== null) {
+        window.clearTimeout(openTimerRef.current);
+      }
+    };
   }, []);
 
   const shouldReduceMotion = mounted && prefersReducedMotion;
@@ -42,8 +52,9 @@ export default function CoverEnvelope({
     // Step 2: Flap rotates open (rotateX 0 to -160deg) over 0.6s with 0.2s delay
     // Step 3: Card slides out over 0.8s with 0.45s delay (0.2s button + 0.25s delay)
     // Transition state to 'opened' at 1.3s
-    setTimeout(() => {
+    openTimerRef.current = window.setTimeout(() => {
       setCoverState("opened");
+      openTimerRef.current = null;
     }, 1300);
   };
 

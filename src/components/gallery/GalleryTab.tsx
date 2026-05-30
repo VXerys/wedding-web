@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import type { GuestbookEntry } from "@/types/guestbook";
 import { motion } from "framer-motion";
 import {
@@ -49,13 +49,20 @@ export default function GalleryTab({
     return `${diffDays} DAYS AGO`;
   }
 
+  const [now, setNow] = useState<number>(0);
+  useEffect(() => {
+    const handle = requestAnimationFrame(() => {
+      setNow(Date.now());
+    });
+    return () => cancelAnimationFrame(handle);
+  }, []);
+
   const visibleEntries = useMemo(() => {
-    const now = Date.now();
     return entries.slice(0, 2).map((entry) => ({
       ...entry,
       relativeTime: getRelativeTime(entry.created_at, now),
     }));
-  }, [entries]);
+  }, [entries, now]);
 
   const getAttendanceStyle = (attendance: GuestbookEntry["attendance"]) => {
     if (attendance === "Hadir") {

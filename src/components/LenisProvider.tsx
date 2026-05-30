@@ -18,9 +18,18 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
   const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
 
   useEffect(() => {
+    let active = true;
+    const updateInstance = (val: Lenis | null) => {
+      requestAnimationFrame(() => {
+        if (active) setLenisInstance(val);
+      });
+    };
+
     if (!enabled) {
-      setLenisInstance(null);
-      return undefined;
+      updateInstance(null);
+      return () => {
+        active = false;
+      };
     }
 
     const lenis = new Lenis({
@@ -36,7 +45,7 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
     });
 
     lenisRef.current = lenis;
-    setLenisInstance(lenis);
+    updateInstance(lenis);
 
     let rafId: number | null = null;
     const raf = (time: number) => {
@@ -89,12 +98,13 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
+      active = false;
       document.removeEventListener("click", handleHashClick);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       stopRaf();
       lenis.destroy();
       lenisRef.current = null;
-      setLenisInstance(null);
+      updateInstance(null);
     };
   }, [enabled]);
 

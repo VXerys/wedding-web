@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { memo } from "react";
 
 interface InvitationPaperCardProps {
   guestName: string;
@@ -29,7 +30,7 @@ const GoldDivider = () => (
   </div>
 );
 
-export default function InvitationPaperCard({
+function InvitationPaperCard({
   guestName,
   variant = "home",
   showButton = false,
@@ -44,7 +45,7 @@ export default function InvitationPaperCard({
     ? "w-[280px] h-[154px] rounded-[16px]"
     : "w-[82vw] max-w-[280px] h-[154px] rounded-[16px]";
 
-  const CardContent = () => (
+  const cardContent = (
     <div
       className={`relative ${sizeClasses} bg-gradient-to-br from-white via-[#faf9f6]/95 to-[#f5f0e8]/90 border border-[#D4AF37]/30 shadow-card p-3 flex items-center justify-center select-none overflow-hidden mx-auto`}
     >
@@ -106,11 +107,12 @@ export default function InvitationPaperCard({
         animate="visible"
         variants={cardVariants}
       >
-        <CardContent />
+        {cardContent}
       </motion.div>
     );
   }
 
-  return <CardContent />;
+  return cardContent;
 }
 
+export default memo(InvitationPaperCard);

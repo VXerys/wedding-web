@@ -19,7 +19,7 @@ export function useScrollAnimation({
   amount = 0.15,
   margin = "0px",
 }: UseScrollAnimationOptions = {}) {
-  const ref = useRef<any>(null);
+  const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once, amount, margin });
   const controls = useAnimation();
 
