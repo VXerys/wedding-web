@@ -106,7 +106,7 @@ export default function CoverEnvelope({
       </div>
 
       {/* Subtitle / Header */}
-      <div className="mb-8 z-10">
+      <div className="mb-36 z-10">
         <p className="text-body-sm uppercase tracking-[0.32em] text-gold-400 font-medium">
           Undangan Pernikahan
         </p>
@@ -123,12 +123,12 @@ export default function CoverEnvelope({
         - Responsive CSS scale transform classes in className
       */}
       <div
-        className="relative w-[340px] h-[220px] scale-[0.88] xs:scale-95 sm:scale-100 origin-center overflow-visible rounded-2xl flex flex-col items-center justify-end z-10 cursor-pointer"
+        className="relative w-[340px] h-[220px] scale-[0.88] xs:scale-95 sm:scale-100 origin-center overflow-visible rounded-b-2xl flex flex-col items-center justify-end z-10 cursor-pointer"
         style={{ perspective: "1200px" }}
       >
         {/* ── 1. ENVELOPE BACK PANEL (z-10) ── */}
         <div
-          className="absolute inset-0 rounded-2xl bg-[#E8ECE9] border border-[rgba(150,165,155,0.25)] shadow-sm z-10"
+          className="absolute inset-0 rounded-b-2xl bg-[#E8ECE9] border border-[rgba(150,165,155,0.25)] shadow-sm z-10"
           style={{
             backgroundImage: "radial-gradient(circle at 50% 40%, #EFF2F0 0%, #E8ECE9 100%)",
           }}
@@ -168,8 +168,8 @@ export default function CoverEnvelope({
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M0 0 L170 135 L340 0 Z" fill="#E8ECE9" />
-              <path d="M0 0 L170 135 L340 0" stroke="rgba(150,165,155,0.3)" strokeWidth="1.5" />
+              <path d="M0 0 L170 131 L340 0 Z" fill="#E8ECE9" />
+              <path d="M0 0 L170 131 L340 0" stroke="rgba(150,165,155,0.3)" strokeWidth="1.5" />
             </svg>
           </div>
 
@@ -189,9 +189,9 @@ export default function CoverEnvelope({
               xmlns="http://www.w3.org/2000/svg"
             >
               {/* Rich Gold Gradient Lining */}
-              <path d="M0 0 L170 135 L340 0 Z" fill="url(#goldGrad)" />
+              <path d="M0 0 L170 131 L340 0 Z" fill="url(#goldGrad)" />
               {/* Decorative dashed gold crease line */}
-              <path d="M8 0 L170 125 L332 0" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="3 3" />
+              <path d="M8 0 L170 121 L332 0" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="3 3" />
               
               <defs>
                 <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -216,12 +216,12 @@ export default function CoverEnvelope({
           style={{ clipPath: "inset(0px round 0px 0px 22px 22px)" }}
         >
           <motion.div
-            className="absolute top-[150px] left-1/2 -translate-x-1/2 w-[280px] h-[168px] pointer-events-auto"
-            initial={shouldReduceMotion ? { y: -60, scale: 1, opacity: 1 } : { y: 110, scale: 0.96, opacity: 0 }}
+            className="absolute top-[150px] left-1/2 -translate-x-1/2 w-[280px] h-[154px] pointer-events-auto"
+            initial={shouldReduceMotion ? { y: -46, scale: 1, opacity: 1 } : { y: 110, scale: 0.96, opacity: 0 }}
             animate={
               coverState === "closed"
                 ? { y: 110, scale: 0.96, opacity: 0 }
-                : { y: -60, scale: 1, opacity: 1 }
+                : { y: -46, scale: 1, opacity: 1 }
             }
             transition={{
               type: "spring",
@@ -283,28 +283,6 @@ export default function CoverEnvelope({
           }}
         >
           <div className="relative flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
-            {/* Botanical Leaf ornament behind/above the seal */}
-            <div className="absolute bottom-[36px] left-[-2px] pointer-events-none select-none w-14 h-14 origin-bottom -rotate-12 z-0">
-              <svg
-                className="w-full h-full text-gold-400 drop-shadow-[0_1px_3px_rgba(0,0,0,0.15)]"
-                viewBox="0 0 64 64"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M32 60 C32 60 12 42 16 26 C18 16 26 10 32 2 C38 10 46 16 48 26 C52 42 32 60 32 60 Z"
-                  fill="rgba(212,175,55,0.2)"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M32 2 C32 2 30 18 24 26 M32 2 C32 2 34 18 40 26 M32 2 L32 50"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                />
-              </svg>
-            </div>
-
             {/* Crimson Red Wax Seal Shape */}
             <div className="w-14 h-14 rounded-[48%_52%_49%_51%] bg-gradient-to-br from-[#c0392b] via-[#e74c3c] to-[#962d22] shadow-[0_6px_12px_rgba(150,45,34,0.4),inset_0_2px_4px_rgba(255,255,255,0.4),inset_0_-2px_4px_rgba(0,0,0,0.5)] flex items-center justify-center p-[3px] select-none active:scale-95 transition-transform">
               {/* Inner Stamped Area */}

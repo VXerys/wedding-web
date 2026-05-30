@@ -38,11 +38,11 @@ export default function InvitationPaperCard({
   const isCover = variant === "cover";
   
   // Landscape dimensions:
-  // - Cover variant: w-[280px] h-[168px] rounded-[18px]
-  // - Home variant: w-[86vw] max-w-[340px] h-[168px] rounded-[22px]
+  // - Cover variant: w-[280px] h-[154px] rounded-[16px]
+  // - Home variant: w-[82vw] max-w-[280px] h-[154px] rounded-[16px]
   const sizeClasses = isCover
-    ? "w-[280px] h-[168px] rounded-[18px]"
-    : "w-[86vw] max-w-[340px] h-[168px] rounded-[22px]";
+    ? "w-[280px] h-[154px] rounded-[16px]"
+    : "w-[82vw] max-w-[280px] h-[154px] rounded-[16px]";
 
   const CardContent = () => (
     <div
@@ -64,7 +64,7 @@ export default function InvitationPaperCard({
         {/* Guest Name */}
         <h2
           className={`font-display font-light italic text-slate-700 text-center break-words max-w-full leading-tight ${
-            isCover ? "text-xl mt-1 px-2" : "text-2xl mt-2 px-3"
+            isCover ? "text-xl mt-1 px-2" : "text-xl mt-1.5 px-3"
           }`}
         >
           {guestName}
@@ -75,7 +75,7 @@ export default function InvitationPaperCard({
           className={`font-display italic text-slate-500 ${
             isCover
               ? "text-[10px] mt-1.5 max-w-[200px] leading-normal"
-              : "text-xs mt-2.5 max-w-[240px] leading-relaxed"
+              : "text-[10px] mt-1.5 max-w-[210px] leading-relaxed"
           }`}
         >
           You are cordially invited to celebrate our union.

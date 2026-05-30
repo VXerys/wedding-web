@@ -244,6 +244,25 @@ export default function RSVPForm({
               )}
             </div>
 
+            <div className="w-full flex flex-col gap-[8px] items-start">
+              <label htmlFor="rsvp-message" className="font-body font-medium text-[11px] tracking-[1.32px] text-[#c9a84c]">
+                UCAPAN & DOA
+              </label>
+              <textarea
+                id="rsvp-message"
+                value={formData.message}
+                onChange={(event) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    message: event.target.value,
+                  }))
+                }
+                placeholder="Tulis ucapan selamat & doa restu Anda..."
+                rows={4}
+                className="w-full bg-[rgba(255,255,255,0.6)] border border-solid border-[rgba(201,168,76,0.1)] rounded-[16px] px-[17px] py-[15px] font-body text-[13px] text-[#1a1d14] placeholder-[rgba(95,95,88,0.3)] focus:outline-none focus:border-[#c9a84c] transition-colors resize-none"
+              />
+            </div>
+
             {submitError && (
               <div className="rounded-[16px] border border-red-200 bg-red-50 px-4 py-3 font-body text-[12px] text-red-500">
                 {submitError}

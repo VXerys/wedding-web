@@ -287,7 +287,10 @@ export default function GalleryTab({
             {!isLoading && visibleEntries.map((entry) => (
               <motion.div
                 key={entry.id}
-                variants={cardRise}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
               >
                 <div className="w-full flex items-start justify-between">
@@ -313,7 +316,9 @@ export default function GalleryTab({
 
             {!isLoading && visibleEntries.length === 0 && (
               <motion.div
-                variants={cardRise}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
                 className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
               >
                 <p className="font-body font-normal text-[14px] text-[rgba(95,95,88,0.6)] text-center">
@@ -324,7 +329,9 @@ export default function GalleryTab({
 
             {!isLoading && error && (
               <motion.div
-                variants={cardRise}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
                 className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
               >
                 <p className="font-body font-normal text-[12px] text-red-500 text-center">

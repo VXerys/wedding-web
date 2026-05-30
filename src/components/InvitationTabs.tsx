@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from "react";
 import { useState, useEffect, useRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue } from "framer-motion";
 import CoverEnvelope from "@/components/cover/CoverEnvelope";
 import HeroSection from "@/components/hero/HeroSection";
 import EventDetails from "@/components/details/EventDetails";
@@ -11,6 +11,128 @@ import GalleryTab from "@/components/gallery/GalleryTab";
 import GiftTab from "@/components/gift/GiftTab";
 import { useLenis } from "@/components/LenisProvider";
 import { useGuestbookFeed } from "@/hooks/useGuestbookFeed";
+
+const MENU_SLIDE_ANIMATION = {
+  initial: { x: "calc(100% + 100px)" },
+  enter: { x: "0", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } },
+  exit: {
+    x: "calc(100% + 100px)",
+    transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
+  },
+} as const;
+
+interface NavLinkProps {
+  heading: string;
+  index: number;
+  onClick: () => void;
+}
+
+const NavLink = ({ heading, index, onClick }: NavLinkProps) => {
+  const ref = useRef<HTMLButtonElement | null>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+    x.set((mouseX / rect.width - 0.5) * 12);
+    y.set((mouseY / rect.height - 0.5) * 8);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      initial="initial"
+      whileHover="whileHover"
+      className="group relative flex items-center justify-between border-b border-[rgba(201,168,76,0.15)] py-4 uppercase transition-colors duration-500 w-full"
+    >
+      <button
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={onClick}
+        className="w-full text-left focus:outline-none cursor-pointer"
+      >
+        <div className="relative flex items-baseline">
+          <span className="mr-3 font-display font-light italic text-[14px] text-[#c9a84c] transition-colors duration-500">
+            {index}.
+          </span>
+          <motion.span
+            variants={{
+              initial: { x: 0 },
+              whileHover: { x: -8 },
+            }}
+            transition={{
+              type: "spring",
+              staggerChildren: 0.04,
+              delayChildren: 0.05,
+            }}
+            style={{ x, y }}
+            className="relative z-10 block font-display font-light italic text-[22px] text-[#585e4d] group-hover:text-[#c9a84c] transition-colors duration-500"
+          >
+            {heading.split("").map((letter, letterIndex) => (
+              <motion.span
+                key={`${heading}-${letterIndex}`}
+                variants={{
+                  initial: { x: 0 },
+                  whileHover: { x: 8 },
+                }}
+                transition={{ type: "spring", stiffness: 150, damping: 12 }}
+                className="inline-block"
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </motion.span>
+            ))}
+          </motion.span>
+        </div>
+      </button>
+    </motion.div>
+  );
+};
+
+const Curve = () => {
+  const [viewportHeight, setViewportHeight] = useState(900);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportHeight(window.innerHeight);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const initialPath = `M100 0 L200 0 L200 ${viewportHeight} L100 ${viewportHeight} Q-100 ${viewportHeight / 2} 100 0`;
+  const targetPath = `M100 0 L200 0 L200 ${viewportHeight} L100 ${viewportHeight} Q100 ${viewportHeight / 2} 100 0`;
+
+  const curve = {
+    initial: { d: initialPath },
+    enter: {
+      d: targetPath,
+      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
+    },
+    exit: {
+      d: initialPath,
+      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
+    },
+  } as const;
+
+  return (
+    <svg className="absolute -left-[99px] top-0 h-full w-[100px] overflow-visible stroke-none fill-white">
+      <motion.path variants={curve} initial="initial" animate="enter" exit="exit" />
+    </svg>
+  );
+};
 
 interface InvitationTabsProps {
   guestName: string;
@@ -154,43 +276,36 @@ export default function InvitationTabs({ guestName, isOpened, onOpen }: Invitati
             />
             {/* Drawer */}
             <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 bottom-0 z-50 w-[260px] right-0 md:right-[calc(50vw-215px)] bg-[#faf9f6]/95 md:backdrop-blur-[20px] border-l border-[rgba(201,168,76,0.15)] shadow-[0_0_50px_rgba(0,0,0,0.1)] p-8 flex flex-col justify-center items-center"
-              style={{
-                backgroundImage: "url('https://www.transparenttextures.com/patterns/p6.png')",
-                backgroundSize: "100px 100px",
-              }}
+              variants={MENU_SLIDE_ANIMATION}
+              initial="initial"
+              animate="enter"
+              exit="exit"
+              className="fixed top-0 bottom-0 z-50 w-[260px] right-0 md:right-[calc(50vw-215px)] bg-white border-l border-[rgba(201,168,76,0.15)] shadow-[0_0_50px_rgba(0,0,0,0.1)] px-8 py-16 flex flex-col justify-between items-stretch overflow-visible"
             >
-              {/* Menu Links */}
-              <div className="flex flex-col gap-8 items-center w-full">
-                <button
-                  onClick={() => scrollToSection("section-home")}
-                  className="font-display font-light italic text-[24px] text-[#585e4d] hover:text-[#c9a84c] transition-colors cursor-pointer"
-                >
-                  Utama
-                </button>
-                <button
-                  onClick={() => scrollToSection("section-gallery")}
-                  className="font-display font-light italic text-[24px] text-[#585e4d] hover:text-[#c9a84c] transition-colors cursor-pointer"
-                >
-                  Galeri
-                </button>
-                <button
-                  onClick={() => scrollToSection("section-acara")}
-                  className="font-display font-light italic text-[24px] text-[#585e4d] hover:text-[#c9a84c] transition-colors cursor-pointer"
-                >
-                  Detail Acara
-                </button>
-                <button
-                  onClick={() => scrollToSection("section-gift")}
-                  className="font-display font-light italic text-[24px] text-[#585e4d] hover:text-[#c9a84c] transition-colors cursor-pointer"
-                >
-                  Kirim Hadiah
-                </button>
+              <div className="flex flex-col gap-6 w-full mt-4">
+                <div className="border-b border-[rgba(201,168,76,0.15)] pb-2 text-[10px] uppercase tracking-widest text-[#5f5f58]/60 font-body">
+                  <p>Explore Menu</p>
+                </div>
+                
+                <div className="flex flex-col w-full">
+                  <NavLink heading="Utama" index={1} onClick={() => scrollToSection("section-home")} />
+                  <NavLink heading="Galeri" index={2} onClick={() => scrollToSection("section-gallery")} />
+                  <NavLink heading="Detail Acara" index={3} onClick={() => scrollToSection("section-acara")} />
+                  <NavLink heading="Kirim Hadiah" index={4} onClick={() => scrollToSection("section-gift")} />
+                </div>
               </div>
+
+              {/* Simple Footer inside Drawer */}
+              <div className="flex flex-col items-center gap-1.5 text-center mt-auto pt-6 border-t border-[rgba(201,168,76,0.1)] w-full">
+                <span className="font-display font-light italic text-[14px] text-[#585e4d]">
+                  Brandon & Meyca
+                </span>
+                <span className="font-body text-[8px] tracking-[0.3em] text-[#5f5f58]/40 uppercase">
+                  12.07.2026
+                </span>
+              </div>
+
+              <Curve />
             </motion.div>
           </>
         )}
@@ -198,14 +313,16 @@ export default function InvitationTabs({ guestName, isOpened, onOpen }: Invitati
 
       {/* Main active tab contents */}
       <div className="flex-1 flex flex-col w-full">
-        <div id="section-home">
-          <HeroSection
-            guestName={guestName}
-            isOpened={isOpened}
-            onOpen={onOpen}
-            showFooter={false}
-          />
-        </div>
+        {isOpened && (
+          <div id="section-home">
+            <HeroSection
+              guestName={guestName}
+              isOpened={isOpened}
+              onOpen={onOpen}
+              showFooter={false}
+            />
+          </div>
+        )}
         {isOpened && <OpenedInvitationSections guestName={guestName} />}
       </div>
     </div>
