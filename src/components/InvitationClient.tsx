@@ -1,21 +1,22 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import InvitationTabs from "@/components/InvitationTabs";
 import { LenisProvider } from "@/components/LenisProvider";
 import { decodeGuestName } from "@/lib/utils";
 
 const nearHomeImagePaths = [
+  "/images/centered-home.svg",
   "/images/figma/brandon_profile.png",
   "/images/figma/meyca_profile.png",
 ];
 
 const deferredInvitationImagePaths = [
-  "/images/figma/faded_temple_footer.png",
   "/images/figma/539710a16a8e4593b04177a7287d1a686cb3c49f.png",
   "/images/figma/58df4d3861d556a32d9611d7ebe181f409759b8b.png",
   "/images/figma/bc72238c81bb18fc6dc53a32f0916a126009f9d5.png",
+  "/images/figma/faded_temple_footer.png",
   "/images/figma/4950129f7a7d256f5721da392cec38d7d6b33daf.png",
 ];
 
@@ -100,8 +101,8 @@ export default function InvitationClient() {
       timeoutIds.push(timeoutId);
     };
 
-    scheduleDecode(nearHomeImagePaths, 120, 700);
-    scheduleDecode(deferredInvitationImagePaths, 900, 1600);
+    scheduleDecode(nearHomeImagePaths, 80, 600);
+    scheduleDecode(deferredInvitationImagePaths, 1200, 1800);
 
     return () => {
       timeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
@@ -114,7 +115,7 @@ export default function InvitationClient() {
       <InvitationTabs
         guestName={guestName}
         isOpened={isOpened}
-        onOpen={() => setIsOpened(true)}
+        onOpen={() => startTransition(() => setIsOpened(true))}
         onClose={() => setIsOpened(false)}
       />
     </LenisProvider>

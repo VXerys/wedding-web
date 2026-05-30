@@ -92,8 +92,28 @@
 
 
   .paper-texture {
-    background-image: url('https://www.transparenttextures.com/patterns/p6.png');
+    background-image: url('/images/textures/p6.png');
     opacity: 0.15;
+    contain: paint;
+    isolation: isolate;
+  }
+
+  .cover-paper-texture {
+    background-image: url('/images/textures/p6.png');
+    background-size: 100px 100px;
+    opacity: 0.12;
+    contain: paint;
+    isolation: isolate;
+  }
+
+  .section-grid-texture {
+    background-image: url('/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png');
+    background-position: left top;
+    background-repeat: repeat;
+    background-size: 8px 8px;
+    opacity: 0.15;
+    contain: paint;
+    isolation: isolate;
   }
 
   .watercolor-bloom {

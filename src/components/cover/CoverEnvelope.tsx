@@ -69,7 +69,7 @@ export default function CoverEnvelope({
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#FAF9F6] md:left-1/2 md:-translate-x-1/2 md:max-w-[430px] w-full px-4 text-center select-none"
+      className="cover-overlay fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#FAF9F6] md:left-1/2 md:-translate-x-1/2 md:max-w-[430px] w-full px-4 text-center select-none"
       role="button"
       tabIndex={0}
       aria-label="Ketuk untuk membuka undangan"
@@ -88,13 +88,7 @@ export default function CoverEnvelope({
       {/* Botanical Heritage Background Layers */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         {/* Base Texture */}
-        <div
-          className="absolute inset-0 opacity-[0.12]"
-          style={{
-            backgroundImage: "url('https://www.transparenttextures.com/patterns/p6.png')",
-            backgroundSize: "100px 100px",
-          }}
-        />
+        <div className="absolute inset-0 cover-paper-texture" />
         <div
           className="absolute inset-0"
           style={{
@@ -139,6 +133,7 @@ export default function CoverEnvelope({
           style={{
             transformOrigin: "top center",
             transformStyle: "preserve-3d",
+            willChange: "transform, opacity",
           }}
           initial={{ rotateX: 0, zIndex: 60, opacity: 1 }}
           animate={{
@@ -216,6 +211,7 @@ export default function CoverEnvelope({
         >
           <motion.div
             className="absolute top-[150px] left-1/2 -translate-x-1/2 w-[280px] h-[154px] pointer-events-auto"
+            style={{ willChange: "transform, opacity" }}
             initial={shouldReduceMotion ? { y: -46, scale: 1, opacity: 1 } : { y: 110, scale: 0.96, opacity: 0 }}
             animate={
               coverState === "closed"
@@ -239,7 +235,10 @@ export default function CoverEnvelope({
         </div>
 
         {/* ── 4. ENVELOPE FRONT POCKET (z-40, Pure CSS Folds with Shadow & Depth) ── */}
-        <div className="absolute bottom-0 left-0 right-0 h-[120px] z-40 pointer-events-none filter drop-shadow-[0_-3px_6px_rgba(0,0,0,0.06)]">
+        <div
+          className="absolute bottom-0 left-0 right-0 h-[120px] z-40 pointer-events-none filter drop-shadow-[0_-3px_6px_rgba(0,0,0,0.06)]"
+          style={{ isolation: "isolate" }}
+        >
           {/* Left fold */}
           <div
             className="absolute inset-0 bg-[#EFF2F0] border-r border-black/5"
@@ -276,6 +275,7 @@ export default function CoverEnvelope({
             duration: 0.2,
             ease: "easeOut",
           }}
+          style={{ willChange: "transform, opacity" }}
           onClick={(e) => {
             e.stopPropagation();
             handleOpen();

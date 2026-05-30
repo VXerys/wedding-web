@@ -94,6 +94,7 @@ export default function HeroSection({
                 src="/images/centered-home.svg"
                 width={90}
                 height={90}
+                preload
               />
             </div>
             <span className="font-body text-[11px] text-[#5f5f58]/70 tracking-[0.4em] uppercase font-medium">
@@ -203,6 +204,7 @@ export default function HeroSection({
                 width={208}
                 height={256}
                 sizes="208px"
+                fetchPriority="high"
               />
             </div>
           </div>
@@ -256,6 +258,7 @@ export default function HeroSection({
                 width={208}
                 height={256}
                 sizes="208px"
+                fetchPriority="high"
               />
             </div>
           </div>

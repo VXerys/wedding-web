@@ -17,7 +17,6 @@ interface EventDetailsProps {
   showFooter?: boolean;
 }
 
-const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
 const imgBotanical1 = "/images/corner-acara.svg";
 const imgBotanical2 = "/images/corner-acara.svg";
 const imgIcon = "/images/figma/8bb27d8679887499077b1019b0deade4bec132f9.svg";
@@ -40,10 +39,7 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
   return (
     <div className="relative w-full flex flex-col items-center overflow-x-hidden">
       {/* Background repeating grid pattern */}
-      <div
-        className="absolute inset-0 opacity-15 bg-[length:8px_8px] bg-left-top bg-repeat pointer-events-none"
-        style={{ backgroundImage: `url('${imgImage}')` }}
-      />
+      <div className="absolute inset-0 section-grid-texture pointer-events-none" />
 
       {/* Decorative background blurs removed */}
 

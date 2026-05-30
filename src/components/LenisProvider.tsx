@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import Lenis from "lenis";
+import Lenis, { type VirtualScrollData } from "lenis";
 
 interface LenisProviderProps {
   children: ReactNode;
@@ -99,8 +99,20 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
       return originalScrollTo(target, options);
     }) as Lenis["scrollTo"];
 
-    const unsubscribeVirtualScroll = lenis.on("virtual-scroll", startRaf);
+    const startRafFromVirtualScroll = ({ event }: VirtualScrollData) => {
+      if (isTouchDevice && event.type.startsWith("touch")) {
+        return;
+      }
+
+      startRaf();
+    };
+    const unsubscribeVirtualScroll = lenis.on("virtual-scroll", startRafFromVirtualScroll);
     const startRafFromInput = () => startRaf();
+    const startRafFromTouch = () => {
+      if (!isTouchDevice) {
+        startRaf();
+      }
+    };
 
     // Sync Lenis scroll position with hash links
     const handleHashClick = (e: MouseEvent) => {
@@ -122,7 +134,7 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
     document.addEventListener("click", handleHashClick);
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("wheel", startRafFromInput, { passive: true });
-    window.addEventListener("touchmove", startRafFromInput, { passive: true });
+    window.addEventListener("touchmove", startRafFromTouch, { passive: true });
     window.addEventListener("keydown", startRafFromInput);
 
     return () => {
@@ -130,7 +142,7 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
       document.removeEventListener("click", handleHashClick);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("wheel", startRafFromInput);
-      window.removeEventListener("touchmove", startRafFromInput);
+      window.removeEventListener("touchmove", startRafFromTouch);
       window.removeEventListener("keydown", startRafFromInput);
       unsubscribeVirtualScroll();
       stopRaf();

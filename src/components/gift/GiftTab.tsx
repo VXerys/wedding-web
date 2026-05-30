@@ -29,7 +29,6 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [canHover, setCanHover] = useState(false);
 
-  const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
   const imgBotanical1 = "/images/corner-acara.svg";
   const imgBotanical2 = "/images/corner-acara.svg";
   const imgFooterLeaf = "/images/figma/4950129f7a7d256f5721da392cec38d7d6b33daf.png";
@@ -61,10 +60,7 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
   return (
     <div className="relative w-full flex flex-col items-center overflow-x-hidden">
       {/* Background Repeating Grid Pattern */}
-      <div
-        className="absolute inset-0 opacity-15 bg-[length:8px_8px] bg-left-top bg-repeat pointer-events-none z-3"
-        style={{ backgroundImage: `url('${imgImage}')` }}
-      />
+      <div className="absolute inset-0 section-grid-texture pointer-events-none z-3" />
 
       {/* Decorative Blurs removed */}
 

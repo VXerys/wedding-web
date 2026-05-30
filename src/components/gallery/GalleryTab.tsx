@@ -33,7 +33,6 @@ export default function GalleryTab({
   const viewport = prefersReducedMotion ? { once: true, amount: 0.05 } : sectionViewport;
   const reducedVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.25 } } };
 
-  const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
   const imgBotanical1 = "/images/corner-acara.svg";
   const imgBotanical2 = "/images/corner-acara.svg";
   const imgMainMoment = "/images/figma/539710a16a8e4593b04177a7287d1a686cb3c49f.png";
@@ -83,10 +82,7 @@ export default function GalleryTab({
   return (
     <div className="relative w-full flex flex-col items-center overflow-x-hidden">
       {/* Background grid pattern */}
-      <div
-        className="absolute inset-0 opacity-15 bg-[length:8px_8px] bg-left-top bg-repeat pointer-events-none"
-        style={{ backgroundImage: `url('${imgImage}')` }}
-      />
+      <div className="absolute inset-0 section-grid-texture pointer-events-none" />
 
       {/* Decorative blurs removed */}
 
