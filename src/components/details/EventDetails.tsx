@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   fadeUp,
   staggerContainer,
@@ -32,6 +32,10 @@ const mapsUrl =
   "https://maps.google.com/?q=-6.2088,106.8456";
 
 function EventDetails({ guestName: _guestName = "", children, showFooter = true }: EventDetailsProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const viewport = prefersReducedMotion ? { once: true, amount: 0.05 } : sectionViewport;
+  const reducedVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.25 } } };
+
 
   return (
     <div className="relative w-full flex flex-col items-center overflow-x-hidden">
@@ -72,8 +76,8 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={sectionViewport}
-          variants={staggerContainer}
+          viewport={viewport}
+          variants={prefersReducedMotion ? reducedVariants : staggerContainer}
           className="w-full flex flex-col gap-[4px] items-center relative"
         >
           <motion.span
@@ -108,8 +112,8 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={sectionViewport}
-          variants={staggerContainer}
+          viewport={viewport}
+          variants={prefersReducedMotion ? reducedVariants : staggerContainer}
           className="w-full flex flex-col gap-[16px] items-center relative"
         >
           
@@ -261,8 +265,8 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={sectionViewport}
-            variants={staggerContainer}
+            viewport={viewport}
+            variants={prefersReducedMotion ? reducedVariants : staggerContainer}
             className="w-full flex flex-col items-center pb-[128px] pt-[32px]"
           >
             <div className="flex flex-col gap-[23.6px] items-center">
@@ -279,7 +283,7 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
                 Brandon & Meyca
               </motion.h2>
               <motion.div
-                variants={staggerContainer}
+                variants={prefersReducedMotion ? reducedVariants : staggerContainer}
                 className="flex flex-col gap-[11.8px] items-center pt-[24px]"
               >
                 <motion.div variants={lineExpand} className="bg-[rgba(201,168,76,0.3)] h-[1px] w-[40px]" />

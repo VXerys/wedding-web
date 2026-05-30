@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useMemo, useState, useEffect } from "react";
 import type { GuestbookEntry } from "@/types/guestbook";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   fadeUp,
   photoMain,
@@ -29,6 +29,10 @@ export default function GalleryTab({
   isLoading,
   error,
 }: GalleryTabProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const viewport = prefersReducedMotion ? { once: true, amount: 0.05 } : sectionViewport;
+  const reducedVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.25 } } };
+
   const imgImage = "/images/figma/8b40ecdeddf1f3897149eac1cfdfdbcb0b9f808a.png";
   const imgBotanical1 = "/images/corner-acara.svg";
   const imgBotanical2 = "/images/corner-acara.svg";
@@ -118,8 +122,8 @@ export default function GalleryTab({
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={sectionViewport}
-            variants={staggerContainer}
+            viewport={viewport}
+            variants={prefersReducedMotion ? reducedVariants : staggerContainer}
             className="w-full flex flex-col gap-[4.2px] items-center relative"
           >
             <motion.span
@@ -153,7 +157,7 @@ export default function GalleryTab({
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={sectionViewport}
+              viewport={viewport}
               variants={photoMain}
               className="-rotate-1 w-[345.7px] flex justify-center items-center transform-gpu"
               style={{ contain: "paint", isolation: "isolate" }}
@@ -181,7 +185,7 @@ export default function GalleryTab({
               <motion.div
                 initial="hidden"
                 whileInView="visible"
-                viewport={sectionViewport}
+                viewport={viewport}
                 variants={photoLeft}
                 className="rotate-2 w-[149.5px] justify-self-center transform-gpu"
                 style={{ contain: "paint", isolation: "isolate" }}
@@ -205,7 +209,7 @@ export default function GalleryTab({
               <motion.div
                 initial="hidden"
                 whileInView="visible"
-                viewport={sectionViewport}
+                viewport={viewport}
                 variants={photoRight}
                 className="-rotate-2 w-[149.5px] justify-self-center transform-gpu"
                 style={{ contain: "paint", isolation: "isolate" }}
@@ -238,8 +242,8 @@ export default function GalleryTab({
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={sectionViewport}
-            variants={staggerContainer}
+            viewport={viewport}
+            variants={prefersReducedMotion ? reducedVariants : staggerContainer}
             className="w-full flex flex-col gap-[4.2px] items-center relative"
           >
             <motion.span
@@ -280,8 +284,8 @@ export default function GalleryTab({
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={sectionViewport}
-            variants={staggerContainer}
+            viewport={viewport}
+            variants={prefersReducedMotion ? reducedVariants : staggerContainer}
             className="w-full flex flex-col gap-[16px] items-stretch relative"
           >
             {isLoading && (
@@ -362,8 +366,8 @@ export default function GalleryTab({
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={sectionViewport}
-            variants={staggerContainer}
+            viewport={viewport}
+            variants={prefersReducedMotion ? reducedVariants : staggerContainer}
             className="w-full flex flex-col items-center pb-[128px] pt-px relative"
           >
             <div className="flex flex-col gap-[23.6px] items-center relative">
@@ -399,7 +403,7 @@ export default function GalleryTab({
               </motion.div>
 
               <motion.div
-                variants={staggerContainer}
+                variants={prefersReducedMotion ? reducedVariants : staggerContainer}
                 className="flex flex-col gap-[11.8px] items-center pt-[24px]"
               >
                 <motion.div variants={lineExpand} className="bg-[rgba(212,175,55,0.3)] h-[1px] w-[40px]" />

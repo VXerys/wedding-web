@@ -4,7 +4,7 @@ import { useState } from "react";
 import { RSVPSubmitError, useRSVPSubmit } from "@/hooks/useRSVPSubmit";
 import type { AttendanceStatus, FormErrors, RSVPFormData } from "@/types/guestbook";
 import type { GuestbookEntry } from "@/types/guestbook";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   fadeUp,
   staggerContainer,
@@ -29,6 +29,10 @@ export default function RSVPForm({
   confirmEntry,
   removeEntry,
 }: RSVPFormProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const viewport = prefersReducedMotion ? { once: true, amount: 0.05 } : sectionViewport;
+  const reducedVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.25 } } };
+
   const [formData, setFormData] = useState<RSVPFormData>(() => ({
     name: guestName,
     attendance: "",
@@ -102,8 +106,8 @@ export default function RSVPForm({
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={sectionViewport}
-        variants={staggerContainer}
+        viewport={viewport}
+        variants={prefersReducedMotion ? reducedVariants : staggerContainer}
         className="w-full flex flex-col gap-[4.2px] items-center relative"
       >
         <motion.span
@@ -139,7 +143,7 @@ export default function RSVPForm({
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={sectionViewport}
+        viewport={viewport}
         variants={scaleIn}
         className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col items-center pb-[49px] pt-[32px] px-[33px] rounded-[16px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] w-full transform-gpu"
         style={{ contain: "paint", isolation: "isolate" }}

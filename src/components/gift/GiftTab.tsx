@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import BsiCardPreview from "@/components/gift/BsiCardPreview";
 import {
   fadeIn,
@@ -22,6 +22,10 @@ interface GiftTabProps {
 }
 
 function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const viewport = prefersReducedMotion ? { once: true, amount: 0.05 } : sectionViewport;
+  const reducedVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.25 } } };
+
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [canHover, setCanHover] = useState(false);
 
@@ -107,8 +111,8 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={sectionViewport}
-          variants={staggerContainer}
+          viewport={viewport}
+          variants={prefersReducedMotion ? reducedVariants : staggerContainer}
           className="w-full flex flex-col gap-[16px] items-center mb-[40px]"
         >
           <motion.h2
@@ -137,7 +141,7 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={sectionViewport}
+          viewport={viewport}
           variants={fadeIn}
           className="w-full text-center px-4 mb-[48px]"
         >
@@ -156,7 +160,7 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={sectionViewport}
+            viewport={viewport}
             variants={slideRight} // Slides from left
             whileHover={canHover ? { scale: 1.02, rotateY: 8, rotateX: -4, transition: { duration: 0.3 } } : undefined}
             className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[24px] sm:p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
@@ -186,7 +190,7 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={sectionViewport}
+            viewport={viewport}
             variants={slideLeft} // Slides from right
             whileHover={canHover ? { scale: 1.02, rotateY: -8, rotateX: -4, transition: { duration: 0.3 } } : undefined}
             className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
@@ -234,7 +238,7 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={sectionViewport}
+          viewport={viewport}
           variants={scaleIn} // Scales in
           className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col gap-[16px] items-center p-[41px] rounded-tl-[140px] rounded-tr-[140px] rounded-bl-[16px] rounded-br-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full mb-8"
           style={{ contain: "paint", isolation: "isolate" }}
@@ -276,7 +280,7 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={sectionViewport}
+          viewport={viewport}
           variants={fadeIn}
           className="w-full text-center py-8 mb-12"
         >
@@ -305,8 +309,8 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={sectionViewport}
-            variants={staggerContainer}
+            viewport={viewport}
+            variants={prefersReducedMotion ? reducedVariants : staggerContainer}
             className="flex flex-col items-center pt-[32px] relative z-10 w-full"
           >
             <motion.h2

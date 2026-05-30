@@ -6,7 +6,7 @@
 
 import type { Variants } from "framer-motion";
 
-// ─── Easing Curves ────────────────────────────────────────────────────────────
+// Easing Curves
 
 /** Smooth ease-out for entrances */
 const easeOut = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number];
@@ -16,18 +16,27 @@ const easeSpring = [0.34, 1.56, 0.64, 1] as [number, number, number, number];
 
 export const sectionViewport = {
   once: true,
-  amount: 0.16,
+  // perf: reduced from 0.16
+  amount: 0.22,
   margin: "0px 0px -12% 0px",
 } as const;
 
-// ─── Fade + Translate ─────────────────────────────────────────────────────────
+// Fade + Translate
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: {
+    opacity: 0,
+    // perf: reduced from 28
+    y: 16,
+  },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: easeOut },
+    transition: {
+      // perf: reduced from 0.7
+      duration: 0.5,
+      ease: easeOut,
+    },
   },
 };
 
@@ -36,7 +45,11 @@ export const fadeDown: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: easeOut },
+    transition: {
+      // perf: reduced from 0.6
+      duration: 0.42,
+      ease: easeOut,
+    },
   },
 };
 
@@ -44,18 +57,26 @@ export const fadeIn: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.8, ease: "easeOut" },
+    transition: {
+      // perf: reduced from 0.8
+      duration: 0.5,
+      ease: "easeOut",
+    },
   },
 };
 
-// ─── Horizontal Slides ────────────────────────────────────────────────────────
+// Horizontal Slides
 
 export const slideLeft: Variants = {
   hidden: { opacity: 0, x: 40 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.7, ease: easeOut },
+    transition: {
+      // perf: reduced from 0.7
+      duration: 0.5,
+      ease: easeOut,
+    },
   },
 };
 
@@ -64,71 +85,117 @@ export const slideRight: Variants = {
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.7, ease: easeOut },
+    transition: {
+      // perf: reduced from 0.7
+      duration: 0.5,
+      ease: easeOut,
+    },
   },
 };
 
-// ─── Scale ────────────────────────────────────────────────────────────────────
+// Scale
 
 export const scaleIn: Variants = {
   hidden: { opacity: 0, scale: 0.92 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.65, ease: easeOut },
+    transition: {
+      // perf: reduced from 0.65
+      duration: 0.45,
+      ease: easeOut,
+    },
   },
 };
 
-/** Scale with a subtle spring overshoot — great for interactive cards */
+/** Scale with a subtle spring overshoot - great for interactive cards */
 export const scaleInSpring: Variants = {
   hidden: { opacity: 0, scale: 0.88 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.7, ease: easeSpring },
+    transition: {
+      // perf: reduced from 0.7
+      duration: 0.5,
+      ease: easeSpring,
+    },
   },
 };
 
-// ─── Gallery Photo Variants ───────────────────────────────────────────────────
+// Gallery Photo Variants
 
 export const photoMain: Variants = {
-  hidden: { opacity: 0, scale: 0.9, rotate: -3 },
+  hidden: {
+    opacity: 0,
+    // perf: reduced from 0.9
+    scale: 0.92,
+    // perf: reduced from -3
+    rotate: -1,
+  },
   visible: {
     opacity: 1,
     scale: 1,
     rotate: -1,
-    transition: { duration: 0.85, ease: easeOut },
+    transition: {
+      // perf: reduced from 0.85
+      duration: 0.55,
+      ease: easeOut,
+    },
   },
 };
 
 export const photoLeft: Variants = {
-  hidden: { opacity: 0, x: -40, rotate: -4 },
+  hidden: {
+    opacity: 0,
+    // perf: reduced from -40
+    x: -32,
+    // perf: reduced from -4
+    rotate: 2,
+  },
   visible: {
     opacity: 1,
     x: 0,
     rotate: 2,
-    transition: { duration: 0.75, ease: easeOut, delay: 0.2 },
+    transition: {
+      // perf: reduced from 0.75
+      duration: 0.5,
+      ease: easeOut,
+      delay: 0.2,
+    },
   },
 };
 
 export const photoRight: Variants = {
-  hidden: { opacity: 0, x: 40, rotate: 4 },
+  hidden: {
+    opacity: 0,
+    // perf: reduced from 40
+    x: 32,
+    // perf: reduced from 4
+    rotate: -2,
+  },
   visible: {
     opacity: 1,
     x: 0,
     rotate: -2,
-    transition: { duration: 0.75, ease: easeOut, delay: 0.35 },
+    transition: {
+      // perf: reduced from 0.75
+      duration: 0.5,
+      ease: easeOut,
+      delay: 0.35,
+    },
   },
 };
 
-// ─── Stagger Container ────────────────────────────────────────────────────────
+// Stagger Container
 
 export const staggerContainer: Variants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.05,
+      // perf: reduced from 0.12
+      staggerChildren: 0.06,
+      // perf: reduced from 0.05
+      delayChildren: 0,
     },
   },
 };
@@ -137,15 +204,17 @@ export const staggerContainerSlow: Variants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.18,
-      delayChildren: 0.1,
+      // perf: reduced from 0.18
+      staggerChildren: 0.1,
+      // perf: reduced from 0.1
+      delayChildren: 0.04,
     },
   },
 };
 
-// ─── Text Reveal ─────────────────────────────────────────────────────────────
+// Text Reveal
 
-/** Word/line reveal from clip mask — use on each word span */
+/** Word/line reveal from clip mask - use on each word span */
 export const textRevealWord: Variants = {
   hidden: { opacity: 0, y: "100%" },
   visible: {
@@ -155,7 +224,7 @@ export const textRevealWord: Variants = {
   },
 };
 
-// ─── Section Header ───────────────────────────────────────────────────────────
+// Section Header
 
 /** Label above heading (e.g. "GALLERY") */
 export const labelFade: Variants = {
@@ -163,37 +232,62 @@ export const labelFade: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: easeOut },
+    transition: {
+      // perf: reduced from 0.7
+      duration: 0.42,
+      ease: easeOut,
+    },
   },
 };
 
-// ─── Divider Line ─────────────────────────────────────────────────────────────
+// Divider Line
 
 export const lineExpand: Variants = {
   hidden: { scaleX: 0, opacity: 0 },
   visible: {
     scaleX: 1,
     opacity: 1,
-    transition: { duration: 0.6, ease: easeOut },
+    transition: {
+      // perf: reduced from 0.6
+      duration: 0.38,
+      ease: easeOut,
+    },
   },
 };
 
-// ─── Card ─────────────────────────────────────────────────────────────────────
+// Card
 
 export const cardRise: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: {
+    opacity: 0,
+    // perf: reduced from 40
+    y: 20,
+  },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.75, ease: easeOut },
+    transition: {
+      // perf: reduced from 0.75
+      duration: 0.5,
+      ease: easeOut,
+    },
   },
 };
 
 export const cardRiseDelayed: Variants = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: {
+    opacity: 0,
+    // perf: reduced from 50
+    y: 22,
+  },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.75, ease: easeOut, delay: 0.2 },
+    transition: {
+      // perf: reduced from 0.75
+      duration: 0.5,
+      ease: easeOut,
+      delay: 0.2,
+    },
   },
 };

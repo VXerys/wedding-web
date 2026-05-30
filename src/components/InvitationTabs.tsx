@@ -76,19 +76,9 @@ const NavLink = ({ heading, index, onClick }: NavLinkProps) => {
             style={{ x, y }}
             className="relative z-10 block font-display font-light italic text-[22px] text-[#585e4d] group-hover:text-[#c9a84c] transition-colors duration-500"
           >
-            {heading.split("").map((letter, letterIndex) => (
-              <motion.span
-                key={`${heading}-${letterIndex}`}
-                variants={{
-                  initial: { x: 0 },
-                  whileHover: { x: 8 },
-                }}
-                transition={{ type: "spring", stiffness: 150, damping: 12 }}
-                className="inline-block"
-              >
-                {letter === " " ? "\u00A0" : letter}
-              </motion.span>
-            ))}
+            <span className="inline-block">
+              {heading}
+            </span>
           </motion.span>
         </div>
       </button>
