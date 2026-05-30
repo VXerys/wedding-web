@@ -281,7 +281,8 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
               initial="initial"
               animate="enter"
               exit="exit"
-              className="fixed top-0 bottom-0 z-50 w-[260px] right-0 md:right-[calc(50vw-215px)] bg-white border-l border-[rgba(201,168,76,0.15)] shadow-[0_0_50px_rgba(0,0,0,0.1)] px-8 py-16 flex flex-col justify-between items-stretch overflow-visible"
+              onClick={() => setIsMenuOpen(false)}
+              className="fixed top-0 bottom-0 z-50 w-[260px] right-0 md:right-[calc(50vw-215px)] bg-white border-l border-[rgba(201,168,76,0.15)] shadow-[0_0_50px_rgba(0,0,0,0.1)] px-8 py-16 flex flex-col justify-between items-stretch overflow-visible cursor-pointer"
             >
               <Curve />
 
@@ -295,10 +296,6 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
                   <NavLink heading="Galeri" index={2} onClick={() => scrollToSection("section-gallery")} />
                   <NavLink heading="Detail Acara" index={3} onClick={() => scrollToSection("section-acara")} />
                   <NavLink heading="Kirim Hadiah" index={4} onClick={() => scrollToSection("section-gift")} />
-                  <NavLink heading="Sampul Undangan" index={5} onClick={() => {
-                    setIsMenuOpen(false);
-                    onClose?.();
-                  }} />
                 </div>
               </div>
 
