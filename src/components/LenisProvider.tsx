@@ -18,6 +18,7 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
   const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
 
   useEffect(() => {
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
     let active = true;
     const updateInstance = (val: Lenis | null) => {
       requestAnimationFrame(() => {
@@ -33,13 +34,13 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
     }
 
     const lenis = new Lenis({
-      lerp: 0.11,
+      lerp: isTouchDevice ? 0.18 : 0.11,
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      syncTouch: true,
-      syncTouchLerp: 0.12,
-      touchMultiplier: 0.85,
+      syncTouch: false,
+      syncTouchLerp: 0.075,
+      touchMultiplier: 1.0,
       wheelMultiplier: 0.85,
       overscroll: false,
     });
@@ -59,7 +60,7 @@ export function LenisProvider({ children, enabled = true }: LenisProviderProps) 
         idleFrames = 0;
       }
 
-      if (idleFrames >= 3) {
+      if (idleFrames >= (isTouchDevice ? 2 : 3)) {
         rafId = null;
         idleFrames = 0;
         return;

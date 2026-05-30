@@ -336,29 +336,69 @@ function OpenedInvitationSections({ guestName }: { guestName: string }) {
     confirmEntry,
     removeEntry,
   } = useGuestbookFeed();
+  const [mountGallery, setMountGallery] = useState(false);
+  const [mountAcara, setMountAcara] = useState(false);
+  const [mountGift, setMountGift] = useState(false);
+
+  useEffect(() => {
+    const galleryTimer = window.setTimeout(() => setMountGallery(true), 80);
+    const acaraTimer = window.setTimeout(() => setMountAcara(true), 450);
+    const giftTimer = window.setTimeout(() => setMountGift(true), 900);
+
+    return () => {
+      window.clearTimeout(galleryTimer);
+      window.clearTimeout(acaraTimer);
+      window.clearTimeout(giftTimer);
+    };
+  }, []);
 
   return (
     <>
-      <div id="section-gallery" style={sectionContainmentStyle}>
-        <GalleryTab
-          showFooter={false}
-          entries={entries}
-          isLoading={isLoading}
-          error={error}
-        />
-      </div>
-      <div id="section-acara" style={sectionContainmentStyle}>
-        <EventDetails guestName={guestName} showFooter={false}>
-          <RSVPForm
-            guestName={guestName}
-            addOptimisticEntry={addOptimisticEntry}
-            confirmEntry={confirmEntry}
-            removeEntry={removeEntry}
+      <div
+        id="section-gallery"
+        style={
+          mountGallery
+            ? sectionContainmentStyle
+            : { ...sectionContainmentStyle, minHeight: "100vh" }
+        }
+      >
+        {mountGallery && (
+          <GalleryTab
+            showFooter={false}
+            entries={entries}
+            isLoading={isLoading}
+            error={error}
           />
-        </EventDetails>
+        )}
       </div>
-      <div id="section-gift" style={sectionContainmentStyle}>
-        <GiftTab showHeader={false} showFooter={true} />
+      <div
+        id="section-acara"
+        style={
+          mountAcara
+            ? sectionContainmentStyle
+            : { ...sectionContainmentStyle, minHeight: "100vh" }
+        }
+      >
+        {mountAcara && (
+          <EventDetails guestName={guestName} showFooter={false}>
+            <RSVPForm
+              guestName={guestName}
+              addOptimisticEntry={addOptimisticEntry}
+              confirmEntry={confirmEntry}
+              removeEntry={removeEntry}
+            />
+          </EventDetails>
+        )}
+      </div>
+      <div
+        id="section-gift"
+        style={
+          mountGift
+            ? sectionContainmentStyle
+            : { ...sectionContainmentStyle, minHeight: "60vh" }
+        }
+      >
+        {mountGift && <GiftTab showHeader={false} showFooter={true} />}
       </div>
     </>
   );
