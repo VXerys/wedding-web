@@ -19,7 +19,6 @@ export default function GuestbookCard({ entry }: GuestbookCardProps) {
 
   return (
     <motion.div
-      layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: entry.isPending ? 0.6 : 1, y: 0 }}
       className={`p-4 rounded-2xl bg-white/60 md:backdrop-blur-lg border border-white/25 shadow-card-sm ${

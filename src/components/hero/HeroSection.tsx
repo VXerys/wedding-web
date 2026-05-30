@@ -130,7 +130,7 @@ export default function HeroSection({
       {/* Section 1: Hero Invitation */}
       <motion.section
         suppressHydrationWarning={true}
-        className="relative min-h-[100svh] flex flex-col items-center justify-center px-[24px] pb-8 pt-[76px] z-10"
+        className="relative min-h-[100svh] flex flex-col items-center justify-center px-[24px] py-8 z-10"
         initial={heroMotion.initial}
         animate={heroMotion.animate}
         transition={heroMotion.transition}
@@ -141,8 +141,7 @@ export default function HeroSection({
             <div className="w-[90px] h-[90px] relative flex items-center justify-center mb-2">
               <Image
                 alt="centered home"
-                className="w-full h-full object-contain"
-                style={{ filter: "sepia(1) saturate(2) hue-rotate(5deg) brightness(0.85)" }}
+                className="w-full h-full object-contain opacity-90"
                 src="/images/centered-home.svg"
                 width={90}
                 height={90}
@@ -209,7 +208,7 @@ export default function HeroSection({
           <img
             alt="divider ornament"
             src="/images/centered-divider.svg"
-            style={{ width: 80, height: 80, objectFit: "contain", filter: "sepia(1) saturate(3) hue-rotate(5deg) brightness(0.75)" }}
+            style={{ width: 80, height: 80, objectFit: "contain", opacity: 0.82 }}
           />
           <span className="block h-px flex-1 bg-[#D4AF37]/30" />
         </div>
@@ -233,15 +232,15 @@ export default function HeroSection({
           whileInView="visible"
           viewport={sectionViewport}
           variants={slideRight}
-          className="flex flex-col items-center mb-20 w-full"
+          className="flex flex-col items-center mb-20 w-full transform-gpu"
+          style={{ contain: "paint", isolation: "isolate" }}
         >
           <div className="relative mb-8">
             {/* Frame Decoration - top left */}
             <div className="absolute -top-5 -left-5 w-20 h-20 pointer-events-none overflow-hidden">
               <img
                 alt=""
-                className="w-full h-full object-contain"
-                style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.85) opacity(0.22)" }}
+                className="w-full h-full object-contain opacity-[0.22]"
                 src="/images/corner-acara.svg"
               />
             </div>
@@ -286,15 +285,15 @@ export default function HeroSection({
           whileInView="visible"
           viewport={sectionViewport}
           variants={slideLeft}
-          className="flex flex-col items-center mb-8 w-full"
+          className="flex flex-col items-center mb-8 w-full transform-gpu"
+          style={{ contain: "paint", isolation: "isolate" }}
         >
           <div className="relative mb-8">
             {/* Frame Decoration - bottom right */}
             <div className="absolute -bottom-5 -right-5 w-20 h-20 pointer-events-none overflow-hidden">
               <img
                 alt=""
-                className="w-full h-full object-contain rotate-180"
-                style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.85) opacity(0.22)" }}
+                className="w-full h-full object-contain rotate-180 opacity-[0.22]"
                 src="/images/corner-acara.svg"
               />
             </div>

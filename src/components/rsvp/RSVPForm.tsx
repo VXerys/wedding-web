@@ -141,7 +141,8 @@ export default function RSVPForm({
         whileInView="visible"
         viewport={sectionViewport}
         variants={scaleIn}
-        className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col items-center pb-[49px] pt-[32px] px-[33px] rounded-[16px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] w-full"
+        className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col items-center pb-[49px] pt-[32px] px-[33px] rounded-[16px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] w-full transform-gpu"
+        style={{ contain: "paint", isolation: "isolate" }}
       >
         {submitState === "success" ? (
           <div className="w-full flex flex-col items-center py-8 text-center">

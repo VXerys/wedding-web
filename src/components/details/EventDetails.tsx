@@ -50,8 +50,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
       <div className="absolute right-0 top-0 w-[160px] h-[160px] flex items-start justify-end pointer-events-none z-0 overflow-hidden">
         <img
           alt=""
-          className="w-full h-full object-contain"
-          style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.9) opacity(0.12)" }}
+          className="w-full h-full object-contain opacity-[0.12]"
           src={imgBotanical1}
         />
       </div>
@@ -60,8 +59,7 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
       <div className="absolute left-0 bottom-0 w-[140px] h-[140px] flex items-end justify-start pointer-events-none z-0 overflow-hidden">
         <img
           alt=""
-          className="w-full h-full object-contain rotate-180"
-          style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.9) opacity(0.10)" }}
+          className="w-full h-full object-contain rotate-180 opacity-[0.10]"
           src={imgBotanical2}
         />
       </div>
@@ -121,7 +119,8 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
           {/* Card 1: Akad Nikah */}
           <motion.div
             variants={cardRise}
-            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-[100px] rounded-tr-[100px] rounded-bl-none rounded-br-none w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)]"
+            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-[100px] rounded-tr-[100px] rounded-bl-none rounded-br-none w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)] transform-gpu"
+            style={{ contain: "paint", isolation: "isolate" }}
           >
             <div className="w-full flex flex-col items-center">
               <div className="w-[27px] h-[24px] relative flex items-center justify-center animate-bounce-slow">
@@ -176,7 +175,8 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="md:backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center px-[20px] py-[32.5px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] cursor-pointer hover:bg-white/70 transition-all duration-300 active:scale-95"
+              className="md:backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center px-[20px] py-[32.5px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] cursor-pointer hover:bg-white/70 transition-all duration-300 active:scale-95 transform-gpu"
+              style={{ contain: "paint", isolation: "isolate" }}
             >
               <div className="w-[22.5px] h-[22.5px] relative flex items-center justify-center">
                 <img alt="Compass" className="w-full h-full object-contain" src={imgContainer3} />
@@ -189,7 +189,8 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
             {/* Tile 2: Dress Code */}
             <motion.div
               variants={cardRise}
-              className="md:backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center p-[25px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)]"
+              className="md:backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center p-[25px] rounded-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] transform-gpu"
+              style={{ contain: "paint", isolation: "isolate" }}
             >
               <div className="w-[22.524px] h-[17.5px] relative flex items-center justify-center">
                 <img alt="Hanger" className="w-full h-full object-contain" src={imgContainer4} />
@@ -208,7 +209,8 @@ export default function EventDetails({ guestName: _guestName = "", children, sho
           {/* Card 2: Resepsi Pernikahan */}
           <motion.div
             variants={cardRise}
-            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-none rounded-tr-none rounded-bl-[100px] rounded-br-[100px] w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)]"
+            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-none rounded-tr-none rounded-bl-[100px] rounded-br-[100px] w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)] transform-gpu"
+            style={{ contain: "paint", isolation: "isolate" }}
           >
             <div className="w-full flex flex-col items-center">
               <div className="w-[27.5px] h-[26px] relative flex items-center justify-center animate-bounce-slow">

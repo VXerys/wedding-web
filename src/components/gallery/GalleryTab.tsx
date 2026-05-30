@@ -39,18 +39,23 @@ export default function GalleryTab({
   const imgContainer1 = "/images/centered-divider.svg";
   const imgIcon = "/images/figma/f0a0985e4ec65be955672ab2b838ad9b600c13e5.svg";
 
-  const visibleEntries = useMemo(() => entries.slice(0, 2), [entries]);
-
-  const getRelativeTime = (isoDate: string) => {
+  function getRelativeTime(isoDate: string, now: number) {
     const timestamp = new Date(isoDate).getTime();
     if (Number.isNaN(timestamp)) return "";
-    // eslint-disable-next-line react-hooks/purity
-    const diffMs = Date.now() - timestamp;
+    const diffMs = now - timestamp;
     const diffHours = Math.max(1, Math.floor(diffMs / (1000 * 60 * 60)));
     if (diffHours < 24) return `${diffHours} HOURS AGO`;
     const diffDays = Math.floor(diffHours / 24);
     return `${diffDays} DAYS AGO`;
-  };
+  }
+
+  const visibleEntries = useMemo(() => {
+    const now = Date.now();
+    return entries.slice(0, 2).map((entry) => ({
+      ...entry,
+      relativeTime: getRelativeTime(entry.created_at, now),
+    }));
+  }, [entries]);
 
   const getAttendanceStyle = (attendance: GuestbookEntry["attendance"]) => {
     if (attendance === "Hadir") {
@@ -80,8 +85,7 @@ export default function GalleryTab({
       <div className="absolute right-0 top-0 w-[160px] h-[160px] flex items-start justify-end pointer-events-none z-0 overflow-hidden">
         <img
           alt=""
-          className="w-full h-full object-contain"
-          style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.9) opacity(0.12)" }}
+          className="w-full h-full object-contain opacity-[0.12]"
           src={imgBotanical1}
         />
       </div>
@@ -90,8 +94,7 @@ export default function GalleryTab({
       <div className="absolute left-0 bottom-0 w-[140px] h-[140px] flex items-end justify-start pointer-events-none z-0 overflow-hidden">
         <img
           alt=""
-          className="w-full h-full object-contain rotate-180"
-          style={{ filter: "sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.9) opacity(0.10)" }}
+          className="w-full h-full object-contain rotate-180 opacity-[0.10]"
           src={imgBotanical2}
         />
       </div>
@@ -147,7 +150,8 @@ export default function GalleryTab({
               whileInView="visible"
               viewport={sectionViewport}
               variants={photoMain}
-              className="-rotate-1 w-[345.7px] flex justify-center items-center"
+              className="-rotate-1 w-[345.7px] flex justify-center items-center transform-gpu"
+              style={{ contain: "paint", isolation: "isolate" }}
             >
               <div className="aspect-[4/5] bg-[rgba(255,255,255,0.4)] flex flex-col items-center justify-center overflow-clip p-[4px] relative rounded-[96px] shadow-[0px_0px_0px_1px_rgba(212,175,55,0.3),0px_0px_0px_4px_rgba(212,175,55,0.08)] w-full">
                 <div className="w-full h-[419.5px] relative rounded-[92.8px] overflow-hidden">
@@ -174,7 +178,8 @@ export default function GalleryTab({
                 whileInView="visible"
                 viewport={sectionViewport}
                 variants={photoLeft}
-                className="rotate-2 w-[149.5px] justify-self-center"
+                className="rotate-2 w-[149.5px] justify-self-center transform-gpu"
+                style={{ contain: "paint", isolation: "isolate" }}
               >
                 <div className="aspect-[3/4] bg-[rgba(255,255,255,0.4)] flex flex-col items-center justify-center overflow-clip p-[4px] relative rounded-[80px] shadow-[0px_0px_0px_1px_rgba(212,175,55,0.3),0px_0px_0px_4px_rgba(212,175,55,0.08)] w-full">
                   <div className="w-full h-[182.6px] relative rounded-[76.8px] overflow-hidden">
@@ -197,7 +202,8 @@ export default function GalleryTab({
                 whileInView="visible"
                 viewport={sectionViewport}
                 variants={photoRight}
-                className="-rotate-2 w-[149.5px] justify-self-center"
+                className="-rotate-2 w-[149.5px] justify-self-center transform-gpu"
+                style={{ contain: "paint", isolation: "isolate" }}
               >
                 <div className="aspect-[3/4] bg-[rgba(255,255,255,0.4)] flex flex-col items-center justify-center overflow-clip p-[4px] relative rounded-[80px] shadow-[0px_0px_0px_1px_rgba(212,175,55,0.3),0px_0px_0px_4px_rgba(212,175,55,0.08)] w-full">
                   <div className="w-full h-[182.6px] relative rounded-[76.8px] overflow-hidden">
@@ -291,7 +297,8 @@ export default function GalleryTab({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
+                className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full transform-gpu"
+                style={{ contain: "paint", isolation: "isolate" }}
               >
                 <div className="w-full flex items-start justify-between">
                   <div className="flex flex-col gap-[3px] items-start">
@@ -299,7 +306,7 @@ export default function GalleryTab({
                       {entry.guest_name}
                     </h4>
                     <span className="font-body font-normal text-[9px] text-[rgba(95,95,88,0.5)] tracking-[0.9px] uppercase">
-                      {getRelativeTime(entry.created_at)}
+                      {entry.relativeTime}
                     </span>
                   </div>
                   <div className={`border border-solid flex items-center px-[13px] py-[5px] rounded-full ${getAttendanceStyle(entry.attendance)}`}>
@@ -319,7 +326,8 @@ export default function GalleryTab({
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
+                className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full transform-gpu"
+                style={{ contain: "paint", isolation: "isolate" }}
               >
                 <p className="font-body font-normal text-[14px] text-[rgba(95,95,88,0.6)] text-center">
                   Belum ada ucapan.
@@ -332,7 +340,8 @@ export default function GalleryTab({
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
+                className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-center p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full transform-gpu"
+                style={{ contain: "paint", isolation: "isolate" }}
               >
                 <p className="font-body font-normal text-[12px] text-red-500 text-center">
                   {error}
