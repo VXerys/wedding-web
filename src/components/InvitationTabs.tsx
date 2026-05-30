@@ -112,8 +112,8 @@ const Curve = () => {
     };
   }, []);
 
-  const initialPath = `M100 0 L200 0 L200 ${viewportHeight} L100 ${viewportHeight} Q-100 ${viewportHeight / 2} 100 0`;
-  const targetPath = `M100 0 L200 0 L200 ${viewportHeight} L100 ${viewportHeight} Q100 ${viewportHeight / 2} 100 0`;
+  const initialPath = `M100 0 L102 0 L102 ${viewportHeight} L100 ${viewportHeight} Q-100 ${viewportHeight / 2} 100 0`;
+  const targetPath = `M100 0 L102 0 L102 ${viewportHeight} L100 ${viewportHeight} Q100 ${viewportHeight / 2} 100 0`;
 
   const curve = {
     initial: { d: initialPath },
@@ -138,6 +138,7 @@ interface InvitationTabsProps {
   guestName: string;
   isOpened: boolean;
   onOpen: () => void;
+  onClose?: () => void;
 }
 
 const sectionContainmentStyle: CSSProperties = {
@@ -145,7 +146,7 @@ const sectionContainmentStyle: CSSProperties = {
   isolation: "isolate",
 };
 
-export default function InvitationTabs({ guestName, isOpened, onOpen }: InvitationTabsProps) {
+export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }: InvitationTabsProps) {
   const lenis = useLenis();
   const [showHeader, setShowHeader] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -282,6 +283,8 @@ export default function InvitationTabs({ guestName, isOpened, onOpen }: Invitati
               exit="exit"
               className="fixed top-0 bottom-0 z-50 w-[260px] right-0 md:right-[calc(50vw-215px)] bg-white border-l border-[rgba(201,168,76,0.15)] shadow-[0_0_50px_rgba(0,0,0,0.1)] px-8 py-16 flex flex-col justify-between items-stretch overflow-visible"
             >
+              <Curve />
+
               <div className="flex flex-col gap-6 w-full mt-4">
                 <div className="border-b border-[rgba(201,168,76,0.15)] pb-2 text-[10px] uppercase tracking-widest text-[#5f5f58]/60 font-body">
                   <p>Explore Menu</p>
@@ -292,6 +295,10 @@ export default function InvitationTabs({ guestName, isOpened, onOpen }: Invitati
                   <NavLink heading="Galeri" index={2} onClick={() => scrollToSection("section-gallery")} />
                   <NavLink heading="Detail Acara" index={3} onClick={() => scrollToSection("section-acara")} />
                   <NavLink heading="Kirim Hadiah" index={4} onClick={() => scrollToSection("section-gift")} />
+                  <NavLink heading="Sampul Undangan" index={5} onClick={() => {
+                    setIsMenuOpen(false);
+                    onClose?.();
+                  }} />
                 </div>
               </div>
 
@@ -304,8 +311,6 @@ export default function InvitationTabs({ guestName, isOpened, onOpen }: Invitati
                   12.07.2026
                 </span>
               </div>
-
-              <Curve />
             </motion.div>
           </>
         )}

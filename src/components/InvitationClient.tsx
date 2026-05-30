@@ -98,6 +98,7 @@ export default function InvitationClient() {
         guestName={guestName}
         isOpened={isOpened}
         onOpen={() => setIsOpened(true)}
+        onClose={() => setIsOpened(false)}
       />
     </LenisProvider>
   );
