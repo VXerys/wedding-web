@@ -232,7 +232,7 @@ export default function CoverEnvelope({
             <InvitationPaperCard
               guestName={guestName}
               variant="cover"
-              showButton={coverState === "opened"}
+              showButton={coverState !== "closed"}
               onOpen={onOpened}
             />
           </motion.div>
