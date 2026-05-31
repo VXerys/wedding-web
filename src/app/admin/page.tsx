@@ -4,7 +4,7 @@ import { useState } from "react";
 import LinkGenerator from "@/components/admin/LinkGenerator";
 
 export default function AdminPage() {
-  const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? "";
+  const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "Sehan123";
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isAuthed, setIsAuthed] = useState(false);

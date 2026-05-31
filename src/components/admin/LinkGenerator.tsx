@@ -28,7 +28,10 @@ export default function LinkGenerator() {
     const name = guestName.trim();
     if (!name) return;
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://intangif.me";
+    const siteUrl =
+      typeof window !== "undefined"
+        ? window.location.origin
+        : process.env.NEXT_PUBLIC_SITE_URL ?? "https://intanagif.me";
     const sanitizedBaseUrl = siteUrl.replace(/\/$/, "");
 
     const encodedName = encodeURIComponent(name).replace(/%20/g, "+");
