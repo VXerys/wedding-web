@@ -27,6 +27,7 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
   const reducedVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.25 } } };
 
   const lenis = useLenis();
+  const mapsUrl = process.env.NEXT_PUBLIC_MAPS_URL ?? "https://maps.google.com";
 
   const handleScrollTo = (id: string) => {
     const element = document.getElementById(id);
@@ -202,7 +203,7 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
           whileInView="visible"
           viewport={viewport}
           variants={scaleIn} // Scales in
-          className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col gap-[16px] items-center p-[41px] rounded-tl-[140px] rounded-tr-[140px] rounded-bl-[16px] rounded-br-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full mb-8"
+          className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col gap-[16px] items-center p-[24px] sm:p-[33px] rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full mb-8 transform-gpu"
           style={{ contain: "paint", isolation: "isolate" }}
         >
           <div className="w-[24px] h-[21.2px] relative flex items-center justify-center">
@@ -214,17 +215,16 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
           
           <div className="w-full flex flex-col gap-[11.2px] items-center py-2">
             <h4 className="font-display font-light italic text-[24px] text-center text-[#1a1d14] leading-[32px]">
-              The Penthouse Residences
+              Kp. Cikored
             </h4>
             <p className="font-body font-normal text-[14px] text-[rgba(95,95,88,0.8)] text-center leading-[22.75px]">
-              Jl. Senopati No. 12, Tower A, Unit 15C<br />
-              Kebayoran Baru, Jakarta Selatan<br />
-              12190
+              RT 007 / RW 006, Kelurahan Pasir Suren,<br />
+              Kecamatan Palabuhan Ratu
             </p>
           </div>
 
           <a
-            href="https://maps.google.com/?q=The+Penthouse+Residences+Jl.+Senopati+No.+12+Jakarta"
+            href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="border-b border-solid border-[rgba(201,168,76,0.3)] flex gap-[8px] items-center pb-[5px] cursor-pointer hover:border-[#c9a84c] transition-colors"

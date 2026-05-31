@@ -79,15 +79,15 @@ export default function HeroSection({
       {/* Section 1: Hero Invitation */}
       <motion.section
         suppressHydrationWarning={true}
-        className="relative min-h-[100svh] flex flex-col items-center justify-center px-4 pt-20 pb-4 xs:px-[24px] xs:pt-24 xs:pb-8 z-10"
+        className="relative min-h-[100svh] flex flex-col items-center justify-center px-4 py-4 xs:px-[24px] xs:py-6 z-10"
         initial={heroMotion.initial}
         animate={heroMotion.animate}
         transition={heroMotion.transition}
       >
-        <div className="relative w-full max-w-[320px] xs:max-w-[376px] min-h-[580px] xs:min-h-[640px] sm:min-h-[690px] bg-white/30 md:backdrop-blur-[1px] rounded-[10rem] xs:rounded-[13rem] sm:rounded-[15rem] flex flex-col items-center justify-center px-4 py-8 xs:px-7 xs:py-10 text-center double-hairline-border">
+        <div className="relative w-full max-w-[320px] xs:max-w-[376px] h-[72svh] min-h-[500px] max-h-[580px] xs:h-[72svh] xs:min-h-[560px] xs:max-h-[640px] sm:h-[75svh] sm:min-h-[620px] sm:max-h-[700px] bg-white/30 md:backdrop-blur-[1px] rounded-[10rem] xs:rounded-[13rem] sm:rounded-[15rem] flex flex-col items-center justify-center px-4 py-6 xs:px-7 xs:py-8 text-center double-hairline-border">
           <div className="absolute inset-[-8px] border border-[rgba(212,175,55,0.15)] rounded-[10.5rem] xs:rounded-[13.5rem] sm:rounded-[15.5rem] pointer-events-none" />
           <div className="relative z-10 flex w-full flex-col items-center gap-3 xs:gap-4">
-            <div className="w-[75px] h-[75px] xs:w-[90px] xs:h-[90px] relative flex items-center justify-center mb-1 xs:mb-2">
+            <div className="w-[70px] h-[70px] xs:w-[85px] xs:h-[85px] relative flex items-center justify-center mb-1">
               <Image
                 alt="centered home"
                 className="w-full h-full object-contain opacity-90"
