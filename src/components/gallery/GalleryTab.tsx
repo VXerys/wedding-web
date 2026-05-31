@@ -35,8 +35,8 @@ export default function GalleryTab({
 
   const imgBotanical1 = "/images/corner-acara.svg";
   const imgBotanical2 = "/images/corner-acara.svg";
-  const imgMainMoment = "/images/figma/539710a16a8e4593b04177a7287d1a686cb3c49f.png";
-  const imgDetailMoment = "/images/figma/58df4d3861d556a32d9611d7ebe181f409759b8b.png";
+  const imgMainMoment = "/images/foto-wedding.jpeg";
+  const imgDetailMoment = "/images/cincin-wedding.jpeg";
   const imgDetailMoment1 = "/images/figma/bc72238c81bb18fc6dc53a32f0916a126009f9d5.png";
   const imgContainer = "/images/centered-divider.svg";
   const imgContainer1 = "/images/centered-divider.svg";
@@ -155,17 +155,16 @@ export default function GalleryTab({
               whileInView="visible"
               viewport={viewport}
               variants={photoMain}
-              className="-rotate-1 w-[345.7px] flex justify-center items-center transform-gpu"
+              className="w-[345.7px] flex justify-center items-center transform-gpu"
               style={{ contain: "paint", isolation: "isolate" }}
             >
               <div className="aspect-[4/5] bg-[rgba(255,255,255,0.4)] flex flex-col items-center justify-center overflow-clip p-[4px] relative rounded-[96px] shadow-[0px_0px_0px_1px_rgba(212,175,55,0.3),0px_0px_0px_4px_rgba(212,175,55,0.08)] w-full">
                 <div className="w-full h-[419.5px] relative rounded-[92.8px] overflow-hidden">
                   <Image
                     alt="Main Moment"
-                    className="absolute h-full left-[-44.29%] max-w-none top-0 w-[188.58%] object-cover"
+                    className="object-cover object-center"
                     src={imgMainMoment}
-                    width={652}
-                    height={420}
+                    fill
                     sizes="346px"
                   />
                 </div>
@@ -183,7 +182,7 @@ export default function GalleryTab({
                 whileInView="visible"
                 viewport={viewport}
                 variants={photoLeft}
-                className="rotate-2 w-[149.5px] justify-self-center transform-gpu"
+                className="w-[149.5px] justify-self-center transform-gpu"
                 style={{ contain: "paint", isolation: "isolate" }}
               >
                 <div className="aspect-[3/4] bg-[rgba(255,255,255,0.4)] flex flex-col items-center justify-center overflow-clip p-[4px] relative rounded-[80px] shadow-[0px_0px_0px_1px_rgba(212,175,55,0.3),0px_0px_0px_4px_rgba(212,175,55,0.08)] w-full">
@@ -207,7 +206,7 @@ export default function GalleryTab({
                 whileInView="visible"
                 viewport={viewport}
                 variants={photoRight}
-                className="-rotate-2 w-[149.5px] justify-self-center transform-gpu"
+                className="w-[149.5px] justify-self-center transform-gpu"
                 style={{ contain: "paint", isolation: "isolate" }}
               >
                 <div className="aspect-[3/4] bg-[rgba(255,255,255,0.4)] flex flex-col items-center justify-center overflow-clip p-[4px] relative rounded-[80px] shadow-[0px_0px_0px_1px_rgba(212,175,55,0.3),0px_0px_0px_4px_rgba(212,175,55,0.08)] w-full">
@@ -378,7 +377,7 @@ export default function GalleryTab({
                 variants={fadeUp}
                 className="font-display font-light italic text-[48px] text-center text-[#585e4d] leading-[48px] tracking-[-1.2px]"
               >
-                Brandon & Meyca
+                Abudzar & Intan
               </motion.h2>
               
               <motion.div
@@ -410,7 +409,7 @@ export default function GalleryTab({
                   variants={labelFade}
                   className="font-body font-normal text-[9px] text-[rgba(95,95,88,0.4)] text-center tracking-[4.5px] uppercase"
                 >
-                  THANK YOU — 2024
+                  THANK YOU — 2026
                 </motion.span>
               </motion.div>
 

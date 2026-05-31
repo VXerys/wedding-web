@@ -1,9 +1,7 @@
 "use client";
 
 import { useCountdown } from "@/hooks/useCountdown";
-import { motion, useInView } from "framer-motion";
-import { memo, useRef } from "react";
-import { scaleIn, sectionViewport } from "@/lib/motionVariants";
+import { memo, useEffect, useRef, useState } from "react";
 
 /** A single countdown digit box with label */
 const CountdownUnit = memo(function CountdownUnit({
@@ -56,49 +54,67 @@ const CountdownDisplay = memo(function CountdownDisplay({ eventDate }: { eventDa
   const { days, hours, minutes, seconds, isExpired, isMounted } = useCountdown(eventDate);
 
   return isExpired && isMounted ? (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={sectionViewport}
-      variants={scaleIn}
-      className="glass-card px-6 py-8"
-    >
+    <div className="glass-card countdown-display-enter px-6 py-8">
       <p className="font-display font-light text-display-md italic text-slate-700">
         Terima kasih atas
       </p>
       <p className="font-display font-light text-display-md italic text-slate-700">
         kehadirannya 💕
       </p>
-    </motion.div>
+    </div>
   ) : (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={sectionViewport}
-      variants={scaleIn}
-      className="flex items-center justify-center gap-3 sm:gap-4"
-    >
+    <div className="countdown-display-enter flex items-center justify-center gap-3 sm:gap-4">
       <CountdownUnit value={days} label="Hari" isMounted={isMounted} />
       <CountdownUnit value={hours} label="Jam" isMounted={isMounted} />
       <CountdownUnit value={minutes} label="Menit" isMounted={isMounted} />
       <CountdownUnit value={seconds} label="Detik" isMounted={isMounted} />
-    </motion.div>
+    </div>
   );
 });
 
 export default function CountdownTimer() {
   const eventDate = process.env.NEXT_PUBLIC_EVENT_DATE ?? "2026-07-12T09:00:00+07:00";
   const sectionRef = useRef<HTMLElement>(null);
-  const isSectionVisible = useInView(sectionRef, { once: true, amount: 0.15 });
+  const [hasEntered, setHasEntered] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section) {
+      return undefined;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const fallbackFrame = (window as any).requestAnimationFrame(() => setHasEntered(true));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return () => (window as any).cancelAnimationFrame(fallbackFrame);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) {
+          return;
+        }
+
+        setHasEntered(true);
+        observer.disconnect();
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section ref={sectionRef} className="py-12">
       <div className="max-w-md mx-auto px-4 sm:px-6 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+        <div
+          className={
+            hasEntered ? "countdown-header-enter" : "countdown-enter-hidden"
+          }
         >
           <p className="text-label text-gold-400 tracking-[0.32em] uppercase">
             Save
@@ -111,10 +127,10 @@ export default function CountdownTimer() {
             <span className="text-gold-400 text-body-sm">◆</span>
             <span className="block h-px w-12 bg-gold-400/40" />
           </div>
-        </motion.div>
+        </div>
 
         {/* Countdown boxes or expired message */}
-        {isSectionVisible ? (
+        {hasEntered ? (
           <CountdownDisplay eventDate={eventDate} />
         ) : (
           <CountdownPlaceholder />

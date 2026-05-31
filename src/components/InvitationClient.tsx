@@ -13,8 +13,8 @@ const nearHomeImagePaths = [
 ];
 
 const deferredInvitationImagePaths = [
-  "/images/figma/539710a16a8e4593b04177a7287d1a686cb3c49f.png",
-  "/images/figma/58df4d3861d556a32d9611d7ebe181f409759b8b.png",
+  "/images/foto-wedding.jpeg",
+  "/images/cincin-wedding.jpeg",
   "/images/figma/bc72238c81bb18fc6dc53a32f0916a126009f9d5.png",
   "/images/figma/faded_temple_footer.png",
   "/images/figma/4950129f7a7d256f5721da392cec38d7d6b33daf.png",

@@ -89,7 +89,7 @@ function BsiCardPreview() {
         className="absolute top-[79.5%] left-[8%] font-mono text-white tracking-[0.12em] font-semibold uppercase"
         style={{ fontSize: "3.5cqw", textShadow: "1px 1px 1px rgba(0,0,0,0.8), -0.5px -0.5px 0px rgba(255,255,255,0.4)" }}
       >
-        Brandon & Meyca
+        Abudzar & Intan
       </div>
 
       <div className="absolute bottom-[6%] right-[6%] flex flex-col items-center">

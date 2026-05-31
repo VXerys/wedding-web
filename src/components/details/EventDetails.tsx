@@ -197,7 +197,7 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
                   DRESS CODE
                 </span>
                 <span className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.6)] text-center leading-[15px]">
-                  Earth Tones / Pastel
+                  Batik / Pakaian Formal
                 </span>
               </div>
             </motion.div>

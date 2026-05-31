@@ -4,13 +4,13 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import BsiCardPreview from "@/components/gift/BsiCardPreview";
+import { useLenis } from "@/components/LenisProvider";
 import {
   fadeIn,
   fadeUp,
   staggerContainer,
   lineExpand,
   scaleIn,
-  slideLeft,
   slideRight,
   cardRise,
   sectionViewport,
@@ -26,13 +26,25 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
   const viewport = prefersReducedMotion ? { once: true, amount: 0.05 } : sectionViewport;
   const reducedVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.25 } } };
 
+  const lenis = useLenis();
+
+  const handleScrollTo = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      if (lenis) {
+        lenis.scrollTo(element, { duration: 1.05 });
+        return;
+      }
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [canHover, setCanHover] = useState(false);
 
   const imgBotanical1 = "/images/corner-acara.svg";
   const imgBotanical2 = "/images/corner-acara.svg";
   const imgFooterLeaf = "/images/figma/4950129f7a7d256f5721da392cec38d7d6b33daf.png";
-  const imgBcaLogo = "/images/figma/2139e2a34812c4176a0c78762207328e71174ec3.png";
   const imgDivider = "/images/centered-divider.svg";
   const imgCopyIcon = "/images/figma/1596a5ebf350c38a8e0ccdfd74a40ed2bada6a04.svg";
   const imgGiftBoxIcon = "/images/figma/a67be60163fb2bf6ebdb1714f85f57a4de0e44d9.svg";
@@ -93,7 +105,7 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
           </div>
           <div className="absolute left-1/2 -translate-x-1/2">
             <h1 className="font-display font-light italic text-[24px] tracking-[-0.6px] text-[#1a1d14]">
-              A & B
+              A & I
             </h1>
           </div>
           <div className="w-4" /> {/* Spacer */}
@@ -182,52 +194,6 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
             </button>
           </motion.div>
 
-          {/* Card 2: Bank BCA */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewport}
-            variants={slideLeft} // Slides from right
-            whileHover={canHover ? { scale: 1.02, rotateY: -8, rotateX: -4, transition: { duration: 0.3 } } : undefined}
-            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
-            style={{ contain: "paint", isolation: "isolate" }}
-          >
-            <div className="w-full flex justify-start mb-6">
-              <div className="h-[24px] w-[75px] relative opacity-50">
-                <img alt="BCA Logo" className="w-full h-full object-contain" src={imgBcaLogo} />
-              </div>
-            </div>
-
-            <span className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.7)] text-center tracking-[2px] uppercase mb-1">
-              ACCOUNT NUMBER
-            </span>
-            
-            <h3 className="font-display font-light italic text-[30px] text-center text-[#1a1d14] leading-[36px] mb-2">
-              1234567890
-            </h3>
-
-            <span className="font-body font-normal text-[14px] text-[rgba(95,95,88,0.8)] text-center mb-6">
-              Brandon & Meyca
-            </span>
-
-            {/* Copy Button */}
-            <button
-              onClick={() => handleCopy("bca", "1234567890")}
-              className="bg-[rgba(201,168,76,0.05)] border border-solid border-[rgba(201,168,76,0.3)] flex gap-[8px] items-center px-[25px] py-[9px] rounded-full hover:bg-[rgba(201,168,76,0.1)] active:scale-[0.97] transition-all cursor-pointer relative z-10"
-            >
-              <div className="w-[8.1px] h-[9.9px] relative flex items-center justify-center">
-                {copiedId === "bca" ? (
-                  <span className="text-[#c9a84c] text-[10px] font-bold">✓</span>
-                ) : (
-                  <img alt="" className="w-full h-full object-contain" src={imgCopyIcon} />
-                )}
-              </div>
-              <span className="font-body font-normal text-[11px] text-[#c9a84c] tracking-[0.55px] uppercase">
-                {copiedId === "bca" ? "COPIED!" : "COPY NUMBER"}
-              </span>
-            </button>
-          </motion.div>
-
         </div>
 
         {/* Gift Registry / Physical Address */}
@@ -278,11 +244,16 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
           whileInView="visible"
           viewport={viewport}
           variants={fadeIn}
-          className="w-full text-center py-8 mb-12"
+          className="w-full text-center py-6 mb-6"
         >
-          <p className="font-display font-light italic text-[20px] text-[rgba(95,95,88,0.7)] leading-[28px]">
-            Terima kasih atas doa dan restu Anda.
+          <p className="font-display font-light italic text-[20px] text-[#585e4d] leading-[30px] px-4">
+            Doa restu Anda adalah kado terindah bagi kami. Terima kasih atas segala kebaikan dan kebersamaan Anda.
           </p>
+          <div className="flex items-center justify-center gap-2 mt-4 opacity-40">
+            <span className="block h-[1px] w-8 bg-[#c9a84c]" />
+            <span className="text-[#c9a84c] text-xs">❦</span>
+            <span className="block h-[1px] w-8 bg-[#c9a84c]" />
+          </div>
         </motion.div>
 
       </div>
@@ -313,29 +284,44 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
               variants={fadeUp}
               className="font-display font-light italic text-[36px] text-center text-[#1a1d14] leading-[40px] mb-8"
             >
-              A & B
+              A & I
             </motion.h2>
             
             <motion.div
               variants={fadeUp}
-              className="flex gap-[32px] justify-center items-center mb-12"
+              className="flex gap-[24px] sm:gap-[32px] justify-center items-center mb-12 flex-wrap"
             >
-              <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase cursor-pointer hover:text-[#1a1d14] transition-colors">
+              <button
+                onClick={() => handleScrollTo("section-home")}
+                className="bg-transparent border-none p-0 cursor-pointer font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase hover:text-[#1a1d14] transition-colors"
+              >
                 SAVE THE DATE
-              </span>
-              <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase cursor-pointer hover:text-[#1a1d14] transition-colors">
+              </button>
+              <button
+                onClick={() => handleScrollTo("section-gallery")}
+                className="bg-transparent border-none p-0 cursor-pointer font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase hover:text-[#1a1d14] transition-colors"
+              >
+                GALLERY
+              </button>
+              <button
+                onClick={() => handleScrollTo("section-acara")}
+                className="bg-transparent border-none p-0 cursor-pointer font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase hover:text-[#1a1d14] transition-colors"
+              >
                 LOCATION
-              </span>
-              <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase cursor-pointer hover:text-[#1a1d14] transition-colors">
+              </button>
+              <button
+                onClick={() => handleScrollTo("section-gift")}
+                className="bg-transparent border-none p-0 cursor-pointer font-body font-normal text-[11px] text-[rgba(95,95,88,0.6)] tracking-[1.1px] uppercase hover:text-[#1a1d14] transition-colors"
+              >
                 GIFT REGISTRY
-              </span>
+              </button>
             </motion.div>
 
             <motion.span
               variants={fadeUp}
               className="font-body font-normal text-[10px] text-[rgba(95,95,88,0.5)] tracking-[2px] uppercase text-center"
             >
-              WITH LOVE, BRANDON & MEYCA — 2024
+              WITH LOVE, ABUDZAR & INTAN — 2026
             </motion.span>
           </motion.div>
         </div>

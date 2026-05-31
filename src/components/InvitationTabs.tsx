@@ -232,7 +232,7 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
           <div className="w-[20px]" /> {/* Spacer to balance the burger icon on the right */}
           <div className="absolute left-1/2 -translate-x-1/2">
             <h1 className="font-display font-light italic text-[24px] tracking-[-0.6px] text-[#1a1d14]">
-              A & B
+              A & I
             </h1>
           </div>
           <button
@@ -298,10 +298,10 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
               {/* Simple Footer inside Drawer */}
               <div className="flex flex-col items-center gap-1.5 text-center mt-auto pt-6 border-t border-[rgba(201,168,76,0.1)] w-full">
                 <span className="font-display font-light italic text-[14px] text-[#585e4d]">
-                  Brandon & Meyca
+                  Abudzar & Intan
                 </span>
                 <span className="font-body text-[8px] tracking-[0.3em] text-[#5f5f58]/40 uppercase">
-                  12.07.2026
+                  06.06.2026
                 </span>
               </div>
             </motion.div>

@@ -102,13 +102,13 @@ export default function HeroSection({
             </span>
             <div className="flex flex-col items-center gap-1">
               <h1 className="font-display text-[54px] text-[#585e4d] italic font-light leading-none">
-                Brandon
+                Abudzar
               </h1>
               <span className="font-display text-[30px] text-[#D4AF37] font-light leading-none">
                 &amp;
               </span>
               <h1 className="font-display text-[54px] text-[#585e4d] italic font-light leading-none">
-                Meyca
+                Intan
               </h1>
             </div>
             <p className="font-body text-[12px] text-[#5f5f58]/70 tracking-[0.18em] uppercase">
@@ -186,14 +186,6 @@ export default function HeroSection({
           style={{ contain: "paint", isolation: "isolate" }}
         >
           <div className="relative mb-8">
-            {/* Frame Decoration - top left */}
-            <div className="absolute -top-5 -left-5 w-20 h-20 pointer-events-none overflow-hidden">
-              <img
-                alt=""
-                className="w-full h-full object-contain opacity-[0.22]"
-                src="/images/corner-acara.svg"
-              />
-            </div>
             <div className="w-52 h-64 rounded-full overflow-hidden border-[4px] border-white shadow-xl relative z-10 double-hairline-border rotate-[-1deg]">
               {/* Outer hairline helper */}
               <div className="absolute inset-[-8px] border border-[rgba(212,175,55,0.15)] rounded-full pointer-events-none" />
@@ -210,23 +202,10 @@ export default function HeroSection({
           </div>
           
           <div className="text-center flex flex-col items-center gap-2">
-            <span className="font-body text-[10px] text-[#5f5f58]/40 tracking-[0.3em] uppercase">Only Child of Mr &amp; Mrs Lorem</span>
+            <span className="font-body text-[10px] text-[#5f5f58]/40 tracking-[0.3em] uppercase">Putra dari Bpk. Rudi Tamim KH &amp; Ibu Nani Sumarni</span>
             <h2 className="font-display text-4xl text-[#585e4d] tracking-[0.15em] font-light flex items-center justify-center gap-2 leading-none mt-1">
-              <span className="text-[#D4AF37] opacity-60 text-[0.6em] select-none">❦</span>BRANDON
+              <span className="text-[#D4AF37] opacity-60 text-[0.6em] select-none">❦</span>ABUDZAR
             </h2>
-            <div className="flex gap-4 mt-4">
-              <a className="w-9 h-9 rounded-full bg-white/80 shadow-sm flex items-center justify-center text-[#585e4d]/60 hover:text-[#D4AF37] transition-colors border border-[#D4AF37]/10" href="#">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-.778.099-1.533.284-2.253" />
-                </svg>
-              </a>
-              <a className="w-9 h-9 rounded-full bg-white/80 shadow-sm flex items-center justify-center text-[#585e4d]/60 hover:text-[#D4AF37] transition-colors border border-[#D4AF37]/10" href="#">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 12l-5.25 3.03v-6.06L15.75 12z" />
-                </svg>
-              </a>
-            </div>
           </div>
         </motion.div>
         
@@ -240,14 +219,6 @@ export default function HeroSection({
           style={{ contain: "paint", isolation: "isolate" }}
         >
           <div className="relative mb-8">
-            {/* Frame Decoration - bottom right */}
-            <div className="absolute -bottom-5 -right-5 w-20 h-20 pointer-events-none overflow-hidden">
-              <img
-                alt=""
-                className="w-full h-full object-contain rotate-180 opacity-[0.22]"
-                src="/images/corner-acara.svg"
-              />
-            </div>
             <div className="w-52 h-64 rounded-full overflow-hidden border-[4px] border-white shadow-xl relative z-10 double-hairline-border rotate-[1deg]">
               {/* Outer hairline helper */}
               <div className="absolute inset-[-8px] border border-[rgba(212,175,55,0.15)] rounded-full pointer-events-none" />
@@ -264,23 +235,10 @@ export default function HeroSection({
           </div>
           
           <div className="text-center flex flex-col items-center gap-2">
-            <span className="font-body text-[10px] text-[#5f5f58]/40 tracking-[0.3em] uppercase">Eldest Daughter of Mr &amp; Mrs Ipsum</span>
+            <span className="font-body text-[10px] text-[#5f5f58]/40 tracking-[0.3em] uppercase">Putri dari Bpk. Himan Nugraha &amp; Ibu Ai Rohimah</span>
             <h2 className="font-display text-4xl text-[#585e4d] tracking-[0.15em] font-light flex items-center justify-center gap-2 leading-none mt-1">
-              <span className="text-[#D4AF37] opacity-60 text-[0.6em] select-none">❦</span>MEYCA
+              <span className="text-[#D4AF37] opacity-60 text-[0.6em] select-none">❦</span>INTAN
             </h2>
-            <div className="flex gap-4 mt-4">
-              <a className="w-9 h-9 rounded-full bg-white/80 shadow-sm flex items-center justify-center text-[#585e4d]/60 hover:text-[#D4AF37] transition-colors border border-[#D4AF37]/10" href="#">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-.778.099-1.533.284-2.253" />
-                </svg>
-              </a>
-              <a className="w-9 h-9 rounded-full bg-white/80 shadow-sm flex items-center justify-center text-[#585e4d]/60 hover:text-[#D4AF37] transition-colors border border-[#D4AF37]/10" href="#">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 12l-5.25 3.03v-6.06L15.75 12z" />
-                </svg>
-              </a>
-            </div>
           </div>
         </motion.div>
       </section>
@@ -316,7 +274,7 @@ export default function HeroSection({
               variants={fadeUp}
               className="font-display text-[48px] text-[#585e4d] italic font-light leading-none tracking-[-1.2px]"
             >
-              Brandon &amp; Meyca
+              Abudzar &amp; Intan
             </motion.h2>
             <motion.div
               variants={staggerContainer}

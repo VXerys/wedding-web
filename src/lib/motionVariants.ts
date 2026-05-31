@@ -130,12 +130,12 @@ export const photoMain: Variants = {
     // perf: reduced from 0.9
     scale: 0.92,
     // perf: reduced from -3
-    rotate: -1,
+    rotate: 0,
   },
   visible: {
     opacity: 1,
     scale: 1,
-    rotate: -1,
+    rotate: 0,
     transition: {
       // perf: reduced from 0.85
       duration: 0.55,
@@ -150,12 +150,12 @@ export const photoLeft: Variants = {
     // perf: reduced from -40
     x: -32,
     // perf: reduced from -4
-    rotate: 2,
+    rotate: 0,
   },
   visible: {
     opacity: 1,
     x: 0,
-    rotate: 2,
+    rotate: 0,
     transition: {
       // perf: reduced from 0.75
       duration: 0.5,
@@ -171,12 +171,12 @@ export const photoRight: Variants = {
     // perf: reduced from 40
     x: 32,
     // perf: reduced from 4
-    rotate: -2,
+    rotate: 0,
   },
   visible: {
     opacity: 1,
     x: 0,
-    rotate: -2,
+    rotate: 0,
     transition: {
       // perf: reduced from 0.75
       duration: 0.5,
