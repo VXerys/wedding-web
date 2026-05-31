@@ -5,9 +5,9 @@ import { formatAttendanceLabel, formatRelativeTime } from "@/lib/utils";
 import type { GuestbookEntry } from "@/types/guestbook";
 
 const badgeStyles: Record<string, { bg: string; text: string }> = {
-  Hadir: { bg: "bg-green-50", text: "text-green-600" },
-  "Tidak Hadir": { bg: "bg-red-50", text: "text-red-400" },
-  Ragu: { bg: "bg-amber-50", text: "text-amber-500" },
+  Hadir: { bg: "bg-green-50/50", text: "text-green-600" },
+  "Tidak Hadir": { bg: "bg-red-50/50", text: "text-red-400" },
+  Ragu: { bg: "bg-amber-50/50", text: "text-amber-500" },
 };
 
 interface GuestbookCardProps {
@@ -21,9 +21,11 @@ export default function GuestbookCard({ entry }: GuestbookCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: entry.isPending ? 0.6 : 1, y: 0 }}
-      className={`p-4 rounded-2xl bg-white/60 md:backdrop-blur-lg border border-white/25 shadow-card-sm ${
-        entry.isPending ? "border-dashed border-gold-400/30" : ""
-      }`}
+      className={
+        entry.isPending
+          ? "p-4 rounded-2xl bg-white/60 md:backdrop-blur-lg border border-dashed border-[#c9a84c]/30 shadow-card-sm"
+          : "p-4 rounded-2xl bg-white/60 md:backdrop-blur-lg border border-solid border-[rgba(201,168,76,0.15)] shadow-card-sm"
+      }
     >
       <div className="flex items-start gap-3">
         <div className="w-9 h-9 rounded-full bg-gold-400/15 flex items-center justify-center flex-shrink-0">

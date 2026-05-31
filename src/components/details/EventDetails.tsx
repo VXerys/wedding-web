@@ -115,7 +115,7 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
           {/* Card 1: Akad Nikah & Resepsi */}
           <motion.div
             variants={cardRise}
-            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-[100px] rounded-tr-[100px] rounded-bl-[48px] rounded-br-[48px] w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)] transform-gpu"
+            className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.5)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-[100px] rounded-tr-[100px] rounded-bl-none rounded-br-none w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)] transform-gpu"
             style={{ contain: "paint", isolation: "isolate" }}
           >
             <div className="w-full flex flex-col items-center">
@@ -172,7 +172,7 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="md:backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center px-[20px] py-[32.5px] rounded-[16px] shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] cursor-pointer hover:bg-white/70 transition-all duration-300 active:scale-95 transform-gpu"
+              className="md:backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center px-[20px] py-[32.5px] rounded-t-none rounded-b-[16px] shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] cursor-pointer hover:bg-white/70 transition-all duration-300 active:scale-95 transform-gpu"
               style={{ contain: "paint", isolation: "isolate" }}
             >
               <div className="w-[22.5px] h-[22.5px] relative flex items-center justify-center">
@@ -186,7 +186,7 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
             {/* Tile 2: Dress Code */}
             <motion.div
               variants={cardRise}
-              className="md:backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center p-[25px] rounded-[16px] shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] transform-gpu"
+              className="md:backdrop-blur-[2px] bg-[rgba(255,255,255,0.5)] border border-[rgba(201,168,76,0.2)] border-solid flex flex-col gap-[11px] items-center justify-center p-[25px] rounded-t-none rounded-b-[16px] shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] transform-gpu"
               style={{ contain: "paint", isolation: "isolate" }}
             >
               <div className="w-[22.524px] h-[17.5px] relative flex items-center justify-center">

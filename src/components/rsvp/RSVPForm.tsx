@@ -194,7 +194,7 @@ export default function RSVPForm({
         whileInView="visible"
         viewport={viewport}
         variants={scaleIn}
-        className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col items-center pb-[49px] pt-[32px] px-[33px] rounded-[16px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] w-full transform-gpu"
+        className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.5)] border border-solid border-[rgba(201,168,76,0.15)] flex flex-col items-center pb-[49px] pt-[32px] px-[33px] rounded-[24px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] w-full transform-gpu"
         style={{ contain: "paint", isolation: "isolate" }}
       >
         {isCheckingSubmission ? (
@@ -237,7 +237,7 @@ export default function RSVPForm({
                   }))
                 }
                 placeholder="Masukkan nama Anda"
-                className={`w-full bg-[rgba(255,255,255,0.6)] border border-solid rounded-[48px] px-[17px] py-[19px] font-body text-[13px] text-[#1a1d14] placeholder-[rgba(95,95,88,0.3)] focus:outline-none focus:border-[#c9a84c] transition-colors ${
+                className={`w-full bg-[rgba(255,255,255,0.5)] border border-solid rounded-[48px] px-[17px] py-[19px] font-body text-[13px] text-[#1a1d14] placeholder-[rgba(95,95,88,0.3)] focus:outline-none focus:border-[#c9a84c] transition-colors ${
                   errors.name ? "border-red-300" : "border-[rgba(201,168,76,0.1)]"
                 }`}
                 aria-describedby={errors.name ? "rsvp-name-error" : undefined}
@@ -265,7 +265,7 @@ export default function RSVPForm({
                   className={`py-[14px] rounded-[48px] text-[12px] font-body text-center transition-all duration-300 cursor-pointer border border-solid ${
                     formData.attendance === "Hadir"
                       ? "bg-[#585e4d] text-white border-transparent shadow-[0_4px_12px_rgba(88,94,77,0.2)] font-medium"
-                      : "bg-[rgba(255,255,255,0.6)] text-[rgba(95,95,88,0.8)] border-[rgba(201,168,76,0.15)] hover:bg-white"
+                      : "bg-[rgba(255,255,255,0.5)] text-[rgba(95,95,88,0.8)] border-[rgba(201,168,76,0.15)] hover:bg-white"
                   } ${errors.attendance ? "border-red-300" : ""}`}
                 >
                   Hadir
@@ -281,7 +281,7 @@ export default function RSVPForm({
                   className={`py-[14px] rounded-[48px] text-[12px] font-body text-center transition-all duration-300 cursor-pointer border border-solid ${
                     formData.attendance === "Tidak Hadir"
                       ? "bg-[#5f5f58]/20 text-[#5f5f58] border-transparent font-medium"
-                      : "bg-[rgba(255,255,255,0.6)] text-[rgba(95,95,88,0.8)] border-[rgba(201,168,76,0.15)] hover:bg-white"
+                      : "bg-[rgba(255,255,255,0.5)] text-[rgba(95,95,88,0.8)] border-[rgba(201,168,76,0.15)] hover:bg-white"
                   } ${errors.attendance ? "border-red-300" : ""}`}
                 >
                   Tidak Hadir
@@ -297,7 +297,7 @@ export default function RSVPForm({
                   className={`py-[14px] rounded-[48px] text-[12px] font-body text-center transition-all duration-300 cursor-pointer border border-solid ${
                     formData.attendance === "Ragu"
                       ? "bg-[rgba(212,175,55,0.2)] text-[#d4af37] border-transparent font-medium"
-                      : "bg-[rgba(255,255,255,0.6)] text-[rgba(95,95,88,0.8)] border-[rgba(201,168,76,0.15)] hover:bg-white"
+                      : "bg-[rgba(255,255,255,0.5)] text-[rgba(95,95,88,0.8)] border-[rgba(201,168,76,0.15)] hover:bg-white"
                   } ${errors.attendance ? "border-red-300" : ""}`}
                 >
                   Ragu-ragu
@@ -325,7 +325,7 @@ export default function RSVPForm({
                 }
                 placeholder="Tulis ucapan selamat & doa restu Anda..."
                 rows={4}
-                className={`w-full bg-[rgba(255,255,255,0.6)] border border-solid rounded-[16px] px-[17px] py-[15px] font-body text-[13px] text-[#1a1d14] placeholder-[rgba(95,95,88,0.3)] focus:outline-none focus:border-[#c9a84c] transition-colors resize-none ${
+                className={`w-full bg-[rgba(255,255,255,0.5)] border border-solid rounded-[16px] px-[17px] py-[15px] font-body text-[13px] text-[#1a1d14] placeholder-[rgba(95,95,88,0.3)] focus:outline-none focus:border-[#c9a84c] transition-colors resize-none ${
                   errors.message ? "border-red-300" : "border-[rgba(201,168,76,0.1)]"
                 }`}
                 aria-describedby={errors.message ? "rsvp-message-error" : undefined}

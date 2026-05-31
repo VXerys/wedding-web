@@ -38,7 +38,7 @@ export default function GuestbookFeed({
             {[...Array(3)].map((_, index) => (
               <div
                 key={`skeleton-${index}`}
-                className="h-24 rounded-2xl bg-white/50 border border-white/30 animate-pulse"
+                className="h-24 rounded-2xl bg-white/50 border border-solid border-[rgba(201,168,76,0.15)] animate-pulse"
               />
             ))}
           </div>
@@ -47,7 +47,7 @@ export default function GuestbookFeed({
             {error}
           </div>
         ) : entries.length === 0 ? (
-          <div className="rounded-2xl border border-white/30 bg-white/60 p-6 text-center text-body-sm text-slate-500">
+          <div className="rounded-2xl border border-solid border-[rgba(201,168,76,0.15)] bg-white/60 p-6 text-center text-body-sm text-slate-500">
             Jadilah yang pertama memberikan ucapan!
           </div>
         ) : (

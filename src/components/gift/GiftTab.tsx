@@ -159,9 +159,9 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
           </p>
         </motion.div>
 
-        {/* Bank Cards Container */}
+        {/* Bank & Gift Cards Container */}
         <div 
-          className="w-full flex flex-col gap-[32px] items-center mb-[48px]"
+          className="w-full flex flex-col gap-[24px] items-center mb-[48px]"
           style={{ perspective: 1000 }} // For 3D Tilt Hover
         >
           
@@ -171,72 +171,99 @@ function GiftTab({ showHeader = true, showFooter = true }: GiftTabProps) {
             whileInView="visible"
             viewport={viewport}
             variants={slideRight} // Slides from left
-            whileHover={canHover ? { scale: 1.02, rotateY: 8, rotateX: -4, transition: { duration: 0.3 } } : undefined}
-            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col items-center p-[24px] sm:p-[33px] relative rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full transform-gpu"
+            whileHover={canHover ? { scale: 1.01, transition: { duration: 0.3 } } : undefined}
+            className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.5)] border border-solid border-[rgba(201,168,76,0.15)] p-2.5 relative rounded-tl-[72px] rounded-tr-[72px] rounded-bl-none rounded-br-none shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] w-full transform-gpu"
             style={{ contain: "paint", isolation: "isolate" }}
           >
-            <BsiCardPreview />
-
-            {/* Copy Button */}
-            <button
-              onClick={() => handleCopy("bsi", "7147778888")}
-              className="bg-[rgba(201,168,76,0.05)] border border-solid border-[rgba(201,168,76,0.3)] flex gap-[8px] items-center px-[25px] py-[9px] rounded-full hover:bg-[rgba(201,168,76,0.1)] active:scale-[0.97] transition-all cursor-pointer relative z-10"
-            >
-              <div className="w-[8.1px] h-[9.9px] relative flex items-center justify-center">
-                {copiedId === "bsi" ? (
-                  <span className="text-[#c9a84c] text-[10px] font-bold">✓</span>
-                ) : (
-                  <img alt="" className="w-full h-full object-contain" src={imgCopyIcon} />
-                )}
+            <div className="w-full h-full border border-dashed border-[#c9a84c]/25 rounded-tl-[64px] rounded-tr-[64px] rounded-bl-none rounded-br-none px-4 pb-6 pt-9 flex flex-col items-center gap-5 relative">
+              {/* Elegant Top Ornament */}
+              <div className="flex items-center justify-center text-[#c9a84c] mb-1 opacity-80">
+                <svg className="w-12 h-6" viewBox="0 0 24 12" fill="none" stroke="currentColor" strokeWidth="1.2">
+                  <path d="M11 6C8 4 5 5 2 7C5 7 8 8 11 6Z" fill="currentColor" opacity="0.15" />
+                  <path d="M11 6C9 3 7 3 5 4C7 5 8 5 11 6Z" fill="currentColor" opacity="0.15" />
+                  <path d="M13 6C16 4 19 5 22 7C19 7 16 8 13 6Z" fill="currentColor" opacity="0.15" />
+                  <path d="M13 6C15 3 17 3 19 4C17 5 16 5 13 6Z" fill="currentColor" opacity="0.15" />
+                  <circle cx="12" cy="6" r="1.2" fill="currentColor" />
+                </svg>
               </div>
-              <span className="font-body font-normal text-[11px] text-[#c9a84c] tracking-[0.55px] uppercase">
-                {copiedId === "bsi" ? "COPIED!" : "COPY NUMBER"}
+
+              <BsiCardPreview />
+
+              {/* Copy Button */}
+              <button
+                onClick={() => handleCopy("bsi", "7147778888")}
+                className="bg-[rgba(201,168,76,0.05)] border border-solid border-[rgba(201,168,76,0.3)] flex gap-[8px] items-center px-[25px] py-[9px] rounded-full hover:bg-[rgba(201,168,76,0.1)] active:scale-[0.97] transition-all cursor-pointer relative z-10"
+              >
+                <div className="w-[8.1px] h-[9.9px] relative flex items-center justify-center">
+                  {copiedId === "bsi" ? (
+                    <span className="text-[#c9a84c] text-[10px] font-bold">✓</span>
+                  ) : (
+                    <img alt="" className="w-full h-full object-contain" src={imgCopyIcon} />
+                  )}
+                </div>
+                <span className="font-body font-normal text-[11px] text-[#c9a84c] tracking-[0.55px] uppercase">
+                  {copiedId === "bsi" ? "COPIED!" : "COPY NUMBER"}
+                </span>
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Card 2: Physical Address */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            variants={scaleIn} // Scales in
+            whileHover={canHover ? { scale: 1.01, transition: { duration: 0.3 } } : undefined}
+            className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.5)] border border-solid border-[rgba(201,168,76,0.15)] p-2.5 relative rounded-tl-none rounded-tr-none rounded-bl-[72px] rounded-br-[72px] shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] w-full transform-gpu"
+            style={{ contain: "paint", isolation: "isolate" }}
+          >
+            <div className="w-full h-full border border-dashed border-[#c9a84c]/25 rounded-tl-none rounded-tr-none rounded-bl-[64px] rounded-br-[64px] px-4 pb-6 pt-9 flex flex-col gap-4 items-center">
+              {/* Elegant Top Ornament */}
+              <div className="flex items-center justify-center text-[#c9a84c] mb-1 opacity-80">
+                <svg className="w-12 h-6" viewBox="0 0 24 12" fill="none" stroke="currentColor" strokeWidth="1.2">
+                  <path d="M11 6C8 4 5 5 2 7C5 7 8 8 11 6Z" fill="currentColor" opacity="0.15" />
+                  <path d="M11 6C9 3 7 3 5 4C7 5 8 5 11 6Z" fill="currentColor" opacity="0.15" />
+                  <path d="M13 6C16 4 19 5 22 7C19 7 16 8 13 6Z" fill="currentColor" opacity="0.15" />
+                  <path d="M13 6C15 3 17 3 19 4C17 5 16 5 13 6Z" fill="currentColor" opacity="0.15" />
+                  <circle cx="12" cy="6" r="1.2" fill="currentColor" />
+                </svg>
+              </div>
+
+              <div className="w-[24px] h-[21.2px] relative flex items-center justify-center">
+                <img alt="Gift Box" className="w-full h-full object-contain animate-bounce-slow" src={imgGiftBoxIcon} />
+              </div>
+              <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.7)] text-center tracking-[3.3px] uppercase">
+                PHYSICAL GIFTS
               </span>
-            </button>
+              
+              <div className="w-full flex flex-col gap-[11.2px] items-center py-2">
+                <h4 className="font-display font-light italic text-[24px] text-center text-[#1a1d14] leading-[32px]">
+                  Kp. Cikored
+                </h4>
+                <p className="font-body font-normal text-[14px] text-[rgba(95,95,88,0.8)] text-center leading-[22.75px]">
+                  RT 007 / RW 006, Kelurahan Pasir Suren,<br />
+                  Kecamatan Palabuhan Ratu
+                </p>
+              </div>
+
+              <a
+                href={mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-b border-solid border-[rgba(201,168,76,0.35)] flex gap-[8px] items-center pb-[5px] cursor-pointer hover:border-[#c9a84c] transition-colors"
+              >
+                <div className="w-[8.2px] h-[10.5px] relative flex items-center justify-center">
+                  <img alt="" className="w-full h-full object-contain" src={imgMapPinIcon} />
+                </div>
+                <span className="font-body font-normal text-[11px] text-[#c9a84c] tracking-[1.1px] uppercase">
+                  VIEW ON MAPS
+                </span>
+              </a>
+            </div>
           </motion.div>
 
         </div>
-
-        {/* Gift Registry / Physical Address */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewport}
-          variants={scaleIn} // Scales in
-          className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.6)] border border-solid border-[rgba(201,168,76,0.2)] flex flex-col gap-[16px] items-center p-[24px] sm:p-[33px] rounded-[16px] shadow-[0px_10px_30px_0px_rgba(0,0,0,0.02)] w-full mb-8 transform-gpu"
-          style={{ contain: "paint", isolation: "isolate" }}
-        >
-          <div className="w-[24px] h-[21.2px] relative flex items-center justify-center">
-            <img alt="Gift Box" className="w-full h-full object-contain animate-bounce-slow" src={imgGiftBoxIcon} />
-          </div>
-          <span className="font-body font-normal text-[11px] text-[rgba(95,95,88,0.7)] text-center tracking-[3.3px] uppercase">
-            PHYSICAL GIFTS
-          </span>
-          
-          <div className="w-full flex flex-col gap-[11.2px] items-center py-2">
-            <h4 className="font-display font-light italic text-[24px] text-center text-[#1a1d14] leading-[32px]">
-              Kp. Cikored
-            </h4>
-            <p className="font-body font-normal text-[14px] text-[rgba(95,95,88,0.8)] text-center leading-[22.75px]">
-              RT 007 / RW 006, Kelurahan Pasir Suren,<br />
-              Kecamatan Palabuhan Ratu
-            </p>
-          </div>
-
-          <a
-            href={mapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="border-b border-solid border-[rgba(201,168,76,0.3)] flex gap-[8px] items-center pb-[5px] cursor-pointer hover:border-[#c9a84c] transition-colors"
-          >
-            <div className="w-[8.2px] h-[10.5px] relative flex items-center justify-center">
-              <img alt="" className="w-full h-full object-contain" src={imgMapPinIcon} />
-            </div>
-            <span className="font-body font-normal text-[11px] text-[#c9a84c] tracking-[1.1px] uppercase">
-              VIEW ON MAPS
-            </span>
-          </a>
-        </motion.div>
 
         {/* Closing Note */}
         <motion.div
