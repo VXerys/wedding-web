@@ -27,7 +27,7 @@ const imgContainer4 = "/images/figma/3c32ef3ac9d7a54e19a727e671662fdb5289ea62.sv
 const imgIcon2 = "/images/figma/cea24c81bc9873e3acccde10cb974e063df0d38a.svg";
 const mapsUrl =
   process.env.NEXT_PUBLIC_MAPS_URL ??
-  "https://maps.google.com/?q=-6.2088,106.8456";
+  "https://www.google.com/maps/dir/?api=1&destination=-6.996278,106.618556";
 
 function EventDetails({ guestName: _guestName = "", children, showFooter = true }: EventDetailsProps) {
   const prefersReducedMotion = useReducedMotion();
