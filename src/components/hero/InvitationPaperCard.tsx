@@ -43,7 +43,7 @@ function InvitationPaperCard({
   // - Home variant: w-[82vw] max-w-[280px] h-[154px] rounded-[16px]
   const sizeClasses = isCover
     ? "w-[280px] h-[154px] rounded-[16px]"
-    : "w-[82vw] max-w-[280px] h-[154px] rounded-[16px]";
+    : "w-[72vw] max-w-[240px] xs:max-w-[260px] sm:max-w-[280px] h-[140px] xs:h-[154px] rounded-[16px]";
 
   const cardContent = (
     <div
@@ -58,14 +58,14 @@ function InvitationPaperCard({
         <GoldDivider />
 
         {/* Salutation */}
-        <p className="font-body text-[9px] uppercase tracking-[0.2em] text-slate-500 mt-1">
+        <p className={`font-body text-[9px] uppercase tracking-[0.2em] text-slate-500 ${isCover ? "mt-1" : "mt-0.5 xs:mt-1"}`}>
           Dear Sir / Madam
         </p>
 
         {/* Guest Name */}
         <h2
           className={`font-display font-light italic text-slate-700 text-center break-words max-w-full leading-tight ${
-            isCover ? "text-xl mt-1 px-2" : "text-xl mt-1.5 px-3"
+            isCover ? "text-xl mt-1 px-2" : "text-lg xs:text-xl mt-1 px-3"
           }`}
         >
           {guestName}
@@ -76,7 +76,7 @@ function InvitationPaperCard({
           className={`font-display italic text-slate-500 ${
             isCover
               ? "text-[10px] mt-1.5 max-w-[200px] leading-normal"
-              : "text-[10px] mt-1.5 max-w-[210px] leading-relaxed"
+              : "text-[9px] xs:text-[10px] mt-1 xs:mt-1.5 max-w-[190px] xs:max-w-[210px] leading-relaxed"
           }`}
         >
           You are cordially invited to celebrate our union.
