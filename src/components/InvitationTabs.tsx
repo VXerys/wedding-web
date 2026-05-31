@@ -213,6 +213,7 @@ export default function InvitationTabs({ guestName, isOpened, onClose }: Invitat
     const prevLeft = body.style.left;
     const prevRight = body.style.right;
     const prevWidth = body.style.width;
+    const prevScrollBehavior = html.style.scrollBehavior;
 
     html.classList.add("overflow-hidden");
     body.classList.add("overflow-hidden");
@@ -223,6 +224,7 @@ export default function InvitationTabs({ guestName, isOpened, onClose }: Invitat
     body.style.width = "100%";
 
     return () => {
+      html.style.scrollBehavior = "auto";
       html.classList.remove("overflow-hidden");
       body.classList.remove("overflow-hidden");
       body.style.position = prevPosition;
@@ -235,6 +237,7 @@ export default function InvitationTabs({ guestName, isOpened, onClose }: Invitat
       if (target) {
         scrollTargetRef.current = null;
         requestAnimationFrame(() => {
+          html.style.scrollBehavior = prevScrollBehavior;
           const element = document.getElementById(target);
           if (element) {
             if (lenis) {
@@ -245,7 +248,10 @@ export default function InvitationTabs({ guestName, isOpened, onClose }: Invitat
           }
         });
       } else {
-        window.scrollTo(0, scrollY);
+        window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
+        requestAnimationFrame(() => {
+          html.style.scrollBehavior = prevScrollBehavior;
+        });
       }
 
       if (lenis) {
