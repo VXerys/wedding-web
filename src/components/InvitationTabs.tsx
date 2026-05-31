@@ -217,6 +217,7 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
         {!isOpened && (
           <CoverEnvelope
             guestName={guestName}
+            coupleInitials="A&I"
             onOpened={onOpen}
           />
         )}

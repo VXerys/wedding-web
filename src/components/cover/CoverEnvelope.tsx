@@ -14,7 +14,7 @@ interface CoverEnvelopeProps {
 
 export default function CoverEnvelope({
   guestName = "Tamu Undangan",
-  coupleInitials = "B&M",
+  coupleInitials = "A&I",
   onOpened,
 }: CoverEnvelopeProps) {
   const [coverState, setCoverState] = useState<CoverState>("closed");
@@ -99,16 +99,28 @@ export default function CoverEnvelope({
       </div>
 
       {/* Subtitle / Header */}
-      <div className="mb-36 z-10">
-        <p className="text-body-sm uppercase tracking-[0.32em] text-gold-400 font-medium">
+      <div className="mb-20 z-10 flex flex-col items-center gap-3">
+        <span className="font-body text-[10px] tracking-[0.3em] text-[#5f5f58]/60 uppercase font-medium">
           Undangan Pernikahan
-        </p>
-        <div className="mt-4 flex items-center justify-center gap-3 text-gold-400/50">
-          <span className="h-px w-8 bg-gold-400/30" />
-          <span className="text-sm">◆</span>
-          <span className="h-px w-8 bg-gold-400/30" />
+        </span>
+        <div className="flex flex-col items-center gap-1 my-2">
+          <h1 className="font-display text-[36px] sm:text-[40px] text-[#585e4d] italic font-light leading-none">
+            Abudzar
+          </h1>
+          <span className="font-display text-[20px] text-[#D4AF37] font-light leading-none my-0.5">
+            &amp;
+          </span>
+          <h1 className="font-display text-[36px] sm:text-[40px] text-[#585e4d] italic font-light leading-none">
+            Intan
+          </h1>
+        </div>
+        <div className="flex items-center justify-center gap-3 text-gold-400/50">
+          <span className="h-[0.5px] w-6 bg-[#D4AF37]/30" />
+          <span className="text-[8px] text-[#D4AF37] select-none">◆</span>
+          <span className="h-[0.5px] w-6 bg-[#D4AF37]/30" />
         </div>
       </div>
+
 
       {/* 
         ENVELOPE SCENE CONTAINER
@@ -297,15 +309,18 @@ export default function CoverEnvelope({
 
       {/* Prompt text helper */}
       {coverState === "closed" && (
-        <motion.p
-          initial={{ opacity: 0.6 }}
-          animate={{ opacity: [0.6, 1, 0.6] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="mt-6 text-body-sm text-slate-500 cursor-pointer select-none z-10"
+        <motion.div
+          initial={{ opacity: 0.5, y: 10 }}
+          animate={{ opacity: [0.5, 1, 0.5], y: 0 }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+          className="mt-12 flex flex-col items-center gap-2 cursor-pointer z-10"
           onClick={handleOpen}
         >
-          Ketuk untuk Membuka
-        </motion.p>
+          <span className="font-body text-[11px] tracking-[0.25em] text-[#D4AF37] uppercase font-medium">
+            Ketuk untuk Membuka
+          </span>
+          <div className="w-[1px] h-8 bg-gradient-to-b from-[#D4AF37]/60 to-transparent mt-1 animate-pulse" />
+        </motion.div>
       )}
     </motion.div>
   );
