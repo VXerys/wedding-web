@@ -79,15 +79,15 @@ export default function HeroSection({
       {/* Section 1: Hero Invitation */}
       <motion.section
         suppressHydrationWarning={true}
-        className="relative min-h-[100svh] flex flex-col items-center justify-center px-[24px] py-8 z-10"
+        className="relative min-h-[100svh] flex flex-col items-center justify-center px-4 py-4 xs:px-[24px] xs:py-8 z-10"
         initial={heroMotion.initial}
         animate={heroMotion.animate}
         transition={heroMotion.transition}
       >
-        <div className="relative w-full max-w-[376px] min-h-[690px] bg-white/30 md:backdrop-blur-[1px] rounded-[15rem] flex flex-col items-center justify-center px-7 py-10 text-center double-hairline-border">
-          <div className="absolute inset-[-8px] border border-[rgba(212,175,55,0.15)] rounded-[15.5rem] pointer-events-none" />
-          <div className="relative z-10 flex w-full flex-col items-center gap-4">
-            <div className="w-[90px] h-[90px] relative flex items-center justify-center mb-2">
+        <div className="relative w-full max-w-[320px] xs:max-w-[376px] min-h-[580px] xs:min-h-[640px] sm:min-h-[690px] bg-white/30 md:backdrop-blur-[1px] rounded-[10rem] xs:rounded-[13rem] sm:rounded-[15rem] flex flex-col items-center justify-center px-4 py-8 xs:px-7 xs:py-10 text-center double-hairline-border">
+          <div className="absolute inset-[-8px] border border-[rgba(212,175,55,0.15)] rounded-[10.5rem] xs:rounded-[13.5rem] sm:rounded-[15.5rem] pointer-events-none" />
+          <div className="relative z-10 flex w-full flex-col items-center gap-3 xs:gap-4">
+            <div className="w-[75px] h-[75px] xs:w-[90px] xs:h-[90px] relative flex items-center justify-center mb-1 xs:mb-2">
               <Image
                 alt="centered home"
                 className="w-full h-full object-contain opacity-90"
@@ -97,21 +97,21 @@ export default function HeroSection({
                 preload
               />
             </div>
-            <span className="font-body text-[11px] text-[#5f5f58]/70 tracking-[0.4em] uppercase font-medium">
+            <span className="font-body text-[10px] xs:text-[11px] text-[#5f5f58]/70 tracking-[0.4em] uppercase font-medium">
               THE WEDDING OF
             </span>
-            <div className="flex flex-col items-center gap-1">
-              <h1 className="font-display text-[54px] text-[#585e4d] italic font-light leading-none">
+            <div className="flex flex-col items-center gap-0.5 xs:gap-1">
+              <h1 className="font-display text-[44px] xs:text-[48px] sm:text-[54px] text-[#585e4d] italic font-light leading-none">
                 Abudzar
               </h1>
-              <span className="font-display text-[30px] text-[#D4AF37] font-light leading-none">
+              <span className="font-display text-[24px] xs:text-[28px] sm:text-[30px] text-[#D4AF37] font-light leading-none">
                 &amp;
               </span>
-              <h1 className="font-display text-[54px] text-[#585e4d] italic font-light leading-none">
+              <h1 className="font-display text-[44px] xs:text-[48px] sm:text-[54px] text-[#585e4d] italic font-light leading-none">
                 Intan
               </h1>
             </div>
-            <p className="font-body text-[12px] text-[#5f5f58]/70 tracking-[0.18em] uppercase">
+            <p className="font-body text-[11px] xs:text-[12px] text-[#5f5f58]/70 tracking-[0.18em] uppercase">
               {eventDateText}
             </p>
 
