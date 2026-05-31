@@ -171,7 +171,7 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
 
       scrollFrameRef.current = window.requestAnimationFrame(() => {
         const currentScrollY = window.scrollY;
-        const shouldShowHeader = currentScrollY <= 100 || currentScrollY <= lastScrollY.current;
+        const shouldShowHeader = currentScrollY > 80 && (currentScrollY <= 100 || currentScrollY <= lastScrollY.current);
 
         if (shouldShowHeader !== showHeaderRef.current) {
           showHeaderRef.current = shouldShowHeader;

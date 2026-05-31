@@ -79,7 +79,7 @@ export default function HeroSection({
       {/* Section 1: Hero Invitation */}
       <motion.section
         suppressHydrationWarning={true}
-        className="relative min-h-[100svh] flex flex-col items-center justify-center px-4 py-4 xs:px-[24px] xs:py-8 z-10"
+        className="relative min-h-[100svh] flex flex-col items-center justify-center px-4 pt-20 pb-4 xs:px-[24px] xs:pt-24 xs:pb-8 z-10"
         initial={heroMotion.initial}
         animate={heroMotion.animate}
         transition={heroMotion.transition}
