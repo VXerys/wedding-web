@@ -67,11 +67,11 @@ export default function GuestbookFeed({
                 disabled={isLoadingMore}
                 className="rounded-full border border-gold-400/40 px-5 py-2 text-body-sm text-gold-600 transition-colors hover:bg-gold-400/10 disabled:opacity-60"
               >
-                {isLoadingMore ? "Memuat..." : "Muat Lebih Banyak"}
+                {isLoadingMore ? "Loading..." : "View More"}
               </button>
             ) : (
               <span className="text-body-sm text-slate-400">
-                Semua ucapan sudah ditampilkan.
+                All wishes are shown.
               </span>
             )}
           </div>

@@ -370,11 +370,14 @@ export default function InvitationTabs({ guestName, isOpened, onClose }: Invitat
 function OpenedInvitationSections({ guestName }: { guestName: string }) {
   const {
     entries,
+    hasMore,
     isLoading,
+    isLoadingMore,
     error,
     addOptimisticEntry,
     confirmEntry,
     removeEntry,
+    loadMore,
   } = useGuestbookFeed();
   const [mountGallery, setMountGallery] = useState(false);
   const [mountAcara, setMountAcara] = useState(false);
@@ -407,7 +410,10 @@ function OpenedInvitationSections({ guestName }: { guestName: string }) {
             showFooter={false}
             entries={entries}
             isLoading={isLoading}
+            hasMore={hasMore}
+            isLoadingMore={isLoadingMore}
             error={error}
+            onLoadMore={loadMore}
           />
         )}
       </div>

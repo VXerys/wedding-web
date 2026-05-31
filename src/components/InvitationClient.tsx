@@ -11,14 +11,14 @@ import { decodeGuestName } from "@/lib/utils";
 
 const nearHomeImagePaths = [
   "/images/centered-home.svg",
-  "/images/figma/brandon_profile.png",
-  "/images/figma/meyca_profile.png",
+  "/images/agif-image.jpeg",
+  "/images/intan-image.jpeg",
 ];
 
 const deferredInvitationImagePaths = [
   "/images/foto-wedding.jpeg",
   "/images/cincin-wedding.jpeg",
-  "/images/figma/bc72238c81bb18fc6dc53a32f0916a126009f9d5.png",
+  "/images/our-moment-3.jpeg",
   "/images/figma/faded_temple_footer.png",
   "/images/figma/4950129f7a7d256f5721da392cec38d7d6b33daf.png",
 ];

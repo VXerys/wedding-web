@@ -23,8 +23,8 @@ interface HeroSectionProps {
   showFooter?: boolean;
 }
 
-const IMG_BRANDON_PROFILE = "/images/figma/brandon_profile.png";
-const IMG_MEYCA_PROFILE = "/images/figma/meyca_profile.png";
+const IMG_BRANDON_PROFILE = "/images/agif-image.jpeg";
+const IMG_MEYCA_PROFILE = "/images/intan-image.jpeg";
 const IMG_FADED_TEMPLE_FOOTER = "/images/figma/faded_temple_footer.png";
 
 export default function HeroSection({

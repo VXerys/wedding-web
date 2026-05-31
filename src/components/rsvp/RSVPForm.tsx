@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RSVPSubmitError, useRSVPSubmit } from "@/hooks/useRSVPSubmit";
+import { supabase } from "@/lib/supabase/client";
 import type { AttendanceStatus, FormErrors, RSVPFormData } from "@/types/guestbook";
 import type { GuestbookEntry } from "@/types/guestbook";
 import { motion, useReducedMotion } from "framer-motion";
@@ -21,7 +22,7 @@ interface RSVPFormProps {
   removeEntry: (tempId: string) => void;
 }
 
-const defaultMessage = "Konfirmasi kehadiran.";
+const FALLBACK_GUEST_NAME = "Tamu Undangan";
 
 export default function RSVPForm({
   guestName,
@@ -40,6 +41,10 @@ export default function RSVPForm({
   }));
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [isCheckingSubmission, setIsCheckingSubmission] = useState(
+    () => guestName.trim() !== FALLBACK_GUEST_NAME
+  );
 
   const { submitRSVP, submitState, isSubmitting } = useRSVPSubmit({
     addOptimisticEntry,
@@ -49,6 +54,51 @@ export default function RSVPForm({
 
   const imgContainer = "/images/figma/d745edfa5a6618dd70dff20b2a6531d6e9e0306d.svg";
 
+  useEffect(() => {
+    const normalizedGuestName = guestName.trim();
+    let isActive = true;
+
+    const checkExistingSubmission = async () => {
+      if (!normalizedGuestName || normalizedGuestName === FALLBACK_GUEST_NAME) {
+        if (isActive) {
+          setIsCheckingSubmission(false);
+        }
+        return;
+      }
+
+      setIsCheckingSubmission(true);
+
+      const { data, error } = await supabase
+        .from("guestbook")
+        .select("id, guest_name, attendance, message, created_at")
+        .eq("guest_name", normalizedGuestName)
+        .limit(1)
+        .maybeSingle();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        console.error("[RSVP] Failed to check existing submission", {
+          error,
+          guestName: normalizedGuestName,
+        });
+        setIsCheckingSubmission(false);
+        return;
+      }
+
+      setHasSubmitted(Boolean(data));
+      setIsCheckingSubmission(false);
+    };
+
+    void checkExistingSubmission();
+
+    return () => {
+      isActive = false;
+    };
+  }, [guestName]);
+
   const validate = () => {
     const nextErrors: FormErrors = {};
     if (!formData.name.trim()) {
@@ -56,6 +106,9 @@ export default function RSVPForm({
     }
     if (!formData.attendance) {
       nextErrors.attendance = "Pilih status kehadiran Anda.";
+    }
+    if (!formData.message.trim()) {
+      nextErrors.message = "Ucapan & doa tidak boleh kosong.";
     }
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
@@ -75,15 +128,11 @@ export default function RSVPForm({
       await submitRSVP({
         guest_name: formData.name.trim(),
         attendance,
-        message: formData.message.trim() || defaultMessage,
+        message: formData.message.trim(),
       });
 
-      setFormData({
-        name: guestName,
-        attendance: "",
-        message: "",
-      });
       setErrors({});
+      setHasSubmitted(true);
     } catch (error) {
       setFormData(snapshot);
       if (error instanceof RSVPSubmitError) {
@@ -148,14 +197,26 @@ export default function RSVPForm({
         className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col items-center pb-[49px] pt-[32px] px-[33px] rounded-[16px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] w-full transform-gpu"
         style={{ contain: "paint", isolation: "isolate" }}
       >
-        {submitState === "success" ? (
+        {isCheckingSubmission ? (
           <div className="w-full flex flex-col items-center py-8 text-center">
-            <span className="text-3xl mb-2">🎉</span>
+            <div className="mb-4 h-10 w-10 rounded-full border border-[rgba(201,168,76,0.2)] border-t-[#c9a84c] animate-spin" />
             <h4 className="font-body font-semibold text-[16px] text-[#585e4d] mb-1">
-              Terima kasih!
+              Checking your confirmation...
             </h4>
             <p className="font-body italic text-[13px] text-[rgba(95,95,88,0.7)]">
-              Konfirmasi kehadiran Anda telah kami simpan.
+              Please wait while we prepare your RSVP status.
+            </p>
+          </div>
+        ) : hasSubmitted || submitState === "success" ? (
+          <div className="w-full flex flex-col items-center py-8 text-center">
+            <span className="mb-3 flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(201,168,76,0.25)] font-body text-[18px] text-[#c9a84c]">
+              OK
+            </span>
+            <h4 className="font-body font-semibold text-[16px] text-[#585e4d] mb-1">
+              Thank you for your confirmation.
+            </h4>
+            <p className="font-body italic text-[13px] text-[rgba(95,95,88,0.7)]">
+              Your attendance and wishes have been saved.
             </p>
           </div>
         ) : (
@@ -264,8 +325,16 @@ export default function RSVPForm({
                 }
                 placeholder="Tulis ucapan selamat & doa restu Anda..."
                 rows={4}
-                className="w-full bg-[rgba(255,255,255,0.6)] border border-solid border-[rgba(201,168,76,0.1)] rounded-[16px] px-[17px] py-[15px] font-body text-[13px] text-[#1a1d14] placeholder-[rgba(95,95,88,0.3)] focus:outline-none focus:border-[#c9a84c] transition-colors resize-none"
+                className={`w-full bg-[rgba(255,255,255,0.6)] border border-solid rounded-[16px] px-[17px] py-[15px] font-body text-[13px] text-[#1a1d14] placeholder-[rgba(95,95,88,0.3)] focus:outline-none focus:border-[#c9a84c] transition-colors resize-none ${
+                  errors.message ? "border-red-300" : "border-[rgba(201,168,76,0.1)]"
+                }`}
+                aria-describedby={errors.message ? "rsvp-message-error" : undefined}
               />
+              {errors.message && (
+                <p id="rsvp-message-error" className="font-body text-[11px] text-red-500">
+                  {errors.message}
+                </p>
+              )}
             </div>
 
             {submitError && (

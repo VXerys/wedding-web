@@ -4,7 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabase/client";
 import type { GuestbookEntry } from "@/types/guestbook";
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 3;
+
+interface GuestbookCursor {
+  createdAt: string;
+  id: string;
+}
 
 const normalizeText = (value: string) =>
   value.trim().replace(/\s+/g, " ").toLowerCase();
@@ -29,34 +34,40 @@ const formatGuestbookError = (error: unknown, fallbackMessage: string) => {
 
 export const useGuestbookFeed = () => {
   const [entries, setEntries] = useState<GuestbookEntry[]>([]);
-  const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const nextCursorRef = useRef<GuestbookCursor | null>(null);
   const optimisticSignatureMapRef = useRef<Map<string, string>>(new Map());
 
-  const fetchPage = useCallback(async (pageIndex: number, initial = false) => {
+  const fetchPage = useCallback(async (initial = false) => {
     setError(null);
     if (initial) {
       setIsLoading(true);
+      nextCursorRef.current = null;
     }
 
-    const from = pageIndex * PAGE_SIZE;
-    const to = from + PAGE_SIZE - 1;
-
-    const { data, error } = await supabase
+    const cursor = initial ? null : nextCursorRef.current;
+    let query = supabase
       .from("guestbook")
       .select("id, guest_name, attendance, message, created_at")
       .order("created_at", { ascending: false })
-      .range(from, to);
+      .order("id", { ascending: false })
+      .limit(PAGE_SIZE + 1);
+
+    if (cursor) {
+      query = query.or(
+        `created_at.lt.${cursor.createdAt},and(created_at.eq.${cursor.createdAt},id.lt.${cursor.id})`
+      );
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       console.error("[Guestbook] Failed to fetch entries", {
         error,
-        pageIndex,
-        from,
-        to,
+        cursor,
       });
       setError(
         formatGuestbookError(
@@ -72,11 +83,32 @@ export const useGuestbookFeed = () => {
       return false;
     }
 
-    const nextEntries = data ?? [];
-    setEntries((prev) =>
-      pageIndex === 0 ? nextEntries : [...prev, ...nextEntries]
-    );
-    setHasMore(nextEntries.length === PAGE_SIZE);
+    const fetchedEntries = data ?? [];
+    const hasNextPage = fetchedEntries.length > PAGE_SIZE;
+    const nextEntries = fetchedEntries.slice(0, PAGE_SIZE);
+    const cursorEntry = nextEntries[nextEntries.length - 1];
+
+    nextCursorRef.current = cursorEntry
+      ? { createdAt: cursorEntry.created_at, id: cursorEntry.id }
+      : null;
+
+    setEntries((prev) => {
+      if (initial) {
+        return nextEntries;
+      }
+
+      const seenIds = new Set(prev.map((entry) => entry.id));
+      const dedupedEntries = nextEntries.filter((entry) => {
+        if (seenIds.has(entry.id)) {
+          return false;
+        }
+        seenIds.add(entry.id);
+        return true;
+      });
+
+      return [...prev, ...dedupedEntries];
+    });
+    setHasMore(hasNextPage);
 
     if (initial) {
       setIsLoading(false);
@@ -87,23 +119,19 @@ export const useGuestbookFeed = () => {
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- initial client data fetch
-    void fetchPage(0, true);
+    void fetchPage(true);
   }, [fetchPage]);
 
   const loadMore = useCallback(async () => {
     if (!hasMore || isLoadingMore) return;
 
-    const nextPage = page + 1;
     setIsLoadingMore(true);
     try {
-      const didLoad = await fetchPage(nextPage);
-      if (didLoad) {
-        setPage(nextPage);
-      }
+      await fetchPage();
     } finally {
       setIsLoadingMore(false);
     }
-  }, [fetchPage, hasMore, isLoadingMore, page]);
+  }, [fetchPage, hasMore, isLoadingMore]);
 
   const addOptimisticEntry = useCallback((entry: GuestbookEntry) => {
     optimisticSignatureMapRef.current.set(entry.id, buildEntrySignature(entry));

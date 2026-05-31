@@ -20,14 +20,20 @@ interface GalleryTabProps {
   showFooter?: boolean;
   entries: GuestbookEntry[];
   isLoading: boolean;
+  hasMore: boolean;
+  isLoadingMore: boolean;
   error: string | null;
+  onLoadMore: () => void;
 }
 
 export default function GalleryTab({
   showFooter = true,
   entries,
   isLoading,
+  hasMore,
+  isLoadingMore,
   error,
+  onLoadMore,
 }: GalleryTabProps) {
   const prefersReducedMotion = useReducedMotion();
   const viewport = prefersReducedMotion ? { once: true, amount: 0.05 } : sectionViewport;
@@ -37,7 +43,7 @@ export default function GalleryTab({
   const imgBotanical2 = "/images/corner-acara.svg";
   const imgMainMoment = "/images/foto-wedding.jpeg";
   const imgDetailMoment = "/images/cincin-wedding.jpeg";
-  const imgDetailMoment1 = "/images/figma/bc72238c81bb18fc6dc53a32f0916a126009f9d5.png";
+  const imgDetailMoment1 = "/images/our-moment-3.jpeg";
   const imgContainer = "/images/centered-divider.svg";
   const imgContainer1 = "/images/centered-divider.svg";
   const imgIcon = "/images/figma/f0a0985e4ec65be955672ab2b838ad9b600c13e5.svg";
@@ -61,7 +67,7 @@ export default function GalleryTab({
   }, []);
 
   const visibleEntries = useMemo(() => {
-    return entries.slice(0, 2).map((entry) => ({
+    return entries.map((entry) => ({
       ...entry,
       relativeTime: getRelativeTime(entry.created_at, now),
     }));
@@ -213,10 +219,9 @@ export default function GalleryTab({
                   <div className="w-full h-[182.6px] relative rounded-[76.8px] overflow-hidden">
                     <Image
                       alt="Detail Moment 2"
-                      className="absolute h-full left-[-51.58%] max-w-none top-0 w-[203.15%] object-cover"
+                      className="object-cover object-center"
                       src={imgDetailMoment1}
-                      width={304}
-                      height={183}
+                      fill
                       sizes="150px"
                     />
                   </div>
@@ -285,12 +290,14 @@ export default function GalleryTab({
           >
             {isLoading && (
               <>
-                <div className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
-                  <div className="w-full h-[96px] rounded-[12px] bg-[rgba(95,95,88,0.08)] animate-pulse" />
-                </div>
-                <div className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full">
-                  <div className="w-full h-[96px] rounded-[12px] bg-[rgba(95,95,88,0.08)] animate-pulse" />
-                </div>
+                {[...Array(3)].map((_, index) => (
+                  <div
+                    key={`guestbook-skeleton-${index}`}
+                    className="md:backdrop-blur-[6px] bg-[rgba(255,255,255,0.6)] border border-solid border-white flex flex-col gap-[16px] items-start p-[25px] rounded-[16px] shadow-[0px_8px_30px_0px_rgba(0,0,0,0.03)] w-full"
+                  >
+                    <div className="w-full h-[96px] rounded-[12px] bg-[rgba(95,95,88,0.08)] animate-pulse" />
+                  </div>
+                ))}
               </>
             )}
 
@@ -351,6 +358,25 @@ export default function GalleryTab({
                   {error}
                 </p>
               </motion.div>
+            )}
+
+            {!isLoading && visibleEntries.length > 0 && (
+              <div className="flex justify-center pt-[4px]">
+                {hasMore ? (
+                  <button
+                    type="button"
+                    onClick={onLoadMore}
+                    disabled={isLoadingMore}
+                    className="rounded-full border border-[rgba(212,175,55,0.35)] bg-white/50 px-6 py-3 font-body text-[10px] tracking-[0.28em] text-[#9a7a0a] uppercase shadow-[0px_8px_24px_rgba(0,0,0,0.03)] transition-colors hover:bg-[rgba(212,175,55,0.08)] disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {isLoadingMore ? "Loading..." : "View More"}
+                  </button>
+                ) : (
+                  <span className="font-body text-[11px] text-[rgba(95,95,88,0.45)]">
+                    All wishes are shown.
+                  </span>
+                )}
+              </div>
             )}
           </motion.div>
 
