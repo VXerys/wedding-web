@@ -12,11 +12,13 @@ export default function AdminPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-    const storedAuth = localStorage.getItem("admin_is_authed") === "true";
-    if (storedAuth) {
-      setIsAuthed(true);
-    }
+    Promise.resolve().then(() => {
+      setIsMounted(true);
+      const storedAuth = localStorage.getItem("admin_is_authed") === "true";
+      if (storedAuth) {
+        setIsAuthed(true);
+      }
+    });
   }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

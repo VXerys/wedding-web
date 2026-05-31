@@ -32,7 +32,9 @@ export default function MusicPlayer({ isOpened }: MusicPlayerProps) {
       void playAudio();
     } else {
       audio.pause();
-      setIsPlaying(false);
+      Promise.resolve().then(() => {
+        setIsPlaying(false);
+      });
     }
   }, [isOpened]);
 
