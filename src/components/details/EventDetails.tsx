@@ -22,7 +22,6 @@ const imgBotanical2 = "/images/corner-acara.svg";
 const imgIcon = "/images/figma/8bb27d8679887499077b1019b0deade4bec132f9.svg";
 const imgContainer1 = "/images/figma/e009ff2efd2048f5dc22b9cc5eabd9fb1beed9bb.svg";
 const imgContainer2 = "/images/figma/970b3fe4ee7db38ce0afbe3361524e81fe190ad9.svg";
-const imgIcon1 = "/images/figma/59b5a93121e1d44887e59105049029be0124e467.svg";
 const imgContainer3 = "/images/figma/74cbb449b4007381b2e0d44b230d55a566c8aefd.svg";
 const imgContainer4 = "/images/figma/3c32ef3ac9d7a54e19a727e671662fdb5289ea62.svg";
 const imgIcon2 = "/images/figma/cea24c81bc9873e3acccde10cb974e063df0d38a.svg";
@@ -113,10 +112,10 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
           className="w-full flex flex-col gap-[16px] items-center relative"
         >
           
-          {/* Card 1: Akad Nikah */}
+          {/* Card 1: Akad Nikah & Resepsi */}
           <motion.div
             variants={cardRise}
-            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-[100px] rounded-tr-[100px] rounded-bl-none rounded-br-none w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)] transform-gpu"
+            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-[100px] rounded-tr-[100px] rounded-bl-[48px] rounded-br-[48px] w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)] transform-gpu"
             style={{ contain: "paint", isolation: "isolate" }}
           >
             <div className="w-full flex flex-col items-center">
@@ -127,7 +126,7 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
 
             <div className="w-full flex flex-col items-center">
               <h3 className="font-display font-light italic text-[30px] text-center text-[#585e4d] leading-[36px]">
-                Akad Nikah
+                Akad Nikah &amp; Resepsi
               </h3>
             </div>
 
@@ -138,7 +137,7 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
                   <img alt="Calendar" className="w-full h-full object-contain" src={imgContainer1} />
                 </div>
                 <span className="font-body font-normal text-[16px] text-[rgba(95,95,88,0.8)] text-center leading-[24px]">
-                  Minggu, 12 Desember 2024
+                  Sabtu, 6 Juni 2026
                 </span>
               </div>
 
@@ -148,17 +147,18 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
                   <img alt="Clock" className="w-full h-full object-contain" src={imgContainer2} />
                 </div>
                 <span className="font-body font-normal text-[16px] text-[rgba(95,95,88,0.8)] text-center leading-[24px]">
-                  08:00 - 10:00 WIB
+                  09:00 - 17:00 WIB
                 </span>
               </div>
 
               {/* Venue Address Section */}
               <div className="border-t border-[rgba(201,168,76,0.1)] border-solid flex flex-col gap-[8px] items-center pt-[25px] w-full">
                 <h4 className="font-body font-normal text-[16px] text-[#585e4d] text-center leading-[24px]">
-                  Masjid Raya Al-Ikhlas
+                  Kp. Cikored
                 </h4>
                 <p className="font-body italic text-[12px] text-[rgba(95,95,88,0.8)] text-center leading-[18px] opacity-70 max-w-[280px]">
-                  Jl. Melati No. 45, Kebayoran Baru, Jakarta Selatan
+                  RT 007 / RW 006, Kelurahan Pasir Suren,<br />
+                  Kecamatan Palabuhan Ratu
                 </p>
               </div>
             </div>
@@ -203,57 +203,6 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
             </motion.div>
           </div>
 
-          {/* Card 2: Resepsi Pernikahan */}
-          <motion.div
-            variants={cardRise}
-            className="md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] flex flex-col gap-[24px] items-center p-[40px] relative rounded-tl-none rounded-tr-none rounded-bl-[100px] rounded-br-[100px] w-full shadow-[0px_10px_40px_-10px_rgba(0,0,0,0.05)] border border-[rgba(201,168,76,0.15)] transform-gpu"
-            style={{ contain: "paint", isolation: "isolate" }}
-          >
-            <div className="w-full flex flex-col items-center">
-              <div className="w-[27.5px] h-[26px] relative flex items-center justify-center animate-bounce-slow">
-                <img alt="Confetti icon" className="w-full h-full object-contain" src={imgIcon1} />
-              </div>
-            </div>
-
-            <div className="w-full flex flex-col items-center">
-              <h3 className="font-display font-light italic text-[30px] text-center text-[#585e4d] leading-[36px]">
-                Resepsi Pernikahan
-              </h3>
-            </div>
-
-            <div className="w-full flex flex-col gap-[15.5px] items-center">
-              {/* Date */}
-              <div className="flex gap-[8px] items-center justify-center w-full">
-                <div className="w-[10.667px] h-[12.154px] relative flex items-center justify-center">
-                  <img alt="Calendar" className="w-full h-full object-contain" src={imgContainer1} />
-                </div>
-                <span className="font-body font-normal text-[16px] text-[rgba(95,95,88,0.8)] text-center leading-[24px]">
-                  Minggu, 12 Desember 2024
-                </span>
-              </div>
-
-              {/* Time */}
-              <div className="flex gap-[8px] items-center justify-center w-full">
-                <div className="w-[12px] h-[12px] relative flex items-center justify-center">
-                  <img alt="Clock" className="w-full h-full object-contain" src={imgContainer2} />
-                </div>
-                <span className="font-body font-normal text-[16px] text-[rgba(95,95,88,0.8)] text-center leading-[24px]">
-                  11:00 - 13:00 WIB
-                </span>
-              </div>
-
-              {/* Venue Address Section */}
-              <div className="border-t border-[rgba(201,168,76,0.1)] border-solid flex flex-col gap-[8px] items-center pt-[25px] w-full">
-                <h4 className="font-body font-normal text-[16px] text-[#585e4d] text-center leading-[24px]">
-                  The Glass House Garden
-                </h4>
-                <p className="font-body italic text-[12px] text-[rgba(95,95,88,0.8)] text-center leading-[18px] opacity-70 max-w-[280px]">
-                  Jl. Mawar Indah Blok B2, Jakarta Selatan
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
         </motion.div>
         {children}
         {/* Footer */}
@@ -276,7 +225,7 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
                 variants={fadeUp}
                 className="font-display font-light italic text-[48px] text-center text-[#585e4d] leading-[48px] tracking-[-1.2px]"
               >
-                Brandon & Meyca
+                Abudzar &amp; Intan
               </motion.h2>
               <motion.div
                 variants={prefersReducedMotion ? reducedVariants : staggerContainer}
@@ -290,7 +239,7 @@ function EventDetails({ guestName: _guestName = "", children, showFooter = true 
                   variants={labelFade}
                   className="font-body font-normal text-[9px] text-[rgba(95,95,88,0.4)] text-center tracking-[4.5px] uppercase"
                 >
-                  THANK YOU — 2024
+                  THANK YOU — 2026
                 </motion.span>
               </motion.div>
             </div>
