@@ -9,13 +9,15 @@ type CoverState = "closed" | "opening" | "opened";
 interface CoverEnvelopeProps {
   guestName?: string;
   coupleInitials?: string;
-  onOpened: () => void;
+  isOpened?: boolean;
+  onOpen: () => void;
 }
 
 export default function CoverEnvelope({
   guestName = "Tamu Undangan",
   coupleInitials = "A&I",
-  onOpened,
+  isOpened = false,
+  onOpen,
 }: CoverEnvelopeProps) {
   const [coverState, setCoverState] = useState<CoverState>("closed");
   const [mounted, setMounted] = useState(false);
@@ -241,7 +243,7 @@ export default function CoverEnvelope({
               guestName={guestName}
               variant="cover"
               showButton={coverState !== "closed"}
-              onOpen={onOpened}
+              onOpen={onOpen}
             />
           </motion.div>
         </div>

@@ -2,7 +2,10 @@
 
 import { useSearchParams } from "next/navigation";
 import { startTransition, useEffect, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import InvitationTabs from "@/components/InvitationTabs";
+import CoverEnvelope from "@/components/cover/CoverEnvelope";
+import MusicPlayer from "@/components/music/MusicPlayer";
 import { LenisProvider } from "@/components/LenisProvider";
 import { decodeGuestName } from "@/lib/utils";
 
@@ -112,12 +115,26 @@ export default function InvitationClient() {
 
   return (
     <LenisProvider enabled={isOpened}>
-      <InvitationTabs
-        guestName={guestName}
-        isOpened={isOpened}
-        onOpen={() => startTransition(() => setIsOpened(true))}
-        onClose={() => setIsOpened(false)}
-      />
+      <div className="flex-1 flex flex-col w-full relative">
+        <AnimatePresence>
+          {!isOpened && (
+            <CoverEnvelope
+              guestName={guestName}
+              coupleInitials="A&I"
+              isOpened={isOpened}
+              onOpen={() => startTransition(() => setIsOpened(true))}
+            />
+          )}
+        </AnimatePresence>
+
+        <InvitationTabs
+          guestName={guestName}
+          isOpened={isOpened}
+          onClose={() => setIsOpened(false)}
+        />
+
+        <MusicPlayer isOpened={isOpened} />
+      </div>
     </LenisProvider>
   );
 }

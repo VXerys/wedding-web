@@ -3,7 +3,6 @@
 import type { CSSProperties } from "react";
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion, useMotionValue } from "framer-motion";
-import CoverEnvelope from "@/components/cover/CoverEnvelope";
 import HeroSection from "@/components/hero/HeroSection";
 import EventDetails from "@/components/details/EventDetails";
 import RSVPForm from "@/components/rsvp/RSVPForm";
@@ -127,7 +126,6 @@ const Curve = () => {
 interface InvitationTabsProps {
   guestName: string;
   isOpened: boolean;
-  onOpen: () => void;
   onClose?: () => void;
 }
 
@@ -136,13 +134,14 @@ const sectionContainmentStyle: CSSProperties = {
   isolation: "isolate",
 };
 
-export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }: InvitationTabsProps) {
+export default function InvitationTabs({ guestName, isOpened, onClose }: InvitationTabsProps) {
   const lenis = useLenis();
   const [showHeader, setShowHeader] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
   const showHeaderRef = useRef(true);
   const scrollFrameRef = useRef<number | null>(null);
+  const scrollTargetRef = useRef<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -232,7 +231,22 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
       body.style.right = prevRight;
       body.style.width = prevWidth;
 
-      window.scrollTo(0, scrollY);
+      const target = scrollTargetRef.current;
+      if (target) {
+        scrollTargetRef.current = null;
+        requestAnimationFrame(() => {
+          const element = document.getElementById(target);
+          if (element) {
+            if (lenis) {
+              lenis.scrollTo(element, { duration: 1.05 });
+            } else {
+              element.scrollIntoView({ behavior: "smooth" });
+            }
+          }
+        });
+      } else {
+        window.scrollTo(0, scrollY);
+      }
 
       if (lenis) {
         lenis.start();
@@ -241,32 +255,13 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
   }, [isMenuOpen, lenis]);
 
   const scrollToSection = (id: string) => {
+    scrollTargetRef.current = id;
     setIsMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      if (lenis) {
-        lenis.scrollTo(element, {
-          duration: 1.05,
-        });
-        return;
-      }
-
-      element.scrollIntoView({ behavior: "smooth" });
-    }
   };
 
   return (
     <div className="flex-1 flex flex-col w-full relative bg-[#FDFCF9]">
-      {/* Cover Envelope Overlay */}
-      <AnimatePresence>
-        {!isOpened && (
-          <CoverEnvelope
-            guestName={guestName}
-            coupleInitials="A&I"
-            onOpened={onOpen}
-          />
-        )}
-      </AnimatePresence>
+
 
       {/* Top Header */}
       {isOpened && (
@@ -362,7 +357,6 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
             <HeroSection
               guestName={guestName}
               isOpened={isOpened}
-              onOpen={onOpen}
               showFooter={false}
             />
           </div>
