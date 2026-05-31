@@ -1,50 +1,61 @@
 "use client";
 
 import { Check, Copy } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
-import { buildWhatsAppLink, encodeGuestName } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 export default function LinkGenerator() {
   const [guestName, setGuestName] = useState("");
   const [inviteUrl, setInviteUrl] = useState("");
-  const [waUrl, setWaUrl] = useState("");
-  const [copied, setCopied] = useState(false);
-
-  const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    (typeof window !== "undefined" ? window.location.origin : "");
-
-  const sanitizedBaseUrl = useMemo(
-    () => baseUrl.replace(/\/$/, ""),
-    [baseUrl]
-  );
+  const [rawMessage, setRawMessage] = useState("");
+  const [copiedInvite, setCopiedInvite] = useState(false);
+  const [copiedText, setCopiedText] = useState(false);
 
   useEffect(() => {
-    if (copied) {
-      const timeout = setTimeout(() => setCopied(false), 2000);
+    if (copiedInvite) {
+      const timeout = setTimeout(() => setCopiedInvite(false), 2000);
       return () => clearTimeout(timeout);
     }
-  }, [copied]);
+  }, [copiedInvite]);
+
+  useEffect(() => {
+    if (copiedText) {
+      const timeout = setTimeout(() => setCopiedText(false), 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [copiedText]);
 
   const handleGenerate = () => {
     const name = guestName.trim();
-    if (!name || !sanitizedBaseUrl || !waNumber) return;
+    if (!name) return;
 
-    const invitation = `${sanitizedBaseUrl}/?to=${encodeGuestName(name)}`;
-    const whatsapp = buildWhatsAppLink(name, invitation, waNumber);
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://intangif.me";
+    const sanitizedBaseUrl = siteUrl.replace(/\/$/, "");
+
+    const encodedName = encodeURIComponent(name).replace(/%20/g, "+");
+    const invitation = `${sanitizedBaseUrl}/?to=${encodedName}`;
+
+    const message = `Assalamualaikum ${name},
+
+Dengan penuh rasa syukur, kami mengundang Anda untuk hadir di acara pernikahan kami.
+
+Buka undangan digital:
+${invitation}`;
 
     setInviteUrl(invitation);
-    setWaUrl(whatsapp);
+    setRawMessage(message);
   };
 
-  const handleCopy = async () => {
-    if (!waUrl) return;
-    await navigator.clipboard.writeText(waUrl);
-    setCopied(true);
+  const handleCopyInvite = async () => {
+    if (!inviteUrl) return;
+    await navigator.clipboard.writeText(inviteUrl);
+    setCopiedInvite(true);
   };
 
-  const isConfigMissing = !sanitizedBaseUrl || !waNumber;
+  const handleCopyText = async () => {
+    if (!rawMessage) return;
+    await navigator.clipboard.writeText(rawMessage);
+    setCopiedText(true);
+  };
 
   return (
     <div className="glass-card p-6 space-y-4">
@@ -61,49 +72,53 @@ export default function LinkGenerator() {
         />
       </div>
 
-      {isConfigMissing && (
-        <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-body-sm text-amber-700">
-          Lengkapi `NEXT_PUBLIC_SITE_URL` dan `NEXT_PUBLIC_WHATSAPP_NUMBER` di
-          `.env.local`.
-        </div>
-      )}
-
       <button
         type="button"
         onClick={handleGenerate}
-        className="w-full rounded-xl bg-gold-400 text-white py-3 font-medium hover:bg-gold-300 transition-colors"
+        className="w-full rounded-xl bg-gold-400 text-white py-3 font-medium hover:bg-gold-300 transition-colors cursor-pointer"
       >
         Generate Link
       </button>
 
       {inviteUrl && (
-        <div className="space-y-3">
+        <div className="space-y-4 pt-2">
           <div>
             <p className="text-label text-slate-500 uppercase">Invitation URL</p>
             <textarea
               readOnly
-              className="mt-2 w-full min-h-[70px] rounded-xl border border-white/40 bg-white/60 p-3 text-body-sm text-slate-700"
+              className="mt-2 w-full min-h-[70px] rounded-xl border border-white/40 bg-white/60 p-3 text-body-sm text-slate-700 font-sans"
               value={inviteUrl}
             />
+            <button
+              type="button"
+              onClick={handleCopyInvite}
+              className={`mt-2 w-full rounded-xl py-2.5 font-medium flex items-center justify-center gap-2 transition-colors cursor-pointer text-body-sm ${
+                copiedInvite ? "bg-green-500 text-white" : "bg-gold-400 text-white hover:bg-gold-300"
+              }`}
+            >
+              {copiedInvite ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copiedInvite ? "Tersalin!" : "Salin Link Undangan"}
+            </button>
           </div>
-          <div>
-            <p className="text-label text-slate-500 uppercase">WhatsApp URL</p>
+
+          <div className="border-t border-slate-100 pt-3">
+            <p className="text-label text-slate-500 uppercase">WhatsApp Message Text</p>
             <textarea
               readOnly
-              className="mt-2 w-full min-h-[70px] rounded-xl border border-white/40 bg-white/60 p-3 text-body-sm text-slate-700"
-              value={waUrl}
+              className="mt-2 w-full min-h-[110px] rounded-xl border border-white/40 bg-white/60 p-3 text-body-sm text-slate-700 font-sans"
+              value={rawMessage}
             />
+            <button
+              type="button"
+              onClick={handleCopyText}
+              className={`mt-2 w-full rounded-xl py-2.5 font-medium flex items-center justify-center gap-2 transition-colors cursor-pointer text-body-sm ${
+                copiedText ? "bg-green-500 text-white" : "bg-gold-400 text-white hover:bg-gold-300"
+              }`}
+            >
+              {copiedText ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copiedText ? "Tersalin!" : "Salin Teks Chat"}
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={handleCopy}
-            className={`w-full rounded-xl py-3 font-medium flex items-center justify-center gap-2 transition-colors ${
-              copied ? "bg-green-500 text-white" : "bg-gold-400 text-white"
-            }`}
-          >
-            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-            {copied ? "Tersalin!" : "Salin Link WhatsApp"}
-          </button>
         </div>
       )}
     </div>
