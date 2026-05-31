@@ -67,7 +67,7 @@ ${invitation}`;
   };
 
   return (
-    <div className="glass-card p-6 space-y-4">
+    <div className="space-y-4">
       <div>
         <label className="text-label text-slate-500 uppercase" htmlFor="guest">
           Nama Tamu
