@@ -195,6 +195,51 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
     };
   }, [isOpened]);
 
+  // Lock background scrolling when menu is open
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return undefined;
+    }
+
+    if (lenis) {
+      lenis.stop();
+    }
+
+    const body = document.body;
+    const html = document.documentElement;
+    const scrollY = window.scrollY;
+
+    const prevPosition = body.style.position;
+    const prevTop = body.style.top;
+    const prevLeft = body.style.left;
+    const prevRight = body.style.right;
+    const prevWidth = body.style.width;
+
+    html.classList.add("overflow-hidden");
+    body.classList.add("overflow-hidden");
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+
+    return () => {
+      html.classList.remove("overflow-hidden");
+      body.classList.remove("overflow-hidden");
+      body.style.position = prevPosition;
+      body.style.top = prevTop;
+      body.style.left = prevLeft;
+      body.style.right = prevRight;
+      body.style.width = prevWidth;
+
+      window.scrollTo(0, scrollY);
+
+      if (lenis) {
+        lenis.start();
+      }
+    };
+  }, [isMenuOpen, lenis]);
+
   const scrollToSection = (id: string) => {
     setIsMenuOpen(false);
     const element = document.getElementById(id);
@@ -227,7 +272,7 @@ export default function InvitationTabs({ guestName, isOpened, onOpen, onClose }:
       {isOpened && (
         <header
           className={`fixed top-0 z-40 w-full md:max-w-[430px] md:left-1/2 md:-translate-x-1/2 md:backdrop-blur-[6px] bg-[rgba(253,252,249,0.8)] border-b border-solid border-[rgba(201,168,76,0.1)] flex h-[64px] items-center justify-between px-6 transition-transform duration-300 ${
-            showHeader ? "translate-y-0" : "-translate-y-full"
+            showHeader || isMenuOpen ? "translate-y-0" : "-translate-y-full"
           }`}
         >
           <div className="w-[20px]" /> {/* Spacer to balance the burger icon on the right */}
