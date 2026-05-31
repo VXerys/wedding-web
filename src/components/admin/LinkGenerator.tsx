@@ -60,6 +60,12 @@ ${invitation}`;
     setCopiedText(true);
   };
 
+  const handleReset = () => {
+    setGuestName("");
+    setInviteUrl("");
+    setRawMessage("");
+  };
+
   return (
     <div className="glass-card p-6 space-y-4">
       <div>
@@ -120,6 +126,13 @@ ${invitation}`;
             >
               {copiedText ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               {copiedText ? "Tersalin!" : "Salin Teks Chat"}
+            </button>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="mt-4 w-full rounded-xl py-2.5 font-medium flex items-center justify-center gap-2 border border-dashed border-slate-300 text-slate-500 hover:border-slate-400 hover:text-slate-600 transition-colors cursor-pointer text-body-sm"
+            >
+              Reset Form / Tamu Baru
             </button>
           </div>
         </div>

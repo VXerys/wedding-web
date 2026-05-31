@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { RefreshCw } from "lucide-react";
 import LinkGenerator from "@/components/admin/LinkGenerator";
 
 export default function AdminPage() {
@@ -8,6 +9,15 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isAuthed, setIsAuthed] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const storedAuth = localStorage.getItem("admin_is_authed") === "true";
+    if (storedAuth) {
+      setIsAuthed(true);
+    }
+  }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -20,11 +30,25 @@ export default function AdminPage() {
 
     if (password === adminPassword) {
       setIsAuthed(true);
+      localStorage.setItem("admin_is_authed", "true");
       return;
     }
 
     setError("Password salah.");
   };
+
+  const handleLogout = () => {
+    setIsAuthed(false);
+    localStorage.removeItem("admin_is_authed");
+  };
+
+  if (!isMounted) {
+    return (
+      <main className="min-h-screen py-16 flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen py-16">
@@ -56,13 +80,30 @@ export default function AdminPage() {
             )}
             <button
               type="submit"
-              className="w-full rounded-xl bg-gold-400 text-white py-3 font-medium hover:bg-gold-300 transition-colors"
+              className="w-full rounded-xl bg-gold-400 text-white py-3 font-medium hover:bg-gold-300 transition-colors cursor-pointer"
             >
               Masuk
             </button>
           </form>
         ) : (
-          <div className="mt-8">
+          <div className="mt-8 relative">
+            <div className="absolute -top-8 right-0 flex items-center gap-4">
+              <button
+                type="button"
+                onClick={() => window.location.reload()}
+                className="text-body-sm text-slate-500 hover:text-gold-500 transition-colors cursor-pointer font-medium flex items-center gap-1"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                Refresh
+              </button>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="text-body-sm text-red-500 hover:text-red-600 transition-colors cursor-pointer font-medium"
+              >
+                Keluar
+              </button>
+            </div>
             <LinkGenerator />
           </div>
         )}
