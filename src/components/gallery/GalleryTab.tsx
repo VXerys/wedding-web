@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { formatAttendanceLabel } from "@/lib/utils";
 import { useMemo, useState, useEffect } from "react";
 import type { GuestbookEntry } from "@/types/guestbook";
 import { motion, useReducedMotion } from "framer-motion";
@@ -322,7 +323,7 @@ export default function GalleryTab({
                   </div>
                   <div className={`border border-solid flex items-center px-[13px] py-[5px] rounded-full ${getAttendanceStyle(entry.attendance)}`}>
                     <span className="font-body font-normal text-[9px] uppercase tracking-wider">
-                      {entry.attendance === "Ragu" ? "TENTATIVE" : entry.attendance.toUpperCase()}
+                      {formatAttendanceLabel(entry.attendance).toUpperCase()}
                     </span>
                   </div>
                 </div>
